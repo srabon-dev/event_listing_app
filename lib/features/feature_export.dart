@@ -1,0 +1,11 @@
+export 'about/about_export.dart';
+export 'terms/terms_export.dart';
+export 'privacy/privacy_export.dart';
+export 'change_password/change_password_export.dart';
+export 'splash/splash_export.dart';
+export 'auth/auth_export.dart';
+export 'onboarding/onboarding_export.dart';
+export 'navigation/navigation_export.dart';
+export 'user/user_export.dart';
+export 'event_details/event_details_export.dart';
+export 'profile/profile_export.dart';
