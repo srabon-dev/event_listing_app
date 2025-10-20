@@ -132,14 +132,19 @@ class EventAddPageOne extends StatelessWidget {
             },
           ),
           CustomAlignText(text: context.loc.eventType),
-          CustomDropdownField(
-            hintText: context.loc.selectOne,
-            value: selectedEventType.value,
-            fillColor: AppColors.softBrandColor,
-            validator: TextFieldValidator.required(context),
-            items: const ["Registration Open", "Event Started", "Event Finished"],
-            onChanged: (value) {
-              selectedEventType.value = value;
+          ValueListenableBuilder(
+            valueListenable: selectedEventType,
+            builder: (context, item, child){
+              return CustomDropdownField(
+                hintText: context.loc.selectOne,
+                value: item,
+                fillColor: AppColors.softBrandColor,
+                validator: TextFieldValidator.required(context),
+                items: const ["Registration Open", "Event Started", "Event Finished"],
+                onChanged: (value) {
+                  selectedEventType.value = value;
+                },
+              );
             },
           ),
           const Gap(12),

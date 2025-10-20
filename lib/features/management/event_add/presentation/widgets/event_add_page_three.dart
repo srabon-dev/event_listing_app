@@ -5,10 +5,23 @@ class EventAddPageThree extends StatelessWidget {
     super.key,
     required this.pageController,
     required this.formKey,
+    required this.selectedAgesGroup,
+    required this.selectedSkillLevel,
+    required this.availableSlot,
+    required this.zipCode,
+    required this.location,
+    required this.city,
   });
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
+
+  final ValueNotifier<String?> selectedAgesGroup;
+  final ValueNotifier<String?> selectedSkillLevel;
+  final TextEditingController availableSlot;
+  final TextEditingController zipCode;
+  final TextEditingController location;
+  final TextEditingController city;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +41,18 @@ class EventAddPageThree extends StatelessWidget {
             // value: selectedEventType.value,
             fillColor: AppColors.softBrandColor,
             validator: TextFieldValidator.required(context),
-            items: const ["Any Age", "5–7 years", "8–10 years", "11–13 years", "14–16 years", "17+ years"],
+            items: const [
+              "Any Age",
+              "5–7 years",
+              "8–10 years",
+              "11–13 years",
+              "14–16 years",
+              "17+ years",
+            ],
             onChanged: (value) {
-
+              if(value != null){
+                selectedAgesGroup.value = value;
+              }
             },
           ),
           CustomAlignText(text: context.loc.skillLevel),
@@ -41,31 +63,33 @@ class EventAddPageThree extends StatelessWidget {
             validator: TextFieldValidator.required(context),
             items: const ["All Types", "Intermediate", "Beginner", "Advanced"],
             onChanged: (value) {
-
+              if(value != null){
+                selectedSkillLevel.value = value;
+              }
             },
           ),
           CustomTextField(
             title: context.loc.available_slot,
             hintText: context.loc.available_slot,
-            // controller: eventPhoneNumber,
+            controller: availableSlot,
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.zipCode,
-            hintText: context.loc.zipCode,
-            // controller: eventPhoneNumber,
+            hintText: context.loc.enterZipCode,
+            controller: zipCode,
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.locationNameVenue,
-            hintText: "****",
-            // controller: eventPhoneNumber,
+            hintText: context.loc.enterLocationNameVenue,
+            controller: location,
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.cityState,
-            hintText: "****",
-            // controller: eventPhoneNumber,
+            hintText: context.loc.enterCityState,
+            controller: city,
             validator: TextFieldValidator.required(context),
           ),
           const Gap(12),

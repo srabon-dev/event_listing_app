@@ -1,3 +1,5 @@
+import 'package:flutter_quill/flutter_quill.dart';
+
 import 'app_export.dart';
 
 class MyApp extends StatelessWidget {
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+            FlutterQuillLocalizations.delegate,
           ],
         );
       },

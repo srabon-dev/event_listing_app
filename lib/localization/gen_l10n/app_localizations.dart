@@ -1243,6 +1243,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save & Publish'**
   String get savePublish;
+
+  /// No description provided for @googleForm_your_own_site_or_social_media_link.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Google Form, your own site, or social media link'**
+  String get googleForm_your_own_site_or_social_media_link;
+
+  /// No description provided for @selectSkillLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Skill Level'**
+  String get selectSkillLevel;
+
+  /// No description provided for @selectAgeGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Age Group'**
+  String get selectAgeGroup;
+
+  /// No description provided for @enterCityState.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter City / State'**
+  String get enterCityState;
+
+  /// No description provided for @enterLocationNameVenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Location Name / Venue'**
+  String get enterLocationNameVenue;
+
+  /// No description provided for @enterZipCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Zip Code'**
+  String get enterZipCode;
 }
 
 class _AppLocalizationsDelegate

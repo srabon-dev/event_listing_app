@@ -606,4 +606,23 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get savePublish => 'Save & Publish';
+
+  @override
+  String get googleForm_your_own_site_or_social_media_link =>
+      'e.g., Google Form, your own site, or social media link';
+
+  @override
+  String get selectSkillLevel => 'Select Skill Level';
+
+  @override
+  String get selectAgeGroup => 'Select Age Group';
+
+  @override
+  String get enterCityState => 'Enter City / State';
+
+  @override
+  String get enterLocationNameVenue => 'Enter Location Name / Venue';
+
+  @override
+  String get enterZipCode => 'Enter Zip Code';
 }

@@ -1,4 +1,5 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 import '../widgets/event_add_page_four.dart';
 import '../widgets/event_add_page_one.dart';
@@ -31,6 +32,19 @@ class _EventAddScreenState extends State<EventAddScreen> {
 
   final ValueNotifier<DateTime?> eventStartDate = ValueNotifier(null);
   final ValueNotifier<DateTime?> eventEndDate = ValueNotifier(null);
+
+  // page Three
+  final ValueNotifier<String?> selectedAgesGroup = ValueNotifier(null);
+  final ValueNotifier<String?> selectedSkillLevel = ValueNotifier(null);
+  final TextEditingController availableSlot = TextEditingController();
+  final TextEditingController zipCode = TextEditingController();
+  final TextEditingController location = TextEditingController();
+  final TextEditingController city = TextEditingController();
+
+  //Page Four
+  final TextEditingController link = TextEditingController();
+  final TextEditingController eventFee = TextEditingController();
+  final QuillController quillController = QuillController.basic();
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +84,22 @@ class _EventAddScreenState extends State<EventAddScreen> {
             EventAddPageThree(
               pageController: pageController,
               formKey: formKey,
+
+              selectedAgesGroup: selectedAgesGroup,
+              selectedSkillLevel: selectedSkillLevel,
+              availableSlot: availableSlot,
+              zipCode: zipCode,
+              location: location,
+              city: city,
             ),
-            EventAddPageFour(),
+            EventAddPageFour(
+              pageController: pageController,
+              formKey: formKey,
+
+              link: link,
+              eventFee: eventFee,
+              quillController: quillController,
+            ),
           ],
         ),
       ),

@@ -1,7 +1,22 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 class EventAddPageFour extends StatelessWidget {
-  const EventAddPageFour({super.key});
+  const EventAddPageFour({
+    super.key,
+    required this.pageController,
+    required this.formKey,
+    required this.link,
+    required this.eventFee,
+    required this.quillController,
+  });
+
+  final PageController pageController;
+  final GlobalKey<FormState> formKey;
+
+  final TextEditingController link;
+  final TextEditingController eventFee;
+  final QuillController quillController;
 
   @override
   Widget build(BuildContext context) {
@@ -12,75 +27,65 @@ class EventAddPageFour extends StatelessWidget {
         spacing: 12,
         children: [
           Text(
-            context.loc.eventBasics,
-            style: context.headlineMedium.copyWith(fontWeight: FontWeight.w500),
+            context.loc.registrationEventDetails,
+            style: context.headlineLarge.copyWith(fontWeight: FontWeight.w500),
           ),
           const Gap(12),
-          Text(
-            context.loc.eventPhotos,
-            style: context.titleSmall.copyWith(fontWeight: FontWeight.w500),
+          CustomTextField(
+            title: context.loc.eventWebsiteRegistrationLink,
+            hintText: context.loc.googleForm_your_own_site_or_social_media_link,
+            controller: link,
+            validator: TextFieldValidator.required(context),
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.softBrandColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              spacing: 12,
-              children: [
-                Assets.icons.upload.svg(height: 50, width: 50),
-                Text(
-                  context.loc.uploadImages,
-                  style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400),
+          CustomTextField(
+            title: context.loc.eventRegistrationFee,
+            hintText: r"$20",
+            controller: eventFee,
+            validator: TextFieldValidator.required(context),
+          ),
+          CustomAlignText(text: context.loc.describeAboutYourEvent),
+          QuillSimpleToolbar(
+            controller: quillController,
+            config: const QuillSimpleToolbarConfig(
+              showFontFamily: false,
+              showStrikeThrough: false,
+              showInlineCode: true,
+              showSubscript: false,
+              showSuperscript: false,
+              showBackgroundColorButton: false,
+              showClearFormat: false,
+              showListCheck: false,
+              showCodeBlock: true,
+              showQuote: true,
+              showSearchButton: false,
+              showLink: false,
+              showUnderLineButton: false,
+              showColorButton: false,
+              showRedo: false,
+              showUndo: false,
+              sectionDividerColor: AppColors.brandHoverColor,
+              color: AppColors.white,
+              decoration: BoxDecoration(
+                color: AppColors.black
+              ),
+              iconTheme: QuillIconTheme(
+                iconButtonSelectedData: IconButtonData(
+                  color: AppColors.softBrandColor,
+                  focusColor: AppColors.softBrandColor,
+                  isSelected: true,
                 ),
-              ],
+                iconButtonUnselectedData: IconButtonData(
+                  color: AppColors.skyLight,
+                )
+              )
             ),
           ),
-          CustomTextField(
-            title: context.loc.eventName,
-            hintText: context.loc.eventName,
-          ),
-          CustomTextField(
-            title: context.loc.eventShortDescription,
-            hintText: context.loc.eventShortDescription,
-          ),
-          CustomTextField(
-            title: context.loc.phoneNumber,
-            hintText: context.loc.phoneNumber,
-          ),
-          CustomAlignText(text: context.loc.sport),
-          CustomDropdownField(
-            hintText: context.loc.selectOne,
-            fillColor: AppColors.softBrandColor,
-            items: const [
-              "Registration Open",
-              "Event Started",
-              "Event Finished"
-            ],
-            onChanged: (value) {
-
-            },
-          ),
-          CustomAlignText(text: context.loc.eventType),
-          CustomDropdownField(
-            hintText: context.loc.selectOne,
-            fillColor: AppColors.softBrandColor,
-            items: const [
-              "Registration Open",
-              "Event Started",
-              "Event Finished"
-            ],
-            onChanged: (value){
-
-            },
+          QuillEditor.basic(
+            controller: quillController,
+            config: const QuillEditorConfig(),
           ),
           const Gap(12),
-          CustomButton(
-            text: context.loc.next,
-            onTap: (){},
-          ),
+          CustomButton(text: context.loc.next, onTap: () {}),
         ],
       ),
     );

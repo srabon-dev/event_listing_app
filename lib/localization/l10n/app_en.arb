@@ -210,6 +210,12 @@
   "eventWebsiteRegistrationLink": "Event Website/Registration Link",
   "eventRegistrationFee": "Event Registration Fee",
   "describeAboutYourEvent": "Describe About Your Event",
-  "savePublish": "Save & Publish"
+  "savePublish": "Save & Publish",
+  "googleForm_your_own_site_or_social_media_link": "e.g., Google Form, your own site, or social media link",
+  "selectSkillLevel": "Select Skill Level",
+  "selectAgeGroup": "Select Age Group",
+  "enterCityState": "Enter City / State",
+  "enterLocationNameVenue": "Enter Location Name / Venue",
+  "enterZipCode": "Enter Zip Code"
 }
 
