@@ -842,6 +842,84 @@ abstract class AppLocalizations {
   /// **'More'**
   String get more;
 
+  /// No description provided for @our_help_line_service_is_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Our help line service is active: 24/7'**
+  String get our_help_line_service_is_active;
+
+  /// No description provided for @mailUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Mail Us ({email})'**
+  String mailUs(Object email);
+
+  /// No description provided for @lastPurchaseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Purchase Date'**
+  String get lastPurchaseDate;
+
+  /// No description provided for @subscriptionExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Expiry Date'**
+  String get subscriptionExpiryDate;
+
+  /// No description provided for @renewSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew Subscription'**
+  String get renewSubscription;
+
+  /// No description provided for @location_ZIP_Code_or_City.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (ZIP Code or City)'**
+  String get location_ZIP_Code_or_City;
+
+  /// No description provided for @selectOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Select One'**
+  String get selectOne;
+
+  /// No description provided for @ageGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Age Group'**
+  String get ageGroup;
+
+  /// No description provided for @skillLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill Level'**
+  String get skillLevel;
+
+  /// No description provided for @dateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get dateRange;
+
+  /// No description provided for @apply_filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filter'**
+  String get apply_filter;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @no_categories_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories found'**
+  String get no_categories_found;
+
   /// No description provided for @yes.
   ///
   /// In en, this message translates to:
@@ -1009,6 +1087,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event Finished'**
   String get eventFinished;
+
+  /// No description provided for @eventBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Basics'**
+  String get eventBasics;
+
+  /// No description provided for @eventPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Photos'**
+  String get eventPhotos;
+
+  /// No description provided for @uploadImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Images'**
+  String get uploadImages;
+
+  /// No description provided for @eventName.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Name'**
+  String get eventName;
+
+  /// No description provided for @eventShortDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Short Description'**
+  String get eventShortDescription;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @eventDatesRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Dates & Registration'**
+  String get eventDatesRegistration;
+
+  /// No description provided for @registrationStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Start Date'**
+  String get registrationStartDate;
+
+  /// No description provided for @registrationEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration End Time'**
+  String get registrationEndTime;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
+
+  /// No description provided for @selectTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Time'**
+  String get selectTime;
+
+  /// No description provided for @registrationEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration End Date'**
+  String get registrationEndDate;
+
+  /// No description provided for @eventStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Start Date'**
+  String get eventStartDate;
+
+  /// No description provided for @eventStartTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Start Time'**
+  String get eventStartTime;
+
+  /// No description provided for @eventEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Event End Date'**
+  String get eventEndDate;
+
+  /// No description provided for @eventEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Event End Time'**
+  String get eventEndTime;
+
+  /// No description provided for @participantsLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Participants & Location'**
+  String get participantsLocation;
+
+  /// No description provided for @zipCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Zip Code'**
+  String get zipCode;
+
+  /// No description provided for @locationNameVenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Name / Venue'**
+  String get locationNameVenue;
+
+  /// No description provided for @cityState.
+  ///
+  /// In en, this message translates to:
+  /// **'City / State'**
+  String get cityState;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @registrationEventDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration & Event Details'**
+  String get registrationEventDetails;
+
+  /// No description provided for @eventWebsiteRegistrationLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Website/Registration Link'**
+  String get eventWebsiteRegistrationLink;
+
+  /// No description provided for @eventRegistrationFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Registration Fee'**
+  String get eventRegistrationFee;
+
+  /// No description provided for @describeAboutYourEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe About Your Event'**
+  String get describeAboutYourEvent;
+
+  /// No description provided for @savePublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Publish'**
+  String get savePublish;
 }
 
 class _AppLocalizationsDelegate

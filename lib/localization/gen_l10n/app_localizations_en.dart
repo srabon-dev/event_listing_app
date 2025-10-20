@@ -405,6 +405,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get more => 'More';
 
   @override
+  String get our_help_line_service_is_active =>
+      'Our help line service is active: 24/7';
+
+  @override
+  String mailUs(Object email) {
+    return 'Mail Us ($email)';
+  }
+
+  @override
+  String get lastPurchaseDate => 'Last Purchase Date';
+
+  @override
+  String get subscriptionExpiryDate => 'Subscription Expiry Date';
+
+  @override
+  String get renewSubscription => 'Renew Subscription';
+
+  @override
+  String get location_ZIP_Code_or_City => 'Location (ZIP Code or City)';
+
+  @override
+  String get selectOne => 'Select One';
+
+  @override
+  String get ageGroup => 'Age Group';
+
+  @override
+  String get skillLevel => 'Skill Level';
+
+  @override
+  String get dateRange => 'Date Range';
+
+  @override
+  String get apply_filter => 'Apply Filter';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get no_categories_found => 'No categories found';
+
+  @override
   String get yes => 'Yes';
 
   @override
@@ -487,4 +529,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventFinished => 'Event Finished';
+
+  @override
+  String get eventBasics => 'Event Basics';
+
+  @override
+  String get eventPhotos => 'Event Photos';
+
+  @override
+  String get uploadImages => 'Upload Images';
+
+  @override
+  String get eventName => 'Event Name';
+
+  @override
+  String get eventShortDescription => 'Event Short Description';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get eventDatesRegistration => 'Event Dates & Registration';
+
+  @override
+  String get registrationStartDate => 'Registration Start Date';
+
+  @override
+  String get registrationEndTime => 'Registration End Time';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get selectTime => 'Select Time';
+
+  @override
+  String get registrationEndDate => 'Registration End Date';
+
+  @override
+  String get eventStartDate => 'Event Start Date';
+
+  @override
+  String get eventStartTime => 'Event Start Time';
+
+  @override
+  String get eventEndDate => 'Event End Date';
+
+  @override
+  String get eventEndTime => 'Event End Time';
+
+  @override
+  String get participantsLocation => 'Participants & Location';
+
+  @override
+  String get zipCode => 'Zip Code';
+
+  @override
+  String get locationNameVenue => 'Location Name / Venue';
+
+  @override
+  String get cityState => 'City / State';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get registrationEventDetails => 'Registration & Event Details';
+
+  @override
+  String get eventWebsiteRegistrationLink => 'Event Website/Registration Link';
+
+  @override
+  String get eventRegistrationFee => 'Event Registration Fee';
+
+  @override
+  String get describeAboutYourEvent => 'Describe About Your Event';
+
+  @override
+  String get savePublish => 'Save & Publish';
 }

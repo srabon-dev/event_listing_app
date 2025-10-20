@@ -8,23 +8,84 @@ class SearchDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: AppColors.softBrandColor,
-      child: Column(
-        children: [
-          CustomTextField(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Column(
+            spacing: 8,
+            children: [
+              CustomTextField(
+                fillColor: AppColors.white,
+                title: context.loc.location,
+                hintText: context.loc.location_ZIP_Code_or_City,
+              ),
+              CustomAlignText(text: context.loc.sport),
+              CustomDropdownField(
+                hintText: context.loc.selectOne,
+                items: const [
+                  "Registration Open",
+                  "Event Started",
+                  "Event Finished"
+                ],
+                onChanged: (value){
+        
+                },
+              ),
+              CustomAlignText(text: context.loc.ageGroup),
+              CustomDropdownField(
+                hintText: context.loc.selectOne,
+                items: const [
+                  "Registration Open",
+                  "Event Started",
+                  "Event Finished"
+                ],
+                onChanged: (value){
 
-          ),
-          CustomDropdownField(
-            hintText: "Selected One",
-            items: [
-              "Registration Open",
-              "Event Started",
-              "Event Finished"
+                },
+              ),
+              CustomAlignText(text: context.loc.eventType),
+              CustomDropdownField(
+                hintText: context.loc.selectOne,
+                items: const [
+                  "Registration Open",
+                  "Event Started",
+                  "Event Finished"
+                ],
+                onChanged: (value){
+
+                },
+              ),
+              CustomAlignText(text: context.loc.skillLevel),
+              CustomDropdownField(
+                hintText: context.loc.selectOne,
+                items: const [
+                  "Registration Open",
+                  "Event Started",
+                  "Event Finished"
+                ],
+                onChanged: (value){
+
+                },
+              ),
+              CustomAlignText(text: context.loc.dateRange),
+              CustomDropdownField(
+                hintText: context.loc.selectOne,
+                items: const [
+                  "Registration Open",
+                  "Event Started",
+                  "Event Finished"
+                ],
+                onChanged: (value){
+
+                },
+              ),
+              const Gap(12),
+              CustomButton(
+                text: context.loc.apply_filter,
+              ),
             ],
-            onChanged: (value){
-
-            },
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

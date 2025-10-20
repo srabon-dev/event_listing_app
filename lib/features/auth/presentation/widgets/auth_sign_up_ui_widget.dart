@@ -40,7 +40,7 @@ class AuthSignUpUiWidget extends StatelessWidget {
           hintText: context.loc.phone_number,
           keyboardType: TextInputType.phone,
           controller: phone,
-          validator: TextFieldValidator.required(context, context.loc.fieldIsRequired),
+          validator: TextFieldValidator.required(context),
         ),
         CustomTextField(
           title: context.loc.password,

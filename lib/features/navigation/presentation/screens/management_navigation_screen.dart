@@ -11,10 +11,10 @@ class ManagementNavigationScreen extends StatefulWidget {
 class _ManagementNavigationScreenState extends State<ManagementNavigationScreen> {
 
   final List<Widget> screens = [
-    Container(),
-    Container(),
-    Container(),
-    Container(),
+    const ManagementHomeScreen(),
+    const EventAddScreen(),
+    const MyEventScreen(),
+    const ProfileScreen(isUser: false),
   ];
 
   @override

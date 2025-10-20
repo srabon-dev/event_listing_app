@@ -6,3 +6,4 @@ export 'errors/failure.dart';
 export 'logger/app_logger.dart';
 export 'toast/toast_helper.dart';
 export 'validator/text_field_validator.dart';
+export 'functions/common_functions.dart';

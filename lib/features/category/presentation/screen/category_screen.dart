@@ -31,7 +31,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         body: BlocBuilder<CategoryCubit, CategoryState>(
           builder: (context, state) {
-
             if (state is CategoryLoading) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -43,13 +42,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
             if (state is CategoryLoaded && state.categories.isNotEmpty) {
               final displayItems = state.categories.toList();
               return RefreshIndicator(
-                onRefresh: () async{
+                onRefresh: () async {
                   controller.getCategories();
                 },
                 child: GridView.builder(
                   itemCount: displayItems.length,
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 24,
+                  ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
@@ -61,12 +63,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     return CategoryBoxCardWidget(
                       name: item["name"]!,
                       image: item["image"]!,
+                      onTap: () {
+                        AppRouter.route.pushNamed(
+                          RoutePath.categoryEventsScreen,
+                          extra: {"title": item["name"]!, "id": ""},
+                        );
+                      },
                     );
                   },
                 ),
               );
             }
-            return const Center(child: Text('No categories found'));
+            return Center(child: Text(context.loc.no_categories_found));
           },
         ),
       ),

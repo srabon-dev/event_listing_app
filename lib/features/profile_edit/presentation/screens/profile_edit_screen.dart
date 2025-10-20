@@ -1,8 +1,4 @@
-/*
 import '../../../../app_export.dart';
-import '../../../profile/cubit/profile_cubit.dart';
-import '../../../profile/domain/entities/profile_entity.dart';
-import '../../cubit/profile_edit_cubit.dart';
 import '../widgets/profile_edit_inputs_widget.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -16,12 +12,16 @@ class ProfileEditScreen extends StatefulWidget {
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   final ValueNotifier<String?> selectedImage = ValueNotifier(null);
   TextEditingController name = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController location = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     name = TextEditingController(text: widget.profile.name);
+    phone = TextEditingController(text: widget.profile.name);
+    location = TextEditingController(text: widget.profile.name);
     super.initState();
   }
 
@@ -29,6 +29,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   void dispose() {
     selectedImage.dispose();
     name.dispose();
+    phone.dispose();
+    location.dispose();
     super.dispose();
   }
 
@@ -38,57 +40,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       top: false,
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: CustomText(
-            text: AppLocalizations.of(context)!.editProfile,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BlocConsumer<ProfileEditCubit, ProfileEditState>(
-                listener: (context, state) async{
-                  try{
-                    if (state is ProfileUpdate) {
-                      if (state.message != null) {
-                        AppToast.show(context: context, message: state.message);
-                      }
-                      if (state.isVerified) {
-                        context.read<ProfileCubit>().fetchProfile();
-
-                        AppRouter.route.pop();
-                      }
-                    }
-                  }catch (e){
-                    AppLogger.log(e.toString());
-                    if(context.mounted) {
-                      AppToast.show(
-                        context: context,
-                        message: AppLocalizations.of(context)!.somethingWentWrong,
-                      );
-                    }
-                  }
-                },
-                builder: (context, ProfileEditState stateSate) {
-                  final isLoading = stateSate is ProfileUpdate && stateSate.isLoading;
-                  return CustomButton(
-                    text: AppLocalizations.of(context)!.save,
-                    isLoading: isLoading,
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<ProfileEditCubit>().updateProfile(
-                          name: name.text,
-                          imagePath: selectedImage.value ?? "",
-                        );
-                      }
-                    },
-                  );
-                },
-              ),
-            ],
+          title: Text(
+            context.loc.editProfile,
+            style: context.titleMedium,
           ),
         ),
         body: SingleChildScrollView(
@@ -104,6 +58,46 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   selectedImage: selectedImage,
                   profileImage: widget.profile.profileImage,
                   name: name,
+                  phone: phone,
+                  location: location,
+                ),
+                BlocConsumer<ProfileEditCubit, ProfileEditState>(
+                  listener: (context, state) async{
+                    try{
+                      if (state is ProfileUpdate) {
+                        if (state.message != null) {
+                          AppToast.success(context: context, message: state.message);
+                        }
+                        if (state.isVerified) {
+                          context.read<ProfileCubit>().fetchProfile();
+                          AppRouter.route.pop();
+                        }
+                      }
+                    }catch (e){
+                      AppLogger.log(e.toString());
+                      if(context.mounted) {
+                        AppToast.error(
+                          context: context,
+                          message: AppLocalizations.of(context)!.somethingWentWrong,
+                        );
+                      }
+                    }
+                  },
+                  builder: (context, ProfileEditState stateSate) {
+                    final isLoading = stateSate is ProfileUpdate && stateSate.isLoading;
+                    return CustomButton(
+                      text: context.loc.continueText,
+                      isLoading: isLoading,
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          /*context.read<ProfileEditCubit>().updateProfile(
+                            name: name.text,
+                            imagePath: selectedImage.value ?? "",
+                          );*/
+                        }
+                      },
+                    );
+                  },
                 ),
               ],
             ),
@@ -113,4 +107,3 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     );
   }
 }
-*/

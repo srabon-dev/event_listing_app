@@ -167,6 +167,9 @@ class $AssetsIconsGen {
   SvgGenImage get tournament =>
       const SvgGenImage('assets/icons/tournament.svg');
 
+  /// File path: assets/icons/upload.svg
+  SvgGenImage get upload => const SvgGenImage('assets/icons/upload.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     age,
@@ -206,6 +209,7 @@ class $AssetsIconsGen {
     support,
     terms,
     tournament,
+    upload,
   ];
 }
 

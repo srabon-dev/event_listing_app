@@ -1,11 +1,14 @@
-/*
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../app_export.dart';
 
 class ProfileImageSection extends StatelessWidget {
-  const ProfileImageSection({super.key, required this.selectedImage, required this.profileImage});
+  const ProfileImageSection({
+    super.key,
+    required this.selectedImage,
+    required this.profileImage,
+  });
 
   final String profileImage;
   final ValueNotifier<String?> selectedImage;
@@ -39,7 +42,13 @@ class ProfileImageSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColors.white, width: 4),
-                  image: DecorationImage(fit: BoxFit.cover, image: showImage(image: image, file: file != null?File(file):null)),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: showImage(
+                      image: image,
+                      file: file != null ? File(file) : null,
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -54,7 +63,7 @@ class ProfileImageSection extends StatelessWidget {
                   ),
                   child: const Icon(Icons.camera_alt_outlined),
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -62,7 +71,10 @@ class ProfileImageSection extends StatelessWidget {
     );
   }
 
-  ImageProvider<Object> showImage({required File? file, required String image}) {
+  ImageProvider<Object> showImage({
+    required File? file,
+    required String image,
+  }) {
     if (file != null) {
       return FileImage(file);
     } else {
@@ -70,4 +82,3 @@ class ProfileImageSection extends StatelessWidget {
     }
   }
 }
-*/

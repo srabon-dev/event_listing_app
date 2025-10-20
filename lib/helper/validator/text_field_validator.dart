@@ -58,7 +58,7 @@ class TextFieldValidator {
     };
   }
 
-  static String? Function(String?) required(BuildContext context, String fieldName) {
+  static String? Function(String?) required(BuildContext context) {
     return (value) {
       final trimmed = value?.trim() ?? '';
       if (trimmed.isEmpty) {

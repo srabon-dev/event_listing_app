@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../../../app_export.dart';
-import '../../domain/interface/i_profile_edit_repository.dart';
 
 class ProfileEditRepository extends IProfileEditRepository {
   final IApiClient apiClient;

@@ -9,9 +9,9 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  final currentPassword = TextEditingController(text: kDebugMode ? "" : null);
-  final newPassword = TextEditingController(text: kDebugMode ? "" : null);
-  final confirmNewPassword = TextEditingController(text: kDebugMode ? "" : null);
+  final currentPassword = TextEditingController();
+  final newPassword = TextEditingController();
+  final confirmNewPassword = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -31,7 +31,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         appBar: AppBar(
           title: Text(
             context.loc.changePassword,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: context.titleMedium,
           ),
         ),
         body: BlocProvider(
@@ -68,7 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         if (context.mounted) {
                           AppToast.error(
                             context: context,
-                            message: AppLocalizations.of(context)!.somethingWentWrong,
+                            message: context.loc.somethingWentWrong,
                           );
                         }
                       }
@@ -76,17 +76,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     builder: (context, state) {
                       final loading = state is ChangePasswordAddNewState ? state.isLoading : false;
                       return CustomButton(
-                        text: AppLocalizations.of(context)!.continues,
+                        text: context.loc.continues,
                         isLoading: loading,
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            context.read<ChangePasswordBloc>().add(
+                            /*context.read<ChangePasswordBloc>().add(
                               ChangePasswordAddNewEvent(
                                 oldPassword: currentPassword.text,
                                 newPassword: newPassword.text,
                                 confirmPassword: confirmNewPassword.text,
                               ),
-                            );
+                            );*/
                           }
                         },
                       );

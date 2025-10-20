@@ -18,7 +18,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
       spacing: 12,
       children: [
         CustomTextField(
-          title: AppLocalizations.of(context)!.currentPassword,
+          title: context.loc.currentPassword,
           hintText: "xxxx",
           keyboardType: TextInputType.text,
           controller: currentPassword,
@@ -26,7 +26,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
           validator: TextFieldValidator.password(context),
         ),
         CustomTextField(
-          title: AppLocalizations.of(context)!.newPassword,
+          title: context.loc.newPassword,
           hintText: "xxxx",
           keyboardType: TextInputType.text,
           controller: newPassword,
@@ -34,7 +34,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
           validator: TextFieldValidator.password(context),
         ),
         CustomTextField(
-          title: AppLocalizations.of(context)!.repeatPassword,
+          title: context.loc.repeatPassword,
           hintText: "xxxx",
           keyboardType: TextInputType.text,
           controller: confirmNewPassword,

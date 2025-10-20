@@ -1,4 +1,3 @@
-/*
 part of 'profile_edit_cubit.dart';
 
 sealed class ProfileEditState extends Equatable {
@@ -25,4 +24,4 @@ class ProfileUpdate extends ProfileEditState{
 
   @override
   List<Object?> get props => [isLoading, error, isVerified, message];
-}*/
+}

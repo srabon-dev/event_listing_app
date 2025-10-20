@@ -57,7 +57,7 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
 
                       return GestureDetector(
                         onTap: () {
-                          selectedIndex.value =
+                          selectedIndex.value = index;
                           _tabController.animateTo(index);
                         },
                         child: AnimatedContainer(
@@ -88,88 +88,69 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
           ),
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          RefreshIndicator(
-            onRefresh: () async {
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            RefreshIndicator(
+              onRefresh: () async {
 
-            },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
               },
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index){
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                    },
+                    event: EventCardEntity(
+                      id: "",
+                      coverImage: "https://picsum.photos/450/300",
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-          RefreshIndicator(
-            onRefresh: () async {
+            RefreshIndicator(
+              onRefresh: () async {
 
-            },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
               },
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index){
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                    },
+                    event: EventCardEntity(
+                      id: "",
+                      coverImage: "https://picsum.photos/450/300",
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-          RefreshIndicator(
-            onRefresh: () async {
+            RefreshIndicator(
+              onRefresh: () async {
 
-            },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
               },
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index){
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                    },
+                    event: EventCardEntity(
+                      id: "",
+                      coverImage: "https://picsum.photos/450/300",
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Tab _buildTab(String text, Color bgColor) {
-    return Tab(
-      child: Container(
-        width: 133,
-        height: 36,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-          ),
+          ],
         ),
       ),
     );

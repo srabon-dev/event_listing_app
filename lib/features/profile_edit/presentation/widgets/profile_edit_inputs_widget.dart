@@ -1,4 +1,3 @@
-/*
 import '../../../../app_export.dart';
 import 'profile_image_section.dart';
 
@@ -6,11 +5,15 @@ class ProfileEditInputsWidget extends StatelessWidget {
   const ProfileEditInputsWidget({
     super.key,
     required this.name,
+    required this.phone,
+    required this.location,
     required this.selectedImage,
     required this.profileImage,
   });
 
   final TextEditingController name;
+  final TextEditingController phone;
+  final TextEditingController location;
   final String profileImage;
   final ValueNotifier<String?> selectedImage;
 
@@ -26,20 +29,27 @@ class ProfileEditInputsWidget extends StatelessWidget {
           profileImage: profileImage,
         ),
         CustomTextField(
-          title: AppLocalizations.of(context)!.name,
-          hintText: AppLocalizations.of(context)!.pleaseEnterYourName,
+          title: context.loc.name,
+          hintText: context.loc.pleaseEnterYourName,
           keyboardType: TextInputType.name,
           controller: name,
-          prefixIcon: const Icon(Icons.person_outline),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return AppLocalizations.of(context)!.nameIsRequired;
-            }
-            return null;
-          },
+          validator: TextFieldValidator.name(context),
+        ),
+        CustomTextField(
+          title: context.loc.phone_number,
+          hintText: context.loc.phone_number,
+          keyboardType: TextInputType.phone,
+          controller: phone,
+          validator: TextFieldValidator.required(context),
+        ),
+        CustomTextField(
+          title: context.loc.location,
+          hintText: context.loc.location,
+          keyboardType: TextInputType.text,
+          controller: location,
+          validator: TextFieldValidator.required(context),
         ),
       ],
     );
   }
 }
-*/

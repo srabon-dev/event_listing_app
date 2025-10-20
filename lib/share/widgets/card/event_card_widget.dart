@@ -11,6 +11,7 @@ class EventCardWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: context.width,
+        margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -93,7 +94,7 @@ class EventCardWidget extends StatelessWidget {
             ),
             const Divider(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: onTap,
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(context.softBrandColor),
               ),

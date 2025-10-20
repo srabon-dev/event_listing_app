@@ -56,117 +56,131 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                spacing: 12,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.loc.sportCategories,
-                        style: context.titleMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          AppRouter.route.pushNamed(RoutePath.categoryScreen);
-                        },
-                        child: Text(
-                          context.loc.view_all,
-                          style: const TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  BlocBuilder<CategoryCubit, CategoryState>(
-                    builder: (context, state) {
-                      if (state is CategoryLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (state is CategoryLoaded) {
-                        final items = state.categories.take(4).toList();
+      body: RefreshIndicator(
+        onRefresh: () async {
 
-                        return GridView.builder(
-                          itemCount: items.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 1.5,
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  spacing: 12,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.loc.sportCategories,
+                          style: context.titleMedium.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
                           ),
-                          itemBuilder: (context, index) {
-                            final item = items[index];
-                            return CategoryBoxCardWidget(
-                              name: item["name"]!,
-                              image: item["image"]!,
-                            );
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            AppRouter.route.pushNamed(RoutePath.categoryScreen);
                           },
-                        );
-                      } else if (state is CategoryError) {
-                        return Center(child: Text(state.message));
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.loc.featuredEvents,
-                        style: context.titleMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          navigationController.changeIndex(index: 1);
-                        },
-                        child: Text(
-                          context.loc.view_all,
-                          style: const TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
+                          child: Text(
+                            context.loc.view_all,
+                            style: const TextStyle(
+                              decoration: TextDecoration.none,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    BlocBuilder<CategoryCubit, CategoryState>(
+                      builder: (context, state) {
+                        if (state is CategoryLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is CategoryLoaded) {
+                          final items = state.categories.take(4).toList();
+
+                          return GridView.builder(
+                            itemCount: items.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 1.4,
+                            ),
+                            itemBuilder: (context, index) {
+                              final item = items[index];
+                              return CategoryBoxCardWidget(
+                                name: item["name"]!,
+                                image: item["image"]!,
+                                onTap: (){
+                                  AppRouter.route.pushNamed(
+                                    RoutePath.categoryEventsScreen,
+                                    extra: {"title": item["name"]!, "id": ""},
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        } else if (state is CategoryError) {
+                          return Center(child: Text(state.message));
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.loc.featuredEvents,
+                          style: context.titleMedium.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            navigationController.changeIndex(index: 1);
+                          },
+                          child: Text(
+                            context.loc.view_all,
+                            style: const TextStyle(
+                              decoration: TextDecoration.none,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          PagedSliverList<int, String>(
-            pagingController: controller.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<String>(
-              itemBuilder: (BuildContext context, String item, int index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: item,
-                  ),
-                );
-              }
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              sliver: PagedSliverList<int, String>(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<String>(
+                  itemBuilder: (BuildContext context, String item, int index){
+                    return EventCardWidget(
+                      onTap: (){
+                        AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                      },
+                      event: EventCardEntity(
+                        id: "",
+                        coverImage: item,
+                      ),
+                    );
+                  }
+                ),
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

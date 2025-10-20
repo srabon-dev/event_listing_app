@@ -72,7 +72,7 @@ class BottomWidget extends StatelessWidget {
                             items[i]['label'] as String,
                             style: const TextStyle(
                               color: AppColors.brandHoverColor,
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

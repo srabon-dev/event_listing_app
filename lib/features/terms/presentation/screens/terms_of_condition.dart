@@ -25,7 +25,7 @@ class _TermsView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           context.loc.termsConditions,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.titleMedium,
         ),
       ),
       body: BlocBuilder<TermsCubit, TermsState>(

@@ -9,6 +9,7 @@ class CustomDropdownField extends StatelessWidget {
   final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
   final bool isRequired;
+  final Color? fillColor;
 
   final Map<String, String>? labels;
 
@@ -22,6 +23,7 @@ class CustomDropdownField extends StatelessWidget {
     this.validator,
     this.isRequired = false,
     this.labels,
+    this.fillColor,
   });
 
   @override
@@ -31,7 +33,9 @@ class CustomDropdownField extends StatelessWidget {
     final message = AppLocalizations.of(context)!.fieldIsRequired;
 
     String? Function(String?)? validation =
-    (isRequired ? (val) => (val == null || val.isEmpty) ? message : null : null);
+        (isRequired
+            ? (val) => (val == null || val.isEmpty) ? message : null
+            : null);
     final validationFunction = validator ?? validation;
 
     final isExtraTextNotEmpty = extraText.isNotEmpty;
@@ -42,33 +46,40 @@ class CustomDropdownField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-        filled: false,
+        filled: true,
+        fillColor: fillColor ?? AppColors.white,
         hintStyle: const TextStyle(color: AppColors.brandHoverColor),
         errorStyle: const TextStyle(color: AppColors.brandHoverColor),
       ),
-      hint: Text(hintText, style: const TextStyle(color: AppColors.brandHoverColor, fontSize: 16),),
-      items: safeItems.map((key) {
-        final label = labels?[key] ?? key;
-        return DropdownMenuItem<String>(
-          value: key,
-          child: Text(
-            label + (isExtraTextNotEmpty ? " $extraText" : ""),
-            style: const TextStyle(
-              color: AppColors.brandHoverColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        );
-      }).toList(),
+      hint: Text(
+        hintText,
+        style: const TextStyle(color: AppColors.brandHoverColor, fontSize: 14),
+      ),
+      items:
+          safeItems.map((key) {
+            final label = labels?[key] ?? key;
+            return DropdownMenuItem<String>(
+              value: key,
+              child: Text(
+                label + (isExtraTextNotEmpty ? " $extraText" : ""),
+                style: const TextStyle(
+                  color: AppColors.brandHoverColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            );
+          }).toList(),
       onChanged: safeItems.isEmpty ? null : onChanged,
       validator: validationFunction,
       style: const TextStyle(
         color: AppColors.brandHoverColor,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
       ),
-      buttonStyleData: const ButtonStyleData(padding: EdgeInsets.only(right: 8)),
+      buttonStyleData: const ButtonStyleData(
+        padding: EdgeInsets.only(right: 8),
+      ),
       iconStyleData: const IconStyleData(
         icon: Icon(Icons.keyboard_arrow_down, color: AppColors.brandHoverColor),
         iconSize: 24,

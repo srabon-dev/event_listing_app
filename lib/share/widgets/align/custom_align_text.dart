@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:event_listing_app/app_export.dart';
 
 class CustomAlignText extends StatelessWidget {
   const CustomAlignText({
@@ -30,8 +30,8 @@ class CustomAlignText extends StatelessWidget {
           text,
           textAlign: textAlign ?? TextAlign.start,
           maxLines: maxLine,
-          style: style??Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: fontWeight,
+          style: style??context.titleSmall.copyWith(
+            fontWeight: fontWeight ?? FontWeight.w500,
             fontSize: fontSize,
             color: color,
           ),

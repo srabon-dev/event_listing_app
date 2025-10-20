@@ -1,6 +1,5 @@
 import '../../../../app_export.dart';
 import '../widgets/settings_row.dart';
-import '../widgets/settings_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,113 +9,60 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.loc.settings,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.loc.accountSettings,
+          style: context.titleMedium,
         ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Column(
+          spacing: 12,
           children: [
-            SettingsSection(
-              title: AppLocalizations.of(context)!.accountSettings,
-              children: [
-                SettingsRow(
-                  text: AppLocalizations.of(context)!.changePassword,
-                  onTap: () {
-                    AppRouter.route.pushNamed(RoutePath.changePasswordScreen);
-                  },
-                ),
-                /*SettingsRow(
-                  text: AppLocalizations.of(context)!.delete_account,
-                  onTap: () {
-                    showCustomAnimatedDialog(context: context,
-                      title: AppLocalizations.of(context)!.delete_account,
-                      subtitle: AppLocalizations.of(context)!.are_you_sure_you_want_delete_account,
-                      actionButton: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: (){},
-                            child: Text(AppLocalizations.of(context)!.yes),
-                          ),
-                        ),
-                        const Gap(12),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: (){
-                              AppRouter.route.pop();
-                            },
-                            child: Text(AppLocalizations.of(context)!.no),
-                          ),
-                        ),
-                      ]
-                    );
-                  },
-                ),*/
-              ],
+            SettingsRow(
+              name: context.loc.changePassword,
+              icon: Assets.icons.lock,
+              onTap: () {
+                AppRouter.route.pushNamed(RoutePath.changePasswordScreen);
+              },
             ),
-            const Gap(24),
-            SettingsSection(
-              title: AppLocalizations.of(context)!.more,
-              children: [
-                SettingsRow(
-                  text: AppLocalizations.of(context)!.aboutUs,
-                  onTap: () {
-                    AppRouter.route.pushNamed(RoutePath.aboutScreen);
-                  },
-                ),
-                SettingsRow(
-                  text: AppLocalizations.of(context)!.privacyPolicy,
-                  onTap: () {
-                    AppRouter.route.pushNamed(RoutePath.privacyPolicy);
-                  },
-                ),
-                SettingsRow(
-                  text: AppLocalizations.of(context)!.termsConditions,
-                  onTap: () {
-                    AppRouter.route.pushNamed(RoutePath.termsOfCondition);
-                  },
-                ),
-              ],
-            ),
-
-            const Gap(24),
-            CustomButton(
-              text: AppLocalizations.of(context)!.logOut,
-              onTap: (){
+            SettingsRow(
+              name: AppLocalizations.of(context)!.delete_account,
+              icon: Assets.icons.delete,
+              onTap: () {
                 showCustomAnimatedDialog(
-                  context: context,
-                  title: AppLocalizations.of(context)!.logout,
-                  subtitle: AppLocalizations.of(context)!.areYouSureYouWantToLogOut,
-                  actionButton: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(AppColors.white),
-                        ),
-                        onPressed: () async {
-                          try{
-                            final dbHelper = sl<ILocalService>();
-                            await dbHelper.logOut();
+                    context: context,
+                    title: context.loc.logout,
+                    subtitle: context.loc.areYouSureYouWantToLogOut,
+                    actionButton: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(AppColors.white),
+                            foregroundColor: WidgetStatePropertyAll(AppColors.black),
+                          ),
+                          onPressed: () async {
+                            try{
+                              final dbHelper = sl<ILocalService>();
+                              await dbHelper.logOut();
 
-                            if(context.mounted && Navigator.canPop(context)){
-                              AppRouter.route.pop();
-                            }
-                          }catch(_){}
-                        },
-                        child: Text(AppLocalizations.of(context)!.yes),
+                              if(context.mounted && Navigator.canPop(context)){
+                                AppRouter.route.pop();
+                              }
+                            }catch(_){}
+                          },
+                          child: Text(context.loc.yes),
+                        ),
                       ),
-                    ),
-                    const Gap(24),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: (){
-                          AppRouter.route.pop();
-                        },
-                        child: Text(AppLocalizations.of(context)!.no),
+                      const Gap(24),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: (){
+                            AppRouter.route.pop();
+                          },
+                          child: Text(context.loc.no),
+                        ),
                       ),
-                    ),
-                  ]
+                    ]
                 );
               },
             ),

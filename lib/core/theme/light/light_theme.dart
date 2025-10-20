@@ -13,7 +13,7 @@ final ThemeData lightTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.brandHoverColor,
-      foregroundColor: Colors.black,
+      foregroundColor: Colors.white,
       minimumSize: const Size(186, 48),
       padding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
