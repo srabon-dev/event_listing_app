@@ -25,21 +25,23 @@ class AppRouter {
         name: RoutePath.onboardingScreen,
         path: RoutePath.onboardingScreen.addBasePath,
         pageBuilder: (context, state) {
+          final bool isUser = state.extra as bool? ?? false;
+
           return _buildPageWithAnimation(
-            child: const OnboardingScreen(),
+            child: OnboardingScreen(isUser: isUser),
             state: state,
           );
         },
       ),
 
       ///======================= Auth Route =======================
-      /*GoRoute(
-        name: RoutePath.authMainScreen,
-        path: RoutePath.authMainScreen.addBasePath,
+      GoRoute(
+        name: RoutePath.authRolePickScreen,
+        path: RoutePath.authRolePickScreen.addBasePath,
         pageBuilder: (context, state) {
-          return _buildPageWithAnimation(child: const AuthMainScreen(), state: state);
+          return _buildPageWithAnimation(child: const AuthRolePickScreen(), state: state);
         },
-      ),*/
+      ),
       GoRoute(
         name: RoutePath.loginScreen,
         path: RoutePath.loginScreen.addBasePath,
@@ -55,7 +57,7 @@ class AppRouter {
         path: RoutePath.signUpScreen.addBasePath,
         pageBuilder: (context, state) {
           return _buildPageWithAnimation(
-            child: const SignUpScreen(),
+            child: SignUpScreen(isUser: state.extra as bool? ?? false,),
             state: state,
           );
         },
@@ -64,8 +66,14 @@ class AppRouter {
         name: RoutePath.signUpOtpScreen,
         path: RoutePath.signUpOtpScreen.addBasePath,
         pageBuilder: (context, state) {
+          final extra = state.extra;
+          final map = (extra is Map<String, dynamic>) ? extra : {};
+
+          final email = map['email'] as String? ?? '';
+          final isUser = map['isUser'] as bool? ?? false;
+
           return _buildPageWithAnimation(
-            child: SignUpOtpScreen(email: state.extra as String),
+            child: SignUpOtpScreen(email: email, isUser: isUser,),
             state: state,
           );
         },

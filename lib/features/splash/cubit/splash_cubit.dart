@@ -9,23 +9,18 @@ class SplashCubit extends Cubit<void> {
 
   Future<void> checkAuthStatus() async {
     final String token = await db.getToken();
-    final bool isOnboarding = await db.isViewOnboarding();
 
-    if(isOnboarding){
-      if (token.isNotEmpty) {
-        Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        bool hasExpired = JwtDecoder.isExpired(token);
+    if (token.isNotEmpty) {
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      bool hasExpired = JwtDecoder.isExpired(token);
 
-        if(decodedToken["role"] != null && decodedToken["role"].isNotEmpty && !hasExpired){
+      if(decodedToken["role"] != null && decodedToken["role"].isNotEmpty && !hasExpired){
 
-        }else{
-          AppRouter.route.goNamed(RoutePath.loginScreen);
-        }
-      } else {
+      }else{
         AppRouter.route.goNamed(RoutePath.loginScreen);
       }
-    }else{
-      AppRouter.route.goNamed(RoutePath.onboardingScreen);
+    } else {
+      AppRouter.route.goNamed(RoutePath.loginScreen);
     }
   }
 }

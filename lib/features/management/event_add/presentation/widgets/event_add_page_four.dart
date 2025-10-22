@@ -49,13 +49,13 @@ class EventAddPageFour extends StatelessWidget {
             config: const QuillSimpleToolbarConfig(
               showFontFamily: false,
               showStrikeThrough: false,
-              showInlineCode: true,
+              showInlineCode: false,
               showSubscript: false,
               showSuperscript: false,
               showBackgroundColorButton: false,
               showClearFormat: false,
               showListCheck: false,
-              showCodeBlock: true,
+              showCodeBlock: false,
               showQuote: true,
               showSearchButton: false,
               showLink: false,
@@ -80,12 +80,68 @@ class EventAddPageFour extends StatelessWidget {
               )
             ),
           ),
-          QuillEditor.basic(
-            controller: quillController,
-            config: const QuillEditorConfig(),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.softBrandColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: QuillEditor.basic(
+              controller: quillController,
+              config: QuillEditorConfig(
+                enableScribble: true,
+                placeholder: context.loc.describeAboutYourEvent,
+                paintCursorAboveText: true,
+                maxContentWidth: 1000,
+                showCursor: true,
+                minHeight: 250,
+              ),
+            ),
           ),
           const Gap(12),
-          CustomButton(text: context.loc.next, onTap: () {}),
+          Row(
+            spacing: 24,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    final currentPage = pageController.page?.round() ?? 0;
+                    if (currentPage > 0) {
+                      pageController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    } else {
+                      AppLogger.log("Already on the first page");
+                    }
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(AppColors.white),
+                    foregroundColor: WidgetStatePropertyAll(AppColors.brandHoverColor),
+                    side: WidgetStatePropertyAll(
+                      BorderSide(color: AppColors.brandHoverColor, width: 1.5),
+                    ),
+                  ),
+                  child: Text(context.loc.previous),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      pageController.animateToPage(
+                        0,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  child: Text(context.loc.savePublish),
+                ),
+              ),
+            ],
+          ),
+          const Gap(44),
         ],
       ),
     );

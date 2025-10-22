@@ -47,6 +47,21 @@ class _EventAddScreenState extends State<EventAddScreen> {
   final QuillController quillController = QuillController.basic();
 
   @override
+  void dispose() {
+    pageController.dispose();
+
+    eventName.dispose();
+    eventDescription.dispose();
+    eventPhoneNumber.dispose();
+
+    selectedImage.dispose();
+    selectedSportType.dispose();
+    selectedEventType.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

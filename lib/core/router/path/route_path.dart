@@ -6,7 +6,7 @@ class RoutePath{
   static const String onboardingScreen = 'onboardingScreen';
 
   //Auth
-  static const String authMainScreen = 'authMainScreen';
+  static const String authRolePickScreen = 'authRolePickScreen';
   static const String loginScreen = 'loginScreen';
 
   static const String signUpScreen = 'signUpScreen';

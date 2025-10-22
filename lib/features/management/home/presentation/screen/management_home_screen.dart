@@ -42,16 +42,21 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
-            child: Container(
-              height: 50,
-              width: 50,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.brandHoverColor),
-                color: AppColors.softBrandColor,
+            child: GestureDetector(
+              onTap: (){
+                AppRouter.route.pushNamed(RoutePath.notificationsScreen);
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.brandHoverColor),
+                  color: AppColors.softBrandColor,
+                ),
+                child: Assets.icons.notification.svg(),
               ),
-              child: Assets.icons.notification.svg(),
             ),
           ),
         ],

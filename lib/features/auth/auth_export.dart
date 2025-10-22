@@ -14,7 +14,7 @@ export 'domain/usecases/reset_password_usecase.dart';
 export 'domain/usecases/sign_up_otp_usecase.dart';
 export 'domain/usecases/sign_up_usecase.dart';
 
-export 'presentation/screens/auth_main_screen.dart';
+export 'presentation/screens/auth_role_pick_screen.dart';
 export 'presentation/screens/forget_otp_screen.dart';
 export 'presentation/screens/forget_screen.dart';
 export 'presentation/screens/login_screen.dart';

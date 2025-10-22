@@ -109,6 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onPressed: () async {
                                   try{
                                     final dbHelper = sl<ILocalService>();
+                                    context.read<NavigationCubit>().changeIndex(index: 0);
                                     await dbHelper.logOut();
 
                                     if(context.mounted && Navigator.canPop(context)){

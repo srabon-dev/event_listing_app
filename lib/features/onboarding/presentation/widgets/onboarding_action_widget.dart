@@ -18,7 +18,7 @@ class OnboardingActionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 6,
-          children: List.generate(6, (i) {
+          children: List.generate(context.read<OnboardingCubit>().totalPages, (i) {
             final bool isActive = currentIndex == i;
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),

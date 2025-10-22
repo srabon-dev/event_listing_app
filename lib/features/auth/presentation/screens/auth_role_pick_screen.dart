@@ -1,19 +1,19 @@
-/*
 import '../../../../app_export.dart';
 
-class AuthMainScreen extends StatefulWidget {
-  const AuthMainScreen({super.key});
+class AuthRolePickScreen extends StatefulWidget {
+  const AuthRolePickScreen({super.key});
 
   @override
-  State<AuthMainScreen> createState() => _AuthMainScreenState();
+  State<AuthRolePickScreen> createState() => _AuthRolePickScreenState();
 }
 
-class _AuthMainScreenState extends State<AuthMainScreen> {
+class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
   bool isFindEvent = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -79,7 +79,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
               CustomButton(
                 text: context.loc.continues,
                 onTap: (){
-                  AppRouter.route.pushNamed(RoutePath.loginScreen, extra: isFindEvent);
+                  AppRouter.route.pushNamed(RoutePath.signUpScreen, extra: isFindEvent);
                 },
               ),
             ],
@@ -89,4 +89,3 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
     );
   }
 }
-*/

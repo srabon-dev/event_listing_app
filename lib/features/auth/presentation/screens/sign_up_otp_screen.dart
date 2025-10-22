@@ -1,8 +1,9 @@
 import '../../../../app_export.dart';
 
 class SignUpOtpScreen extends StatefulWidget {
-  const SignUpOtpScreen({super.key, required this.email});
+  const SignUpOtpScreen({super.key, required this.email, required this.isUser});
   final String email;
+  final bool isUser;
 
   @override
   State<SignUpOtpScreen> createState() => _SignUpOtpScreenState();
@@ -71,7 +72,7 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
                   text: context.loc.verifyCode,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
+                      AppRouter.route.goNamed(RoutePath.onboardingScreen, extra: widget.isUser);
                     }
                   },
                 ),

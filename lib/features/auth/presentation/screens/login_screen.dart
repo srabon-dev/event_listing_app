@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(context.loc.donTHaveAnAccount),
                       TextButton(
                         onPressed: () {
-                          AppRouter.route.pushNamed(RoutePath.signUpScreen);
+                          AppRouter.route.pushNamed(RoutePath.authRolePickScreen);
                         },
                         child: Text(
                           context.loc.signUp,

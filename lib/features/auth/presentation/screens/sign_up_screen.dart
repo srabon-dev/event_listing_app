@@ -4,7 +4,9 @@ import '../../../../app_export.dart';
 import '../widgets/auth_sign_up_ui_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({super.key, required this.isUser});
+
+  final bool isUser;
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -17,7 +19,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final password = TextEditingController(text: kDebugMode ? "%%66Test" : "");
   final confirmPassword = TextEditingController(text: kDebugMode ? "%%66Test" : "");
   final ValueNotifier<bool> isAgree = ValueNotifier(false);
-  final ValueNotifier<String> role = ValueNotifier("USER");
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,7 +29,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     password.dispose();
     confirmPassword.dispose();
     isAgree.dispose();
-    role.dispose();
     super.dispose();
   }
 
@@ -45,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
               children: [
-                const SizedBox(height: 44,),
+                const SizedBox(height: 44),
                 Text(
                   context.loc.create_your_account,
                   style: context.headlineMedium.copyWith(fontWeight: FontWeight.w500),
@@ -56,64 +56,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.w400,
                     color: AppColors.secondaryText,
                   ),
-                ),
-                Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        context.loc.choose_your_role,
-                        style: context.titleSmall,
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 12,
-                      children: [
-                        Row(
-                          children: [
-                            ValueListenableBuilder(
-                              valueListenable: role,
-                              builder: (BuildContext context, item, child) {
-                                return Radio<String>(
-                                  value: "USER",
-                                  groupValue: role.value,
-                                  activeColor: AppColors.brandHoverColor,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      role.value = value;
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                            Text(context.loc.find_events, style: context.titleSmall),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            ValueListenableBuilder(
-                              valueListenable: role,
-                              builder: (BuildContext context, item, child) {
-                                return Radio<String>(
-                                  value: "MANAGEMENT",
-                                  groupValue: role.value,
-                                  activeColor: AppColors.brandHoverColor,
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      role.value = value;
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                            Text(context.loc.list_events, style: context.titleSmall),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
                 AuthSignUpUiWidget(
                   name: name,
@@ -184,9 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(context.loc.alreadyHaveAnAccount),
                     TextButton(
                       onPressed: () {
-                        if (Navigator.canPop(context)) {
-                          AppRouter.route.pop();
-                        }
+                        AppRouter.route.goNamed(RoutePath.loginScreen);
                       },
                       child: Text(context.loc.signIn),
                     ),
@@ -196,7 +136,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   text: context.loc.continueText,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      AppRouter.route.pushNamed(RoutePath.signUpOtpScreen, extra: email.text);
+                      AppRouter.route.pushNamed(
+                        RoutePath.signUpOtpScreen,
+                        extra: {"isUser": widget.isUser, "email": email.text},
+                      );
                     }
                   },
                 ),
