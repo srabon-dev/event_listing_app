@@ -13,6 +13,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final businessName = TextEditingController(text: kDebugMode ? "Test" : "");
   final name = TextEditingController(text: kDebugMode ? "Test" : "");
   final email = TextEditingController(text: kDebugMode ? "rv@yopmail.com" : "");
   final phone = TextEditingController();
@@ -23,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
+    businessName.dispose();
     name.dispose();
     email.dispose();
     phone.dispose();
@@ -51,13 +53,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: context.headlineMedium.copyWith(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  context.loc.join_for_free,
+                  widget.isUser?context.loc.join_for_free: context.loc.join_for_free_and_start,
                   style: context.bodyLarge.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.secondaryText,
                   ),
                 ),
                 AuthSignUpUiWidget(
+                  isUser: widget.isUser,
+                  businessName: businessName,
                   name: name,
                   email: email,
                   phone: phone,

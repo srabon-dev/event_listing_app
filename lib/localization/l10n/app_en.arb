@@ -92,6 +92,7 @@
   "name": "Name",
   "nameIsRequired": "Name is required",
   "pleaseEnterYourName": "Please enter your name",
+  "pleaseEnterYourBusinessName": "Please enter your business name",
   "continueText": "Continue",
   "alreadyHaveAnAccount": "Already have an account?",
   "signIn": "Sign In",
@@ -216,6 +217,10 @@
   "selectAgeGroup": "Select Age Group",
   "enterCityState": "Enter City / State",
   "enterLocationNameVenue": "Enter Location Name / Venue",
-  "enterZipCode": "Enter Zip Code"
+  "enterZipCode": "Enter Zip Code",
+
+  "businessName": "Business Name",
+  "join_for_free_and_start": "Join for free and start listing your Sport events to reach thousands of families, with full control over registrations and event details.",
+  "createYourAccount": "Create Your Account"
 }
 

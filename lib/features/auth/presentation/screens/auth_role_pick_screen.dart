@@ -67,7 +67,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
                           spacing: 12,
                           children: [
                             Assets.images.listEvent.image(),
-                            Text(context.loc.find_events, style: context.titleLarge,)
+                            Text(context.loc.list_events, style: context.titleLarge,)
                           ],
                         ),
                       ),

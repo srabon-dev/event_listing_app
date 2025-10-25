@@ -31,6 +31,7 @@ class _PrivacyView extends StatelessWidget {
       body: BlocBuilder<PrivacyCubit, PrivacyState>(
         builder: (context, state) {
           if (state is OtherPrivacyState) {
+            AppLogger.log(state.status);
             switch (state.status) {
               case ApiStatus.loading:
                 return const LoadingWidget(color: AppColors.black,);

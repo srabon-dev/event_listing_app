@@ -3,13 +3,17 @@ import '../../../../app_export.dart';
 class AuthSignUpUiWidget extends StatelessWidget {
   const AuthSignUpUiWidget({
     super.key,
+    required this.isUser,
     required this.name,
+    required this.businessName,
     required this.email,
     required this.phone,
     required this.password,
     required this.confirmPassword,
   });
 
+  final bool isUser;
+  final TextEditingController businessName;
   final TextEditingController name;
   final TextEditingController email;
   final TextEditingController phone;
@@ -21,6 +25,14 @@ class AuthSignUpUiWidget extends StatelessWidget {
     return Column(
       spacing: 18,
       children: [
+        if(!isUser)
+          CustomTextField(
+            title: context.loc.businessName,
+            hintText: context.loc.pleaseEnterYourBusinessName,
+            keyboardType: TextInputType.name,
+            controller: businessName,
+            validator: TextFieldValidator.name(context),
+          ),
         CustomTextField(
           title: context.loc.name,
           hintText: context.loc.pleaseEnterYourName,

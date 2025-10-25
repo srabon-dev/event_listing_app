@@ -566,6 +566,12 @@ abstract class AppLocalizations {
   /// **'Please enter your name'**
   String get pleaseEnterYourName;
 
+  /// No description provided for @pleaseEnterYourBusinessName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your business name'**
+  String get pleaseEnterYourBusinessName;
+
   /// No description provided for @continueText.
   ///
   /// In en, this message translates to:
@@ -1279,6 +1285,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter Zip Code'**
   String get enterZipCode;
+
+  /// No description provided for @businessName.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Name'**
+  String get businessName;
+
+  /// No description provided for @join_for_free_and_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Join for free and start listing your Sport events to reach thousands of families, with full control over registrations and event details.'**
+  String get join_for_free_and_start;
+
+  /// No description provided for @createYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Account'**
+  String get createYourAccount;
 }
 
 class _AppLocalizationsDelegate

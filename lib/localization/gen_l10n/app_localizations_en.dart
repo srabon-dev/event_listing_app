@@ -263,6 +263,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pleaseEnterYourName => 'Please enter your name';
 
   @override
+  String get pleaseEnterYourBusinessName => 'Please enter your business name';
+
+  @override
   String get continueText => 'Continue';
 
   @override
@@ -626,4 +629,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterZipCode => 'Enter Zip Code';
+
+  @override
+  String get businessName => 'Business Name';
+
+  @override
+  String get join_for_free_and_start =>
+      'Join for free and start listing your Sport events to reach thousands of families, with full control over registrations and event details.';
+
+  @override
+  String get createYourAccount => 'Create Your Account';
 }
