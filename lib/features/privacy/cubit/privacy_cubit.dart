@@ -15,18 +15,10 @@ class PrivacyCubit extends Cubit<PrivacyState> {
     try {
       emit(const OtherPrivacyState(status: ApiStatus.loading, description: ''));
 
-      await Future.delayed(const Duration(seconds: 1));
+      final token = await db.getToken();
+      final response = await apiClient.get(token: token, url: ApiUrls.privacy());
 
-      AppLogger.log("message");
-      emit(const OtherPrivacyState(
-        status: ApiStatus.completed,
-        description: "",
-      ));
-      AppLogger.log("message 2");
-      // final token = await db.getToken();
-      // final response = await apiClient.get(token: token, url: ApiUrls.privacy());
-
-      /*response.fold(
+      response.fold(
         (failure) {
           emit(OtherPrivacyState(status: ApiStatus.error, description: failure.message));
         },
@@ -38,7 +30,7 @@ class PrivacyCubit extends Cubit<PrivacyState> {
             ),
           );
         },
-      );*/
+      );
     } catch (e) {
       emit(const OtherPrivacyState(status: ApiStatus.error, description: ''));
     }

@@ -37,11 +37,11 @@ class CustomButton extends StatelessWidget {
 
   Widget buildChild(BuildContext context) {
     if (isLoading) {
-      return const LoadingWidget();
+      return const LoadingWidget(color: AppColors.white,);
     } else {
       return Text(
         text,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.white),
+        style: context.titleMedium.copyWith(color: AppColors.white),
       );
     }
   }

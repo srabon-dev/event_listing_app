@@ -8,18 +8,41 @@ class SplashCubit extends Cubit<void> {
   SplashCubit(this.db) : super(null);
 
   Future<void> checkAuthStatus() async {
-    final String token = await db.getToken();
+    try {
+      final String token = await db.getToken();
 
-    if (token.isNotEmpty) {
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      bool hasExpired = JwtDecoder.isExpired(token);
-
-      if(decodedToken["role"] != null && decodedToken["role"].isNotEmpty && !hasExpired){
-
-      }else{
+      if (token.isEmpty) {
         AppRouter.route.goNamed(RoutePath.loginScreen);
+        return;
       }
-    } else {
+
+      if (JwtDecoder.isExpired(token)) {
+        AppRouter.route.goNamed(RoutePath.loginScreen);
+        return;
+      }
+
+      Map<String, dynamic> decodedToken;
+      try {
+        decodedToken = JwtDecoder.decode(token);
+      } catch (_) {
+        AppRouter.route.goNamed(RoutePath.loginScreen);
+        return;
+      }
+
+      final role = (decodedToken["role"] ?? "").toString().toLowerCase();
+
+      switch (role) {
+        case "user":
+          AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+          break;
+        case "organizer":
+          AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
+          break;
+        default:
+          AppRouter.route.goNamed(RoutePath.loginScreen);
+          break;
+      }
+    } catch (e) {
       AppRouter.route.goNamed(RoutePath.loginScreen);
     }
   }

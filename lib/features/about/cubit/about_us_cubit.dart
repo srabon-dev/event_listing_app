@@ -13,19 +13,14 @@ class AboutUsCubit extends Cubit<AboutUsState> {
   Future<void> getAbout() async{
     try{
       emit(const OtherAboutState(status: ApiStatus.loading, description: ''));
-      await Future.delayed(const Duration(seconds: 1));
-      emit(const OtherAboutState(
-        status: ApiStatus.completed,
-        description: "",
-      ));
-      /*final token = await db.getToken();
+      final token = await db.getToken();
       final response = await apiClient.get(token: token, url: ApiUrls.about());
 
       response.fold((failure){
         emit(OtherAboutState(status: ApiStatus.error, description: failure.message));
       }, (success){
         emit(OtherAboutState(status: ApiStatus.completed, description: success.data?["data"]?["description"] ?? ""));
-      });*/
+      });
     }catch(e){
       emit(const OtherAboutState(status: ApiStatus.error, description: ''));
     }

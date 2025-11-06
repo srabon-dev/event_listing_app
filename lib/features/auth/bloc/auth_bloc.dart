@@ -1,39 +1,13 @@
-/*
-import 'package:my_rv_app/app_export.dart';
-import 'package:my_rv_app/features/auth/domain/entities/auth_entity.dart';
-import 'package:my_rv_app/features/auth/domain/usecases/login_usecase.dart';
-
-import '../domain/usecases/forget_otp_usecase.dart';
-import '../domain/usecases/forget_usecase.dart';
-import '../domain/usecases/resend_otp_usecase.dart';
-import '../domain/usecases/reset_password_usecase.dart';
-import '../domain/usecases/sign_up_otp_usecase.dart';
-import '../domain/usecases/sign_up_usecase.dart';
-
+import 'package:event_listing_app/app_export.dart';
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final ILocalService db;
-  final LoginUseCase loginUseCase;
-  final ResendOtpUseCase resendOtpUseCase;
-
-  final ForgetUseCase forgetUseCase;
-  final ForgetOtpUseCase forgetOtpUseCase;
-  final ResetPasswordUseCase resetPasswordUseCase;
-
-  final SignUpUseCase signUpUseCase;
-  final SignUpOtpUseCase signUpOtpUseCase;
+  final IAuthRepository repository;
 
   AuthBloc({
-    required this.loginUseCase,
-    required this.resendOtpUseCase,
-    required this.forgetUseCase,
-    required this.forgetOtpUseCase,
-    required this.resetPasswordUseCase,
-    required this.signUpUseCase,
-    required this.signUpOtpUseCase,
+    required this.repository,
     required this.db,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
@@ -52,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const LoginState(isLoading: true));
 
-      final response = await loginUseCase.call(
+      final response = await repository.login(
         email: event.email,
         password: event.password,
         url: ApiUrls.login(),
@@ -63,19 +37,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(LoginState(isLoading: false, message: failure.message));
         },
         (success) async {
-          Future.wait([
-            db.saveUserdata(
-              token: success.accessToken,
-              refreshToken: success.refreshToken,
-              id: success.userId,
-            ),
-            db.saveChassis(
-              id: success.chassisId,
-            ),
-            db.saveRv(
-              id: success.rvId,
-            ),
-          ]);
+          if (!success.isSuccess) {
+            final errorMessage = 'Unknown error';
+            emit(SignUpOtpState(isLoading: false, message: errorMessage));
+            return;
+          }
+
+          db.saveUserdata(
+            token: success.accessToken,
+            refreshToken: success.refreshToken,
+            id: success.userId,
+            role: success.role,
+          );
+
           emit(LoginState(isLoading: false, isVerified: true, authEntity: success));
         },
       );
@@ -88,7 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const ForgetState(isLoading: true));
 
-      final response = await forgetUseCase.call(email: event.email, url: ApiUrls.forget());
+      final response = await repository.forget(email: event.email, url: ApiUrls.forget());
 
       await response.fold(
         (failure) async {
@@ -114,7 +88,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const ForgetOtpState(isLoading: true));
 
-      final response = await forgetOtpUseCase.call(
+      final response = await repository.forgetOTP(
         email: event.email,
         code: event.otp,
         url: ApiUrls.forgetOtpVerify(),
@@ -144,7 +118,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const ResetPasswordState(isLoading: true));
 
-      final response = await resetPasswordUseCase.call(
+      final response = await repository.resetPassword(
         email: event.email,
         password: event.password,
         confirmPassword: event.confirmPassword,
@@ -175,26 +149,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const SignUpState(isLoading: true));
 
-      final response = await signUpUseCase.call(
+      final response = await repository.signUp(
+        businessName: event.businessName,
         name: event.name,
         email: event.email,
+        role: event.role,
         password: event.password,
         confirmPassword: event.confirmPassword,
-        phone: "",
+        phone: event.phone,
         url: ApiUrls.signUp(),
       );
 
-      await response.fold(
-        (failure) async {
+      await response.fold((failure) async {
           emit(SignUpState(isLoading: false, message: failure.message));
-        },
-        (success) async {
-          if (success.statusCode != 201) {
-            final errorMessage = success.data["message"] ?? 'Unknown error';
-            emit(SignUpState(isLoading: false, message: errorMessage));
-            return;
-          }
-
+        }, (success) async {
           final message = success.data["message"] ?? 'Sign up success';
           emit(SignUpState(isLoading: false, isVerified: true, message: message));
         },
@@ -208,7 +176,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const SignUpOtpState(isLoading: true));
 
-      final response = await signUpOtpUseCase.call(
+      final response = await repository.signUpOTP(
         email: event.email,
         code: event.otp,
         url: ApiUrls.signUpOtp(),
@@ -219,20 +187,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(SignUpOtpState(isLoading: false, message: failure.message));
         },
         (success) async {
-          if (success.success != true) {
-            final errorMessage = success.message ?? 'Unknown error';
+          if (!success.isSuccess) {
+            final errorMessage = 'Unknown error';
             emit(SignUpOtpState(isLoading: false, message: errorMessage));
             return;
           }
 
-          await db.saveUserdata(
-            token: success.accessToken ?? "",
-            refreshToken: success.refreshToken ?? "",
-            id: success.user?.id ?? "",
+          db.saveUserdata(
+            token: success.accessToken,
+            refreshToken: success.refreshToken,
+            id: success.userId,
+            role: success.role,
           );
 
-          final message = success.message ?? 'Sign up success';
-          emit(SignUpOtpState(isLoading: false, isVerified: true, message: message));
+          final message = 'Sign up success';
+          emit(SignUpOtpState(isLoading: false, isVerified: true, message: message, authEntity: success));
         },
       );
     } catch (e) {
@@ -244,7 +213,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(const ResendOTPState(isLoading: true));
 
-      final response = await resendOtpUseCase.call(email: event.email, url: event.url);
+      final response = await repository.resendOTP(email: event.email, url: event.url);
 
       await response.fold(
         (failure) async {
@@ -266,4 +235,3 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 }
-*/

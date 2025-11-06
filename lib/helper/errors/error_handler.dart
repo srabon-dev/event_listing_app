@@ -11,12 +11,12 @@ class ErrorHandle extends IErrorHandler{
     if (error is DioException) {
       final statusCode = error.response?.statusCode ?? 0;
 
-      if (statusCode == 403) {
+      if (statusCode == 401) {
         AppLogger.log("401 Unauthorized - Clearing local session");
         sl<ILocalService>().logOut();
         AppRouter.route.goNamed(RoutePath.loginScreen);
 
-        return Failure(message: "Session expired. Please login again.", code: 403);
+        return Failure(message: "Session expired. Please login again.", code: 401);
       }
 
       switch (error.type) {

@@ -16,7 +16,7 @@ class AuthResetUiWidget extends StatelessWidget {
         ),
         const Gap(5),
         CustomAlignText(
-          text: AppLocalizations.of(context)!.createANewPasswordEnsureTtDiffersFrom,
+          text: context.loc.createANewPasswordEnsureTtDiffersFrom,
           maxLine: 3,
           style: context.bodyMedium,
         ),
@@ -25,8 +25,8 @@ class AuthResetUiWidget extends StatelessWidget {
         ///==================== input Field =======================
         const Gap(18),
         CustomTextField(
-          title: AppLocalizations.of(context)!.password,
-          hintText: AppLocalizations.of(context)!.enterYourPassword,
+          title: context.loc.password,
+          hintText: context.loc.enterYourPassword,
           keyboardType: TextInputType.text,
           controller: password,
           isPassword: true,
@@ -34,8 +34,8 @@ class AuthResetUiWidget extends StatelessWidget {
         ),
         const Gap(18),
         CustomTextField(
-          title: AppLocalizations.of(context)!.confirmPassword,
-          hintText: AppLocalizations.of(context)!.confirmPassword,
+          title: context.loc.confirmPassword,
+          hintText: context.loc.confirmPassword,
           keyboardType: TextInputType.text,
           controller: confirmPassword,
           isPassword: true,

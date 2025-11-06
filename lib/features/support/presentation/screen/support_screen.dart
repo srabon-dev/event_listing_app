@@ -60,8 +60,8 @@ class _ViewState extends State<_View> {
                 );
 
               case ApiStatus.completed:
-                final description = state.description.trim();
-                if (description.isEmpty) {
+                final items = state.faqModel.data ?? [];
+                if (items.isEmpty) {
                   return Center(
                     child: Text(
                       context.loc.no_items_found,
@@ -78,11 +78,11 @@ class _ViewState extends State<_View> {
                             backgroundColor: AppColors.softBrandColor,
                             questionTextStyle: context.titleSmall,
                             anserTextStyle: context.bodyMedium,
-                            question: "How do I find events for my child’s age and sport?",
-                            answer: "Use the search bar on the homepage — just pick your child’s sport, age group, and ZIP code. You’ll see matching events in seconds. No login needed to browse!",
+                            question: items[index].question ?? "",
+                            answer: items[index].answer ?? "",
                           ),
                         );
-                      }, childCount: 12),
+                      }, childCount: items.length),
                     ),
                     SliverToBoxAdapter(
                       child: Padding(

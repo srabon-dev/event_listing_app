@@ -20,5 +20,4 @@ class TokenRepository extends ITokenRepository{
       return Right(success);
     });
   }
-
 }

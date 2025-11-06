@@ -184,8 +184,12 @@ class AppRouter {
         name: RoutePath.profileEditScreen,
         path: RoutePath.profileEditScreen.addBasePath,
         pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final profile = extra["data"] as ProfileEntity;
+          final isUser = extra["isUser"] as bool? ?? false;
+
           return _buildPageWithAnimation(
-            child: ProfileEditScreen(profile: state.extra as ProfileEntity),
+            child: ProfileEditScreen(profile: profile, isUser: isUser),
             state: state,
           );
         },

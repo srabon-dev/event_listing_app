@@ -16,7 +16,7 @@ class ApiClient extends IApiClient{
 
     if (token != null) {
       AppLogger.log(token);
-      headers['Authorization'] = "Bearer $token";
+      headers['Authorization'] = token;
     }
 
     if (isJson) {

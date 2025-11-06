@@ -1,57 +1,31 @@
 class ProfileEntity {
   final String id;
   final String name;
+  final String businessName;
   final String email;
-  final String role;
+  final String phone;
+  final String address;
   final String profileImage;
-  final bool isVerified;
-  final List<RvEntity> rvList;
-  final RvEntity? selectedRv;
 
   const ProfileEntity({
     required this.id,
     required this.name,
+    required this.businessName,
     required this.email,
-    required this.role,
+    required this.phone,
+    required this.address,
     required this.profileImage,
-    required this.isVerified,
-    required this.rvList,
-    this.selectedRv,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
+      'businessName': businessName,
       'email': email,
-      'role': role,
+      'phone': phone,
+      'address': address,
       'profileImage': profileImage,
-      'isVerified': isVerified,
-      'rvList': rvList.map((x) => x.toJson()).toList(),
-      'selectedRv': selectedRv?.toJson(),
-    };
-  }
-}
-
-class RvEntity {
-  final String id;
-  final String nickname;
-  final String currentMileage;
-  final bool isOverdueForMaintenance;
-
-  const RvEntity({
-    required this.id,
-    required this.nickname,
-    required this.currentMileage,
-    required this.isOverdueForMaintenance,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nickname': nickname,
-      'currentMileage': currentMileage,
-      'isOverdueForMaintenance': isOverdueForMaintenance,
     };
   }
 }

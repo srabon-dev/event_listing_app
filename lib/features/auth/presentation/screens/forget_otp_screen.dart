@@ -57,31 +57,38 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
                     Text(
                       context.loc.haveNotGotTheEmailYet,
                     ),
-                    TextButton(
-                      onPressed: (){
-
+                    BlocConsumer<AuthBloc, AuthState>(
+                      listener: (_, state) {
+                        try{
+                          if (state is ResendOTPState) {
+                            if (state.message != null) {
+                              AppToast.success(context: context, message: state.message);
+                            }
+                          }
+                        }catch(_){}
                       },
-                      child: Text(context.loc.resendEmail),
+                      builder: (context, state) {
+                        final loading = state is ResendOTPState ? state.isLoading : false;
+                        return TextButton(
+                          onPressed: (){
+                            context.read<AuthBloc>().add(
+                              ResendOTPEvent(email: widget.email, url: ApiUrls.forgetOtpResend()),
+                            );
+                          },
+                          child: loading? const LoadingWidget(): Text(context.loc.resendEmail),
+                        );
+                      },
                     ),
                   ],
                 ),
                 const Gap(24),
-                CustomButton(
-                  text: context.loc.verifyCode,
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      AppRouter.route.pushNamed(RoutePath.resetPassword, extra: widget.email);
-                    }
-                  },
-                ),
-                /*BlocConsumer<AuthBloc, AuthState>(
+                BlocConsumer<AuthBloc, AuthState>(
                   listener: (_, state) {
                     try{
                       if (state is ForgetOtpState) {
                         if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
+                          AppToast.success(context: context, message: state.message);
                         }
-                        print("state.isVerified : ${state.isVerified}");
                         if (state.isVerified) {
                           AppRouter.route.pushNamed(RoutePath.resetPassword, extra: widget.email);
                         }
@@ -91,7 +98,7 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
                   builder: (context, state) {
                     final loading = state is ForgetOtpState ? state.isLoading : false;
                     return CustomButton(
-                      text: AppLocalizations.of(context)!.verifyCode,
+                      text: context.loc.verifyCode,
                       isLoading: loading,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
@@ -102,39 +109,8 @@ class _ForgetOtpScreenState extends State<ForgetOtpScreen> {
                       },
                     );
                   },
-                ),*/
+                ),
                 const Gap(24),
-                /*BlocConsumer<AuthBloc, AuthState>(
-                  listener: (_, state) {
-                    try{
-                      if (state is ResendOTPState) {
-                        if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
-                        }
-                      }
-                    }catch(_){}
-                  },
-                  builder: (context, state) {
-                    final loading = state is ResendOTPState ? state.isLoading : false;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          text: AppLocalizations.of(context)!.haveNotGotTheEmailYet,
-                        ),
-                        TextButton(
-                          onPressed: (){
-                            context.read<AuthBloc>().add(
-                              ResendOTPEvent(email: widget.email, url: ApiUrls.forgetOtpResend()),
-                            );
-                          },
-                          child: loading? const LoadingWidget(): Text(AppLocalizations.of(context)!.resendEmail),
-                        ),
-                      ],
-                    );
-                  },
-                ),*/
               ],
             ),
           ),

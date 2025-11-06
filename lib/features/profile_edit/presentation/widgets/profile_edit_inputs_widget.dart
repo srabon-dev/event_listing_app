@@ -4,13 +4,17 @@ import 'profile_image_section.dart';
 class ProfileEditInputsWidget extends StatelessWidget {
   const ProfileEditInputsWidget({
     super.key,
+    required this.businessName,
     required this.name,
+    required this.isUser,
     required this.phone,
     required this.location,
     required this.selectedImage,
     required this.profileImage,
   });
 
+  final bool isUser;
+  final TextEditingController businessName;
   final TextEditingController name;
   final TextEditingController phone;
   final TextEditingController location;
@@ -28,6 +32,14 @@ class ProfileEditInputsWidget extends StatelessWidget {
           selectedImage: selectedImage,
           profileImage: profileImage,
         ),
+        if(!isUser)
+          CustomTextField(
+            title: context.loc.businessName,
+            hintText: context.loc.businessName,
+            keyboardType: TextInputType.name,
+            controller: businessName,
+            validator: TextFieldValidator.name(context),
+          ),
         CustomTextField(
           title: context.loc.name,
           hintText: context.loc.pleaseEnterYourName,

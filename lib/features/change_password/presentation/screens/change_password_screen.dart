@@ -35,11 +35,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
         ),
         body: BlocProvider(
-          create:
-              (context) => ChangePasswordBloc(
-                db: sl<ILocalService>(),
-                repository: ChangePasswordRepository(apiClient: sl<IApiClient>()),
-              ),
+          create: (context) => ChangePasswordBloc(
+            db: sl<ILocalService>(),
+            repository: ChangePasswordRepository(apiClient: sl<IApiClient>()),
+          ),
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             child: Form(
@@ -80,13 +79,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         isLoading: loading,
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            /*context.read<ChangePasswordBloc>().add(
+                            context.read<ChangePasswordBloc>().add(
                               ChangePasswordAddNewEvent(
                                 oldPassword: currentPassword.text,
                                 newPassword: newPassword.text,
                                 confirmPassword: confirmNewPassword.text,
                               ),
-                            );*/
+                            );
                           }
                         },
                       );

@@ -40,22 +40,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                   confirmPassword: confirmPassword,
                 ),
                 const Gap(24),
-                CustomButton(
-                  text: context.loc.continues,
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      AppRouter.route.goNamed(RoutePath.loginScreen);
-                    }
-                  },
-                ),
-                /*BlocConsumer<AuthBloc, AuthState>(
+                BlocConsumer<AuthBloc, AuthState>(
                   listener: (_, state) {
                     try{
                       if (state is ResetPasswordState) {
                         if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
+                          AppToast.success(context: context, message: state.message);
                         }
-                        print("state.isVerified : ${state.isVerified}");
                         if (state.isVerified) {
                           AppRouter.route.goNamed(RoutePath.loginScreen);
                         }
@@ -65,7 +56,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   builder: (context, state) {
                     final loading = state is ResetPasswordState ? state.isLoading : false;
                     return CustomButton(
-                      text: AppLocalizations.of(context)!.updatePassword,
+                      text: context.loc.resetPassword,
                       isLoading: loading,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
@@ -76,7 +67,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       },
                     );
                   },
-                ),*/
+                ),
               ],
             ),
           ),

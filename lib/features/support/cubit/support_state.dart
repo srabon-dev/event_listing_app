@@ -6,9 +6,9 @@ sealed class SupportState extends Equatable {
 
 final class OtherSupportState extends SupportState {
   final ApiStatus status;
-  final String description;
-  const OtherSupportState({required this.status, required this.description});
+  final FaqModel faqModel;
+  const OtherSupportState({required this.status, required this.faqModel});
 
   @override
-  List<Object> get props => [status, description];
+  List<Object> get props => [status, faqModel];
 }

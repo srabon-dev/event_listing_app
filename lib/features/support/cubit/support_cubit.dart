@@ -8,46 +8,39 @@ class SupportCubit extends Cubit<SupportState> {
 
   SupportCubit({required this.apiClient, required this.db})
     : super(
-        const OtherSupportState(status: ApiStatus.loading, description: ""),
+        OtherSupportState(status: ApiStatus.loading, faqModel: FaqModel()),
       ) {
     get();
   }
 
   Future<void> get() async {
-    emit(const OtherSupportState(status: ApiStatus.loading, description: ''));
-    await Future.delayed(const Duration(milliseconds: 800));
-    emit(const OtherSupportState(
-      status: ApiStatus.completed,
-      description: 'Demo success response!',
-    ));
-  }
-
-/*  Future<void> get() async {
     try {
-      emit(const OtherSupportState(status: ApiStatus.loading, description: ''));
+      emit(OtherSupportState(status: ApiStatus.loading, faqModel: FaqModel(),));
       final token = await db.getToken();
-      final response = await apiClient.get(token: token, url: ApiUrls.terms());
+      final response = await apiClient.get(token: token, url: ApiUrls.faq());
 
       response.fold(
         (failure) {
           emit(
             OtherSupportState(
               status: ApiStatus.error,
-              description: failure.message,
+              faqModel: FaqModel(),
             ),
           );
         },
         (success) {
+          final data = FaqModel.fromJson(success.data);
+
           emit(
             OtherSupportState(
               status: ApiStatus.completed,
-              description: success.data?["data"]?["description"] ?? "",
+              faqModel: data,
             ),
           );
         },
       );
     } catch (e) {
-      emit(const OtherSupportState(status: ApiStatus.error, description: ''));
+      emit(OtherSupportState(status: ApiStatus.error, faqModel: FaqModel()));
     }
-  }*/
+  }
 }

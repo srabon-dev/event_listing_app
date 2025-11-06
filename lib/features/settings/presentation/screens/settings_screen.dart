@@ -81,7 +81,7 @@ class DeleteAccountUIWidget extends StatefulWidget {
 }
 
 class _DeleteAccountUIWidgetState extends State<DeleteAccountUIWidget> {
-  final password = TextEditingController(text: kDebugMode ? "123456" : "");
+  final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -125,27 +125,49 @@ class _DeleteAccountUIWidgetState extends State<DeleteAccountUIWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: ElevatedButton(
-                  style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(AppColors.white),
-                    foregroundColor: WidgetStatePropertyAll(AppColors.black),
-                  ),
-                  onPressed: () async {
+                child: BlocConsumer<SettingsCubit, SettingsState>(
+                  listener: (context, state) async {
                     try {
-                      if(_formKey.currentState!.validate()){
-                        final dbHelper = sl<ILocalService>();
-                        context.read<NavigationCubit>().changeIndex(index: 0);
-                        await dbHelper.logOut();
+                      if(state is SettingsUpdate){
+                        if (state.message != null) {
+                          AppToast.success(context: context, message: state.message);
+                        }
+                        if(state.isVerified){
+                          final dbHelper = sl<ILocalService>();
+                          context.read<NavigationCubit>().changeIndex(index: 0);
+                          await dbHelper.logOut();
 
-                        if (context.mounted && Navigator.canPop(context)) {
-                          AppRouter.route.pop();
+                          if (context.mounted && Navigator.canPop(context)) {
+                            AppRouter.route.pop();
+                          }
                         }
                       }
                     } catch (_) {
-
+                      if(context.mounted) {
+                        AppToast.error(
+                          context: context,
+                          message: AppLocalizations.of(context)!.somethingWentWrong,
+                        );
+                      }
                     }
                   },
-                  child: Text(context.loc.yes),
+                  builder: (context, state) {
+                    if(state is SettingsUpdate && state.isLoading) {
+                      return const LoadingWidget();
+                    }
+                    return ElevatedButton(
+                      style: const ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(AppColors.white),
+                        foregroundColor: WidgetStatePropertyAll(AppColors.black),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<SettingsCubit>().delete(password: password.text);
+                        }
+                      },
+                      child: Text(context.loc.yes),
+                    );
+                  },
                 ),
               ),
               const Gap(24),

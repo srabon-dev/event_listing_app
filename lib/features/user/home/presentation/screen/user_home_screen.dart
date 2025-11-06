@@ -35,7 +35,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.loc.greeting("Srabon Ray"), style: context.titleMedium),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if(state is ProfileLoaded){
+                  final name = state.data.name.isNotEmpty? state.data.name : context.loc.unknown;
+                  return Text(context.loc.greeting(name), style: context.titleMedium);
+                }
+                return Text(context.loc.greeting(context.loc.unknown), style: context.titleMedium);
+              },
+            ),
             Text(context.loc.welcomeToPlayFinderUSA, style: context.bodyLarge),
           ],
         ),
@@ -43,7 +51,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 AppRouter.route.pushNamed(RoutePath.notificationsScreen);
               },
               child: Container(
@@ -120,7 +128,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               return CategoryBoxCardWidget(
                                 name: item["name"]!,
                                 image: item["image"]!,
-                                onTap: (){
+                                onTap: () {
                                   AppRouter.route.pushNamed(
                                     RoutePath.categoryEventsScreen,
                                     extra: {"title": item["name"]!, "id": ""},
@@ -170,17 +178,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               sliver: PagedSliverList<int, String>(
                 pagingController: controller.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<String>(
-                  itemBuilder: (BuildContext context, String item, int index){
-                    return EventCardWidget(
-                      onTap: (){
-                        AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                      },
-                      event: EventCardEntity(
-                        id: "",
-                        coverImage: item,
-                      ),
-                    );
-                  }
+                    itemBuilder: (BuildContext context, String item, int index) {
+                      return EventCardWidget(
+                        onTap: () {
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                        },
+                        event: EventCardEntity(
+                          id: "",
+                          coverImage: item,
+                        ),
+                      );
+                    }
                 ),
               ),
             ),

@@ -35,7 +35,15 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.loc.greeting("Srabon Ray"), style: context.titleMedium),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if(state is ProfileLoaded){
+                  final name = state.data.name.isNotEmpty? state.data.name : context.loc.unknown;
+                  return Text(context.loc.greeting(name), style: context.titleMedium);
+                }
+                return Text(context.loc.greeting(context.loc.unknown), style: context.titleMedium);
+              },
+            ),
             Text(context.loc.welcomeToPlayFinderUSA, style: context.bodyLarge),
           ],
         ),

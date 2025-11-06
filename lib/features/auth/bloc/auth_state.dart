@@ -1,4 +1,3 @@
-/*
 part of 'auth_bloc.dart';
 
 sealed class AuthState extends Equatable {
@@ -100,16 +99,18 @@ class SignUpOtpState extends AuthState{
   final String? error;
   final String? message;
   final bool isVerified;
+  final AuthEntity? authEntity;
 
   const SignUpOtpState({
     this.isLoading = false,
     this.error,
     this.message,
     this.isVerified = false,
+    this.authEntity,
   });
 
   @override
-  List<Object?> get props => [isLoading, error, isVerified, message];
+  List<Object?> get props => [isLoading, error, isVerified, message, authEntity];
 }
 
 class ResendOTPState extends AuthState{
@@ -130,4 +131,3 @@ class ResendOTPState extends AuthState{
 }
 
 
-*/

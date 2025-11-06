@@ -39,13 +39,12 @@ class ProfileAppBar extends StatelessWidget {
 
               },
               builder: (context, state) {
-                print("object");
                 String name = context.loc.unknown;
                 String image = AppConfig.defaultProfile;
 
                 if (state is ProfileLoaded) {
-                  image = state.data["profileImage"] ?? AppConfig.defaultProfile;
-                  name = state.data["name"] ?? context.loc.unknown;
+                  image = state.data.profileImage.isNotEmpty?  state.data.profileImage : AppConfig.defaultProfile;
+                  name = state.data.name.isNotEmpty? state.data.name : context.loc.unknown;
                 }
 
                 return Column(
@@ -67,7 +66,6 @@ class ProfileAppBar extends StatelessWidget {
                   ],
                 );
               },
-
             ),
           ),
         ],

@@ -16,10 +16,10 @@ class ChangePasswordRepository extends IChangePasswordRepository {
     final Map<String, String> body = {
       "oldPassword": oldPassword,
       "newPassword": newPassword,
-      "confirmPassword": confirmPassword,
+      "confirmNewPassword": confirmPassword,
     };
 
-    final response = await apiClient.put(
+    final response = await apiClient.post(
       url: url,
       body: body,
       token: token,

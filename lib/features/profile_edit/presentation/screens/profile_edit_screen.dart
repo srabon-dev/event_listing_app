@@ -2,8 +2,9 @@ import '../../../../app_export.dart';
 import '../widgets/profile_edit_inputs_widget.dart';
 
 class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key, required this.profile});
+  const ProfileEditScreen({super.key, required this.profile, required this.isUser});
   final ProfileEntity profile;
+  final bool isUser;
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
@@ -11,6 +12,7 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   final ValueNotifier<String?> selectedImage = ValueNotifier(null);
+  TextEditingController businessName = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController location = TextEditingController();
@@ -19,15 +21,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   void initState() {
+    businessName = TextEditingController(text: widget.profile.businessName);
     name = TextEditingController(text: widget.profile.name);
-    phone = TextEditingController(text: widget.profile.name);
-    location = TextEditingController(text: widget.profile.name);
+    phone = TextEditingController(text: widget.profile.phone);
+    location = TextEditingController(text: widget.profile.address);
     super.initState();
   }
 
   @override
   void dispose() {
     selectedImage.dispose();
+    businessName.dispose();
     name.dispose();
     phone.dispose();
     location.dispose();
@@ -56,8 +60,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               children: [
                 ProfileEditInputsWidget(
                   selectedImage: selectedImage,
+                  isUser: widget.isUser,
                   profileImage: widget.profile.profileImage,
                   name: name,
+                  businessName: businessName,
                   phone: phone,
                   location: location,
                 ),
@@ -90,10 +96,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       isLoading: isLoading,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          /*context.read<ProfileEditCubit>().updateProfile(
+                          context.read<ProfileEditCubit>().updateProfile(
                             name: name.text,
+                            businessName: businessName.text,
+                            address: location.text,
+                            phone: phone.text,
                             imagePath: selectedImage.value ?? "",
-                          );*/
+                          );
                         }
                       },
                     );

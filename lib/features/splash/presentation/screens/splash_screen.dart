@@ -40,7 +40,7 @@ class _ViewState extends State<_View> with SingleTickerProviderStateMixin {
     ));
 
     _colorAnimation = ColorTween(
-      begin: Color(0xFF002868),
+      begin: const Color(0xFF002868),
       end: Colors.white,
     ).animate(CurvedAnimation(
       parent: _controller,

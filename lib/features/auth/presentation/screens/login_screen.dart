@@ -68,32 +68,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  CustomButton(
-                    text: context.loc.log_in,
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        AppRouter.route.goNamed(RoutePath.userNavigationScreen);
-                      }
-                    },
-                  ),
-                  /*BlocConsumer<AuthBloc, AuthState>(
+                  BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is LoginState) {
                         if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
+                          AppToast.info(context: context, message: state.message ?? "");
                         }
                         if (state.isVerified) {
-                          if(state.authEntity?.isRvIdAvailable == true){
-                            if(state.authEntity?.isChassisIdAvailable == true){
-                              AppRouter.route.goNamed(RoutePath.navigationScreen);
-                            }else{
-                              AppRouter.route.goNamed(RoutePath.chassisAddScreen, extra: {
-                                'isBack': false,
-                                'rvId': state.authEntity?.rvId,
-                              },);
+                          if(state.authEntity?.isSuccess == true){
+                            if(state.authEntity?.isUser == true){
+                              AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+                            } else if(state.authEntity?.isOrganizer == true){
+                              AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
                             }
-                          }else{
-                            AppRouter.route.goNamed(RoutePath.rvAddScreen);
                           }
                         }
                       }
@@ -101,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (context, state) {
                       final data = state is LoginState && state.isLoading;
                       return CustomButton(
-                        text: AppLocalizations.of(context)!.continueText,
+                        text: context.loc.log_in,
                         isLoading: data,
                         onTap: () {
                           if(_formKey.currentState!.validate()){
@@ -112,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       );
                     },
-                  ),*/
+                  ),
                 ],
               ),
             ),

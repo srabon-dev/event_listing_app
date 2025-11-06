@@ -1,10 +1,5 @@
-/*
 import 'package:dartz/dartz.dart';
-import 'package:my_rv_app/features/auth/data/model/sign_up_model.dart';
-import 'package:my_rv_app/features/auth/domain/entities/auth_entity.dart';
-import 'package:my_rv_app/features/auth/domain/interface/i_auth_repository.dart';
 import '../../../../app_export.dart';
-import '../model/auth_model.dart';
 
 class AuthRepository extends IAuthRepository {
   final IApiClient apiClient;
@@ -106,16 +101,21 @@ class AuthRepository extends IAuthRepository {
 
   @override
   Future<Either<Failure, Response>> signUp({
+    String? businessName,
     required String name,
     required String email,
     required String password,
     required String confirmPassword,
     required String phone,
+    required String role,
     required String url,
   }) async {
     final body = {
+      "businessName": businessName,
       'name': name,
       'email': email,
+      "role": role,
+      "phone": phone,
       'password': password,
       'confirmPassword': confirmPassword,
     };
@@ -133,14 +133,14 @@ class AuthRepository extends IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, SignUpModel>> signUpOTP({
+  Future<Either<Failure, AuthEntity>> signUpOTP({
     required String code,
     required String email,
     required String url,
   }) async {
     final body = {
       'email': email,
-      'code': code,
+      'verifyCode': int.tryParse(code),
     };
 
     final response =  await apiClient.post(
@@ -151,8 +151,8 @@ class AuthRepository extends IAuthRepository {
     return response.fold((failure){
       return Left(failure);
     }, (success){
-      final authModel = SignUpModel.fromJson(success.data);
-      return Right(authModel);
+      final authModel = AuthModel.fromJson(success.data);
+      return Right(authModel.toEntity());
     });
   }
 
@@ -176,4 +176,4 @@ class AuthRepository extends IAuthRepository {
       return Right(success);
     });
   }
-}*/
+}

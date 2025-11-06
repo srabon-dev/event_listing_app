@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: context.headlineMedium.copyWith(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  widget.isUser?context.loc.join_for_free: context.loc.join_for_free_and_start,
+                  widget.isUser ? context.loc.join_for_free : context.loc.join_for_free_and_start,
                   style: context.bodyLarge.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.secondaryText,
@@ -136,50 +136,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                CustomButton(
-                  text: context.loc.continueText,
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      AppRouter.route.pushNamed(
-                        RoutePath.signUpOtpScreen,
-                        extra: {"isUser": widget.isUser, "email": email.text},
-                      );
-                    }
-                  },
-                ),
-                /*BlocConsumer<AuthBloc, AuthState>(
+                BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
-                    try{
+                    try {
                       if (state is SignUpState) {
                         if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
+                          AppToast.success(context: context, message: state.message);
                         }
                         if (state.isVerified) {
-                          AppRouter.route.pushNamed(RoutePath.signUpOtpScreen, extra: email.text);
+                          AppRouter.route.pushNamed(
+                            RoutePath.signUpOtpScreen,
+                            extra: {"email": email.text, "isUser": widget.isUser},
+                          );
                         }
                       }
-                    }catch(_){}
+                    } catch (_) {}
                   },
                   builder: (context, state) {
                     final loading = state is SignUpState && state.isLoading;
                     return CustomButton(
-                      text: AppLocalizations.of(context)!.continueText,
+                      text: context.loc.signUp,
                       isLoading: loading,
                       onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(
-                            SignUpEvent(
-                              name: name.text,
-                              email: email.text,
-                              password: password.text,
-                              confirmPassword: confirmPassword.text,
-                            ),
-                          );
+                        if(isAgree.value){
+                          if (_formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                              SignUpEvent(
+                                businessName: businessName.text,
+                                name: name.text,
+                                email: email.text,
+                                phone: phone.text,
+                                role: widget.isUser ? "user" : "organizer",
+                                password: password.text,
+                                confirmPassword: confirmPassword.text,
+                              ),
+                            );
+                          }
+                        } else {
+                          AppToast.warning(message: "Please Agree Terms of condition and privacy policy");
                         }
                       },
                     );
                   },
-                ),*/
+                ),
                 const Gap(24),
               ],
             ),

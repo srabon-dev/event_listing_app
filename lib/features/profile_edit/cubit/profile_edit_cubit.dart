@@ -8,7 +8,7 @@ class ProfileEditCubit extends Cubit<ProfileEditState> {
 
   ProfileEditCubit({required this.repository, required this.db}) : super(ProfileEditInitial());
 
-  Future<void> updateProfile({String? name, String? imagePath, String? currentMileage}) async {
+  Future<void> updateProfile({String? name, String? businessName, String? imagePath, String? phone, String? address}) async {
     try {
       emit(const ProfileUpdate(isLoading: true));
       final token = await db.getToken();
@@ -16,7 +16,9 @@ class ProfileEditCubit extends Cubit<ProfileEditState> {
       final result = await repository.profileEdit(
         token: token,
         name: name,
-        currentMileage: currentMileage,
+        businessName: businessName,
+        phone: phone,
+        address: address,
         imagePath: imagePath,
         url: ApiUrls.editProfile(),
       );

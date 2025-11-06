@@ -8,7 +8,7 @@ sealed class ProfileState extends Equatable {
 }
 
 final class ProfileLoaded extends ProfileState {
-  final Map<String, String> data;
+  final ProfileEntity data;
   const ProfileLoaded({required this.data});
 
   @override
@@ -23,7 +23,7 @@ final class ProfileLoading extends ProfileState {
 
 final class ProfileError extends ProfileState {
   final String message;
-  const ProfileError(this.message);
+  const ProfileError({required this.message});
 
   @override
   List<Object?> get props => [message];

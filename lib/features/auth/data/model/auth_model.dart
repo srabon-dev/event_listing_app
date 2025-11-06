@@ -1,107 +1,68 @@
-/*
-import 'package:my_rv_app/features/auth/domain/entities/auth_entity.dart';
+import 'package:event_listing_app/app_export.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthModel {
   final bool? success;
   final String? message;
-  final String? accessToken;
-  final String? refreshToken;
-  final User? user;
+  final Data? data;
 
   AuthModel({
     this.success,
     this.message,
-    this.accessToken,
-    this.refreshToken,
-    this.user,
+    this.data,
   });
 
   factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
     success: json["success"],
     message: json["message"],
-    accessToken: json["accessToken"],
-    refreshToken: json["refreshToken"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "accessToken": accessToken,
-    "refreshToken": refreshToken,
-    "user": user?.toJson(),
+    "data": data?.toJson(),
   };
 
   AuthEntity toEntity() {
-    final rvList = user?.rv ?? [];
-
-    Rv? rv = rvList.firstWhere(
-          (r) => (r.id?.isNotEmpty ?? false) && (r.chassisId?.isNotEmpty ?? false),
-      orElse: () => Rv(id: null, chassisId: null),
-    );
-
-    if (rv.id == null || rv.id!.isEmpty) {
-      rv = rvList.firstWhere(
-            (r) => (r.id?.isNotEmpty ?? false),
-        orElse: () => Rv(id: null, chassisId: null),
+    if (data == null || data!.accessToken == null) {
+      return const AuthEntity(
+        userId: "",
+        accessToken: "",
+        refreshToken: "",
+        role: "",
       );
     }
 
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(data?.accessToken ?? "");
+    final userId = decodedToken["id"] ?? "";
+    final role = decodedToken["role"] ?? "";
+
     return AuthEntity(
-      userId: user?.id ?? '',
-      rvId: rv.id ?? '',
-      chassisId: rv.chassisId ?? '',
-      accessToken: accessToken ?? '',
-      refreshToken: refreshToken ?? '',
+      userId: userId,
+      role: role,
+      accessToken: data!.accessToken ?? "",
+      refreshToken: data!.refreshToken ?? "",
     );
   }
 }
 
-class User {
-  final String? id;
-  final String? name;
-  final String? email;
-  final List<Rv>? rv;
+class Data {
+  final String? accessToken;
+  final String? refreshToken;
 
-  User({
-    this.id,
-    this.name,
-    this.email,
-    this.rv,
+  Data({
+    this.accessToken,
+    this.refreshToken,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    rv: json["rv"] == null ? [] : List<Rv>.from(json["rv"]!.map((x) => Rv.fromJson(x))),
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+    accessToken: json["accessToken"],
+    refreshToken: json["refreshToken"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "rv": rv == null ? [] : List<dynamic>.from(rv!.map((x) => x.toJson())),
+    "accessToken": accessToken,
+    "refreshToken": refreshToken,
   };
 }
-
-class Rv {
-  final String? id;
-  final String? chassisId;
-
-  Rv({
-    this.id,
-    this.chassisId,
-  });
-
-  factory Rv.fromJson(Map<String, dynamic> json) => Rv(
-    id: json["id"],
-    chassisId: json["chassisId"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "chassisId": chassisId,
-  };
-}
-*/

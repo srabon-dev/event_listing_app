@@ -59,41 +59,56 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
                     Text(
                       context.loc.haveNotGotTheEmailYet,
                     ),
-                    TextButton(
-                      onPressed: (){
-
+                    BlocConsumer<AuthBloc, AuthState>(
+                      listener: (_, state) {
+                        try{
+                          if (state is ResendOTPState) {
+                            if (state.message != null) {
+                              AppToast.success(context: context, message: state.message);
+                            }
+                          }
+                        }catch(_){}
                       },
-                      child: Text(context.loc.resendEmail),
+                      builder: (context, state) {
+                        final loading = state is ResendOTPState ? state.isLoading : false;
+                        return TextButton(
+                          onPressed: (){
+                            context.read<AuthBloc>().add(
+                              ResendOTPEvent(email: widget.email, url: ApiUrls.signUpOtpResend()),
+                            );
+                          },
+                          child: loading? const LoadingWidget(): Text(context.loc.resendEmail),
+                        );
+                      },
                     ),
                   ],
                 ),
                 const Gap(12),
-                CustomButton(
-                  text: context.loc.verifyCode,
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      AppRouter.route.goNamed(RoutePath.onboardingScreen, extra: widget.isUser);
-                    }
-                  },
-                ),
-                /*BlocConsumer<AuthBloc, AuthState>(
-                  listener: (_, state) {
-                    try{
-                      if (state is SignUpOtpState) {
-                        if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
-                        }
-                        print("state.isVerified : ${state.isVerified}");
-                        if (state.isVerified) {
-                          AppRouter.route.goNamed(RoutePath.rvAddScreen);
+                BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is SignUpOtpState) {
+                      if (state.message != null) {
+                        AppToast.info(context: context, message: state.message ?? "");
+                      }
+                      if (state.isVerified) {
+                        AppLogger.log(state.isVerified);
+                        AppLogger.log(state.authEntity?.isSuccess);
+                        AppLogger.log(state.authEntity?.isUser);
+                        AppLogger.log(state.authEntity?.isOrganizer);
+                        if(state.authEntity?.isSuccess == true){
+                          if(state.authEntity?.isUser == true){
+                            AppRouter.route.goNamed(RoutePath.onboardingScreen, extra: true);
+                          } else if(state.authEntity?.isOrganizer == true){
+                            AppRouter.route.goNamed(RoutePath.onboardingScreen, extra: false);
+                          }
                         }
                       }
-                    }catch(_){}
+                    }
                   },
                   builder: (context, state) {
                     final loading = state is SignUpOtpState ? state.isLoading : false;
                     return CustomButton(
-                      text: AppLocalizations.of(context)!.verifyCode,
+                      text: context.loc.verifyCode,
                       isLoading: loading,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
@@ -104,39 +119,8 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
                       },
                     );
                   },
-                ),*/
+                ),
                 const Gap(24),
-                /*BlocConsumer<AuthBloc, AuthState>(
-                  listener: (_, state) {
-                    try{
-                      if (state is ResendOTPState) {
-                        if (state.message != null) {
-                          AppToast.show(context: context, message: state.message);
-                        }
-                      }
-                    }catch(_){}
-                  },
-                  builder: (context, state) {
-                    final loading = state is ResendOTPState ? state.isLoading : false;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          text: AppLocalizations.of(context)!.haveNotGotTheEmailYet,
-                        ),
-                        TextButton(
-                          onPressed: (){
-                            context.read<AuthBloc>().add(
-                              ResendOTPEvent(email: widget.email, url: ApiUrls.signUpOtpResend()),
-                            );
-                          },
-                          child: loading? const LoadingWidget(): Text(AppLocalizations.of(context)!.resendEmail),
-                        ),
-                      ],
-                    );
-                  },
-                ),*/
               ],
             ),
           ),

@@ -33,8 +33,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             return Center(child: Text(state.message),);
           }
           if (state is ProfileLoaded) {
-            final image = state.data["profileImage"] ?? AppConfig.defaultProfile;
-            final name = state.data["name"] ?? context.loc.unknown;
+            final image = state.data.profileImage.isNotEmpty?  state.data.profileImage : AppConfig.defaultProfile;
+            final name = state.data.name.isNotEmpty? state.data.name : context.loc.unknown;
+            final businessName = state.data.businessName;
+            final email = state.data.email.isNotEmpty? state.data.email : context.loc.unknown;
+            final phone = state.data.phone.isNotEmpty? state.data.phone : context.loc.unknown;
+            final address = state.data.address.isNotEmpty? state.data.address : context.loc.unknown;
 
             return RefreshIndicator(
               onRefresh: () async{
@@ -60,6 +64,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 12,
                         children: [
+                          if(businessName.isNotEmpty)
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              width: context.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.skyLight),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 4,
+                                children: [
+                                  Text(context.loc.businessName, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500)),
+                                  Text(businessName, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
+                                ],
+                              ),
+                            ),
                           Container(
                             padding: const EdgeInsets.all(6),
                             width: context.width,
@@ -88,7 +109,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               spacing: 4,
                               children: [
                                 Text(context.loc.email_address, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500)),
-                                Text(name, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
+                                Text(email, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
                               ],
                             ),
                           ),
@@ -104,7 +125,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               spacing: 4,
                               children: [
                                 Text(context.loc.phone_number, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500)),
-                                Text(name, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
+                                Text(phone, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
                               ],
                             ),
                           ),
@@ -120,23 +141,28 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               spacing: 4,
                               children: [
                                 Text(context.loc.location, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500)),
-                                Text(name, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
+                                Text(address, style: context.titleSmall.copyWith(fontWeight: FontWeight.w400)),
                               ],
                             ),
                           ),
+                          const Gap(12),
                           ElevatedButton(
-                            onPressed: (){
-                              AppRouter.route.pushNamed(RoutePath.profileEditScreen, extra: const ProfileEntity(
-                                name: "",
-                                id: "",
-                                email: "",
-                                role: "",
-                                profileImage: "",
-                                isVerified: true,
-                                rvList: []
-                              ));
-                            },
-                            child: Text(context.loc.editProfile),
+                              onPressed: () async {
+                                final role = await sl<ILocalService>().getRole();
+                                final bool isUser = role.toLowerCase() == 'user';
+                                final bool isOrganizer = role.toLowerCase() == 'organizer';
+
+                                if (isUser || isOrganizer) {
+                                  AppRouter.route.pushNamed(
+                                    RoutePath.profileEditScreen,
+                                    extra: {
+                                      "data": state.data,
+                                      "isUser": isUser,
+                                    },
+                                  );
+                                }
+                              },
+                              child: Text(context.loc.editProfile),
                           ),
                         ],
                       ),

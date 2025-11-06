@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../../../app_export.dart';
@@ -9,20 +10,24 @@ class ProfileEditRepository extends IProfileEditRepository {
   @override
   Future<Either<Failure, Response>> profileEdit({
     String? name,
+    String? businessName,
     String? imagePath,
-    String? currentMileage,
+    String? phone,
+    String? address,
     required String url,
     required String token,
   }) async {
     final Map<String, String> body = {
       if (name != null) "name": name,
-      if (currentMileage != null) "currentMileage": currentMileage,
+      if (businessName != null) "businessName": businessName,
+      if (phone != null) "phone": phone,
+      if (address != null) "address": address,
     };
 
     final List<MultipartBody> multipart = [];
 
     if (imagePath != null && imagePath.isNotEmpty) {
-      multipart.add(MultipartBody(fieldKey: "profilePic", file: File(imagePath)));
+      multipart.add(MultipartBody(fieldKey: "profile_image", file: File(imagePath)));
     }
 
     final Either<Failure, Response<dynamic>> response;
@@ -30,51 +35,22 @@ class ProfileEditRepository extends IProfileEditRepository {
     if(multipart.isNotEmpty){
       response = await apiClient.uploadMultipart(
         url: url,
-        fields: body,
+        fields: {
+          "data": jsonEncode(body),
+        },
         token: token,
         files: multipart,
-        method: 'PUT',
+        method: 'PATCH',
       );
     }else{
-      response = await apiClient.put(
+      response = await apiClient.patch(
         url: url,
-        body: body,
+        body: {
+          "data": jsonEncode(body),
+        },
         token: token,
       );
     }
-
-    return response.fold((failure) {
-        return Left(failure);
-      }, (success) {
-        return Right(success);
-      },
-    );
-  }
-
-  @override
-  Future<Either<Failure, Response>> changeRv({
-    required String rvId,
-    required String token,
-    required String url,
-  }) async {
-    final body = {"rvId": rvId};
-
-    final response = await apiClient.put(url: url, token: token, body: body);
-
-    return response.fold((failure) {
-        return Left(failure);
-      }, (success) {
-        return Right(success);
-      },
-    );
-  }
-
-  @override
-  Future<Either<Failure, Response>> deleteRv({
-    required String token,
-    required String url,
-  }) async{
-    final response = await apiClient.post(url: url, token: token, body: {});
 
     return response.fold((failure) {
         return Left(failure);

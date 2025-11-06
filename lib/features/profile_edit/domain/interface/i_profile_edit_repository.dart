@@ -5,20 +5,11 @@ abstract class IProfileEditRepository{
 
   Future<Either<Failure, Response>> profileEdit({
     String? name,
+    String? businessName,
     String? imagePath,
-    String? currentMileage,
+    String? phone,
+    String? address,
     required String url,
     required String token,
-  });
-
-  Future<Either<Failure, Response>> changeRv({
-    required String rvId,
-    required String token,
-    required String url,
-  });
-
-  Future<Either<Failure, Response>> deleteRv({
-    required String token,
-    required String url,
   });
 }

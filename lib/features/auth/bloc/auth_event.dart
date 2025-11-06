@@ -1,4 +1,3 @@
-/*
 part of 'auth_bloc.dart';
 
 sealed class AuthEvent extends Equatable {
@@ -49,13 +48,19 @@ class ResetPasswordEvent extends AuthEvent {
 
 class SignUpEvent extends AuthEvent {
   final String name;
+  final String? businessName;
   final String email;
+  final String role;
+  final String phone;
   final String password;
   final String confirmPassword;
 
   const SignUpEvent({
+    this.businessName,
     required this.name,
     required this.email,
+    required this.role,
+    required this.phone,
     required this.password,
     required this.confirmPassword,
   });
@@ -82,4 +87,3 @@ class ResendOTPEvent extends AuthEvent {
   @override
   List<Object?> get props => [email, url];
 }
-*/
