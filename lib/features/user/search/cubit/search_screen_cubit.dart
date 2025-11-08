@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:event_listing_app/app_export.dart';
 
 class SearchScreenCubit extends Cubit<void> {

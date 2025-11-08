@@ -1,5 +1,4 @@
 import 'package:event_listing_app/app_export.dart';
-import 'package:event_listing_app/features/user/subscription/presentation/widgets/subscription_card.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});

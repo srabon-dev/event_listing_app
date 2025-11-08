@@ -11,7 +11,7 @@ class ApiClient extends IApiClient{
 
   ApiClient({required this.dio, required this.networkChecker, required this.localizationHelper, required this.errorHandler});
 
-  Map<String, String> _headers({String? token, bool isJson = true, bool isMultipart = false}) {
+  Map<String, String> _headers({String? token, bool isJson = true}) {
     final headers = <String, String>{};
 
     if (token != null) {
