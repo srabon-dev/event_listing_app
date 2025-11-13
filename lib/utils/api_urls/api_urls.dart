@@ -18,6 +18,20 @@ class ApiUrls {
   static String editProfile() => '$base/user/update-profile';
   static String refreshToken() => '$base/auth/refresh-token';
 
+  static String category() => '$base/category/all-categories';
+  static String eventAdd() => '$base/event/create';
+  static String getEventDetails({required String id}) => '$base/event/get-single/$id';
+  static String getMyEvents({String? status, required int page}) {
+    final buffer = StringBuffer('$base/event/my-events?page=$page&limit=10');
+
+    if (status != null && status.isNotEmpty) {
+      buffer.write('&status=$status');
+    }
+
+    return buffer.toString();
+  }
+
+
   static String privacy() => '$base/manage/get-privacy-policy';
   static String terms() => '$base/manage/get-terms-conditions';
   static String about() => '$base/manage/get-about-us';

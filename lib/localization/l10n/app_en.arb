@@ -43,6 +43,11 @@
   "management_onboarding_title_one": "List Your First Event",
   "management_onboarding_title_two": "Add Registration Link",
   "management_onboarding_title_three": "Go Live & Reach Families",
+  "pleaseUploadImage" : "Please upload an event image",
+  "pleaseSelectAllDates": "Please Select All Dates",
+  "pleaseSelectAgeGroup": "Please Select Age Group",
+  "pleaseSelectSkillLevel": "Please Select Skill Level",
+  "pleaseDescribeYourEvent": "Please Describe Your Event",
 
   "skip": "Skip",
   "next": "Next",
@@ -85,6 +90,8 @@
   "confirm_new_password": "Confirm New password",
 
   "log_in_to_your_account_to_find": "Log in to your account to find events or manage your listings.",
+  "invalidWebsiteUrl": "Please enter a valid website URL.",
+  "upcoming": "Upcoming",
 
 
   "logIn": "Log In",

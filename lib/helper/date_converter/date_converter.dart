@@ -11,6 +11,19 @@ class DateConverter{
     }
   }
 
+
+  static String formatDateTime({
+    DateTime? dateTime,
+    String format = 'dd MMM yyyy h:mm a',
+  }) {
+    try {
+      final dt = dateTime ?? DateTime.now();
+      return DateFormat(format).format(dt);
+    } catch (e) {
+      return dateTime?.toString() ?? '';
+    }
+  }
+
   static String formatDateRange({
     DateTime? startDate,
     DateTime? endDate,

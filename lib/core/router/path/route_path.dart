@@ -21,7 +21,7 @@ class RoutePath{
   static const String managementNavigationScreen = 'managementNavigationScreen';
   static const String myProfileScreen = 'myProfileScreen';
   static const String profileEditScreen = 'profileEditScreen';
-  static const String categoryEventsScreen = 'categoryEventsScreen';
+  // static const String categoryEventsScreen = 'categoryEventsScreen';
 
   static const String categoryScreen = 'categoryScreen';
   static const String eventDetailsScreen = 'eventDetailsScreen';

@@ -1,4 +1,5 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:flutter/services.dart';
 
 class EventAddPageThree extends StatelessWidget {
   const EventAddPageThree({
@@ -20,7 +21,7 @@ class EventAddPageThree extends StatelessWidget {
   final ValueNotifier<String?> selectedSkillLevel;
   final TextEditingController availableSlot;
   final TextEditingController zipCode;
-  final TextEditingController location;
+  final ValueNotifier<PickedLocation?> location;
   final TextEditingController city;
 
   @override
@@ -38,7 +39,7 @@ class EventAddPageThree extends StatelessWidget {
           CustomAlignText(text: context.loc.ageGroup),
           CustomDropdownField(
             hintText: context.loc.selectOne,
-            // value: selectedEventType.value,
+            value: selectedAgesGroup.value,
             fillColor: AppColors.softBrandColor,
             validator: TextFieldValidator.required(context),
             items: const [
@@ -58,10 +59,10 @@ class EventAddPageThree extends StatelessWidget {
           CustomAlignText(text: context.loc.skillLevel),
           CustomDropdownField(
             hintText: context.loc.selectOne,
-            // value: selectedEventType.value,
+            value: selectedSkillLevel.value,
             fillColor: AppColors.softBrandColor,
             validator: TextFieldValidator.required(context),
-            items: const ["All Types", "Intermediate", "Beginner", "Advanced"],
+            items: const ["Intermediate", "Beginner", "Advanced"],
             onChanged: (value) {
               if(value != null){
                 selectedSkillLevel.value = value;
@@ -72,19 +73,28 @@ class EventAddPageThree extends StatelessWidget {
             title: context.loc.available_slot,
             hintText: context.loc.available_slot,
             controller: availableSlot,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.zipCode,
             hintText: context.loc.enterZipCode,
             controller: zipCode,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: TextFieldValidator.required(context),
           ),
-          CustomTextField(
-            title: context.loc.locationNameVenue,
-            hintText: context.loc.enterLocationNameVenue,
-            controller: location,
-            validator: TextFieldValidator.required(context),
+          ValueListenableBuilder(
+            valueListenable: location,
+            builder: (_, item, _){
+              return _BoxLocationCard(
+                title: context.loc.locationNameVenue,
+                name: item?.address ?? context.loc.enterLocationNameVenue,
+                onTap: () async {
+                  location.value = await openLocationPicker(context);
+                  print(location.value?.address);
+                },
+              );
+            },
           ),
           CustomTextField(
             title: context.loc.cityState,
@@ -123,6 +133,22 @@ class EventAddPageThree extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+
+                      if (selectedAgesGroup.value == null || selectedAgesGroup.value!.isEmpty) {
+                        AppToast.warning(message: context.loc.pleaseSelectAgeGroup);
+                        return;
+                      }
+
+                      if (selectedSkillLevel.value == null || selectedSkillLevel.value!.isEmpty) {
+                        AppToast.warning(message: context.loc.pleaseSelectSkillLevel);
+                        return;
+                      }
+
+                      if (location.value == null) {
+                        AppToast.warning(message: context.loc.enterLocationNameVenue);
+                        return;
+                      }
+
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeInOut,
@@ -137,6 +163,36 @@ class EventAddPageThree extends StatelessWidget {
           const Gap(24),
         ],
       ),
+    );
+  }
+}
+
+class _BoxLocationCard extends StatelessWidget {
+  const _BoxLocationCard({required this.name, required this.title, this.onTap});
+
+  final String title;
+  final String name;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 8,
+      children: [
+        CustomAlignText(text: title),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: context.width,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.softBrandColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(name),
+          ),
+        ),
+      ],
     );
   }
 }

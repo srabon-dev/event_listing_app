@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomNetworkImage extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double? height;
   final double? width;
   final Border? border;
@@ -21,7 +21,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.child,
     this.errorWidget,
     this.colorFilter,
-    required this.imageUrl,
+    this.imageUrl = "https://picsum.photos/450/300",
     this.backgroundColor,
     this.height,
     this.width,
@@ -31,11 +31,11 @@ class CustomNetworkImage extends StatelessWidget {
     this.boxShape = BoxShape.rectangle,
   });
 
-  bool get isSvg => imageUrl.toLowerCase().endsWith(".svg");
+  bool get isSvg => imageUrl?.toLowerCase().endsWith(".svg") ?? false;
 
   @override
   Widget build(BuildContext context) {
-    if (imageUrl.isEmpty) {
+    if (imageUrl == null || imageUrl!.isEmpty) {
       return Container(
         height: height,
         width: width,
@@ -60,7 +60,7 @@ class CustomNetworkImage extends StatelessWidget {
           shape: boxShape,
         ),
         child: SvgPicture.network(
-          imageUrl,
+          imageUrl ?? "",
           fit: fit ?? BoxFit.cover,
           colorFilter: colorFilter,
           placeholderBuilder: (context) => shimmerPlaceholder(),
@@ -71,7 +71,7 @@ class CustomNetworkImage extends StatelessWidget {
     }
 
     return CachedNetworkImage(
-      imageUrl: imageUrl,
+      imageUrl: imageUrl ?? "https://picsum.photos/450/300",
       fit: fit,
       imageBuilder: (context, imageProvider) => Container(
         height: height,
@@ -99,7 +99,6 @@ class CustomNetworkImage extends StatelessWidget {
             ),
           )),
       errorWidget: (context, url, error){
-        print(error.toString());
         return errorWidget??Container(
           height: height,
           width: width,
@@ -116,14 +115,14 @@ class CustomNetworkImage extends StatelessWidget {
   }
 
   Widget shimmerPlaceholder() => Shimmer.fromColors(
-    baseColor: Colors.grey.withOpacity(0.6),
-    highlightColor: Colors.grey.withOpacity(0.3),
+    baseColor: Colors.grey.withValues(alpha: 0.6),
+    highlightColor: Colors.grey.withValues(alpha: 0.3),
     child: Container(
       height: height,
       width: width,
       decoration: BoxDecoration(
         border: border,
-        color: Colors.grey.withOpacity(0.6),
+        color: Colors.grey.withValues(alpha: 0.6),
         borderRadius: borderRadius,
         shape: boxShape,
       ),

@@ -7,7 +7,6 @@ extension BasePathExtensions on String {
 }
 
 extension ContextExtensions on BuildContext {
-  // ----------------- THEME & COLORS -----------------
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
   Color get primaryTextColor => isDarkMode ? AppColorsDark.primaryText : AppColors.primaryText;
   Color get secondaryTextColor => isDarkMode ? AppColorsDark.secondaryText : AppColors.secondaryText;
@@ -17,14 +16,11 @@ extension ContextExtensions on BuildContext {
   Color get successColor => isDarkMode ? AppColorsDark.successColor : AppColors.successColor;
   Color get errorColor => isDarkMode ? AppColorsDark.errorColor : AppColors.errorColor;
 
-  // ----------------- MEDIA QUERY -----------------
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;
 
-  // ----------------- LOCALIZATION -----------------
   AppLocalizations get loc => AppLocalizations.of(this)!;
 
-  // ----------------- TEXT THEME -----------------
   TextTheme get textTheme => Theme.of(this).textTheme;
 
   TextStyle get headlineLarge => textTheme.headlineLarge!;
@@ -40,3 +36,100 @@ extension ContextExtensions on BuildContext {
   TextStyle get labelMedium => textTheme.labelMedium!;
   TextStyle get labelSmall => textTheme.labelSmall!;
 }
+
+extension CategoryMapper on CategoryModel {
+  List<CategoryEntities> toEntities() {
+    if (data == null || data!.isEmpty) return [];
+
+    return data!.where((item) => item.id != null && item.id!.trim().isNotEmpty).map((item) => CategoryEntities(
+      id: item.id!,
+      name: item.name ?? "Unknown",
+      type: item.type ?? "",
+      categoryImage: item.categoryImage ?? AppConfig.defaultCategory,
+    )).toList();
+  }
+
+  List<CategoryEntities> getAll() => toEntities();
+
+  List<CategoryEntities> getSports() => toEntities().where((e) => e.type.toLowerCase() == 'sports').toList();
+
+  List<CategoryEntities> getEvents() => toEntities().where((e) => e.type.toLowerCase() == 'event').toList();
+}
+
+
+extension EventDetailsMapper on EventDetailsModel {
+  EventDetailsEntity toEntity() => EventDetailsEntity(
+    id: data?.id ?? '',
+    name: data?.name ?? '',
+    shortDescription: data?.shortDescription,
+    description: data?.description,
+    city: data?.city,
+    address: data?.address,
+    zipCode: data?.zipCode,
+    websiteLink: data?.websiteLink,
+    registrationFee: data?.registrationFee,
+    availableSlot: data?.availableSlot,
+    minAge: data?.minAge,
+    maxAge: data?.maxAge,
+    skillLevel: data?.skillLevel,
+    isDeleted: data?.isDeleted,
+    averageRating: data?.averageRating,
+    image: data?.image,
+    status: data?.status,
+    registrationStartDate: data?.registrationStartDate,
+    registrationEndDateTime: data?.registrationEndDateTime,
+    eventStartDateTime: data?.eventStartDateTime,
+    eventEndDateTime: data?.eventEndDateTime,
+    sport: data?.sport != null ? EventDetailsTypeEntity(
+      id: data?.sport!.id ?? '',
+      name: data?.sport!.name ?? '',
+      type: data?.sport!.type,
+      categoryImage: data?.sport!.categoryImage,
+    ) : null,
+    eventType: data?.eventType != null ? EventDetailsTypeEntity(
+      id: data?.eventType!.id ?? '',
+      name: data?.eventType!.name ?? '',
+      type: data?.eventType!.type,
+      categoryImage: data?.eventType!.categoryImage,
+    ) : null,
+    organizer: data?.organizer != null ? EventDetailsOrganizerEntity(
+      id: data?.organizer!.id ?? '',
+      name: data?.organizer!.name,
+      businessName: data?.organizer!.businessName,
+      email: data?.organizer!.email,
+      phone: data?.organizer!.phone,
+      address: data?.organizer!.address,
+      profileImage: data?.organizer!.profileImage,
+    ) : null,
+    location: data?.location != null ? EventDetailsLocationEntity(
+      type: data?.location!.type,
+      coordinates: data?.location!.coordinates,
+    ) : null,
+  );
+}
+
+
+extension OrganizerEventMapper on OrganizerEventItem {
+  ManagementEntities toEntity() {
+    return ManagementEntities(
+      id: id ?? '',
+      name: name ?? '',
+      shortDescription: shortDescription,
+      description: description,
+      sport: sport?.name,
+      eventType: eventType?.name,
+      eventStart: eventStartDateTime ?? DateTime.now(),
+      eventEnd: eventEndDateTime ?? DateTime.now(),
+      minAge: minAge,
+      maxAge: maxAge,
+      skillLevel: skillLevel,
+      availableSlot: availableSlot,
+      city: city,
+      address: address,
+      image: image,
+      rating: averageRating,
+    );
+  }
+}
+
+

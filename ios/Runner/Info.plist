@@ -45,5 +45,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Image picker permissions -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to allow you to pick event images.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to allow you to take photos for your event.</string>
+
+	<!-- Google Maps permission -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to show nearby places on the map and pick an event location.</string>
+
 </dict>
 </plist>

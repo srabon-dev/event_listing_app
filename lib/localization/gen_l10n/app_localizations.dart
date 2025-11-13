@@ -320,6 +320,36 @@ abstract class AppLocalizations {
   /// **'Go Live & Reach Families'**
   String get management_onboarding_title_three;
 
+  /// No description provided for @pleaseUploadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload an event image'**
+  String get pleaseUploadImage;
+
+  /// No description provided for @pleaseSelectAllDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Select All Dates'**
+  String get pleaseSelectAllDates;
+
+  /// No description provided for @pleaseSelectAgeGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Select Age Group'**
+  String get pleaseSelectAgeGroup;
+
+  /// No description provided for @pleaseSelectSkillLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Select Skill Level'**
+  String get pleaseSelectSkillLevel;
+
+  /// No description provided for @pleaseDescribeYourEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Describe Your Event'**
+  String get pleaseDescribeYourEvent;
+
   /// No description provided for @skip.
   ///
   /// In en, this message translates to:
@@ -535,6 +565,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log in to your account to find events or manage your listings.'**
   String get log_in_to_your_account_to_find;
+
+  /// No description provided for @invalidWebsiteUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid website URL.'**
+  String get invalidWebsiteUrl;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcoming;
 
   /// No description provided for @logIn.
   ///

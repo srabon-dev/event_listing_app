@@ -104,9 +104,11 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                     onTap: (){
                       AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
                     },
-                    event: EventCardEntity(
+                    event: ManagementEntities(
                       id: "",
-                      coverImage: "https://picsum.photos/450/300",
+                      name: "",
+                      eventEnd: DateTime.now(),
+                      eventStart: DateTime.now(),
                     ),
                   );
                 },
@@ -123,9 +125,11 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                     onTap: (){
                       AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
                     },
-                    event: EventCardEntity(
+                    event: ManagementEntities(
                       id: "",
-                      coverImage: "https://picsum.photos/450/300",
+                      name: "",
+                      eventEnd: DateTime.now(),
+                      eventStart: DateTime.now(),
                     ),
                   );
                 },
@@ -142,9 +146,11 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                     onTap: (){
                       AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
                     },
-                    event: EventCardEntity(
+                    event: ManagementEntities(
                       id: "",
-                      coverImage: "https://picsum.photos/450/300",
+                      name: "",
+                      eventEnd: DateTime.now(),
+                      eventStart: DateTime.now(),
                     ),
                   );
                 },

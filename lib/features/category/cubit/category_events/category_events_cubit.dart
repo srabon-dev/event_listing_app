@@ -1,3 +1,4 @@
+/*
 import 'package:event_listing_app/app_export.dart';
 
 class CategoryEventsCubit extends Cubit<void> {
@@ -32,7 +33,8 @@ class CategoryEventsCubit extends Cubit<void> {
         "https://picsum.photos/450/300",
         "https://picsum.photos/450/300",
       ]);
-      /*final token = await db.getToken();
+      */
+/*final token = await db.getToken();
       final Either<Failure, String> response = await repository.getAll(
         url: ApiUrls.internetSatelliteGetAll(page: pageKey),
         token: token,
@@ -50,7 +52,8 @@ class CategoryEventsCubit extends Cubit<void> {
             pagingController.appendPage(newItems, pageKey + 1);
           }
         },
-      );*/
+      );*//*
+
     } catch (e) {
       pagingController.error = 'An error occurred';
     } finally {
@@ -58,3 +61,4 @@ class CategoryEventsCubit extends Cubit<void> {
     }
   }
 }
+*/

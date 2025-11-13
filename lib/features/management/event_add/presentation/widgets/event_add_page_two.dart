@@ -209,6 +209,14 @@ class EventAddPageTwo extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+
+                      if (registrationDate.value == null ||
+                          registrationEndDate.value == null ||
+                          eventStartDate.value == null ||
+                          eventEndDate.value == null) {
+                        AppToast.warning(message: context.loc.pleaseSelectAllDates);
+                        return;
+                      }
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeInOut,

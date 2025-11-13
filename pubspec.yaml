@@ -52,6 +52,7 @@ dependencies:
   shared_preferences: ^2.5.3
   #google_maps_flutter: ^2.12.3
   path_provider: ^2.1.5
+  map_location_picker: ^3.1.0
 
   gap: ^3.0.1
   dropdown_button2: ^2.3.9

@@ -148,14 +148,14 @@ class AppRouter {
         name: RoutePath.eventDetailsScreen,
         path: RoutePath.eventDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final id = state.extra as String? ?? "";
+          final id = state.extra as String? ?? "69102ad94e31099d62b8f014";
           return _buildPageWithAnimation(
             child: EventDetailsScreen(id: id),
             state: state,
           );
         },
       ),
-      GoRoute(
+      /*GoRoute(
         name: RoutePath.categoryEventsScreen,
         path: RoutePath.categoryEventsScreen.addBasePath,
         pageBuilder: (context, state) {
@@ -169,7 +169,7 @@ class AppRouter {
             state: state,
           );
         },
-      ),
+      ),*/
       GoRoute(
         name: RoutePath.myProfileScreen,
         path: RoutePath.myProfileScreen.addBasePath,

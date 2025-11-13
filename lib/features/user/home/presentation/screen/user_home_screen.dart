@@ -71,6 +71,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
+          categoryController.getCategories();
 
         },
         child: CustomScrollView(
@@ -111,7 +112,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         if (state is CategoryLoading) {
                           return const Center(child: CircularProgressIndicator());
                         } else if (state is CategoryLoaded) {
-                          final items = state.categories.take(4).toList();
+                          final items = state.categories.getSports().take(4).toList();
 
                           return GridView.builder(
                             itemCount: items.length,
@@ -126,14 +127,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             itemBuilder: (context, index) {
                               final item = items[index];
                               return CategoryBoxCardWidget(
-                                name: item["name"]!,
-                                image: item["image"]!,
-                                onTap: () {
+                                name: item.name,
+                                image: item.categoryImage,
+                                /*onTap: () {
                                   AppRouter.route.pushNamed(
                                     RoutePath.categoryEventsScreen,
-                                    extra: {"title": item["name"]!, "id": ""},
+                                    extra: {"title": item.name, "id": item.id},
                                   );
-                                },
+                                },*/
                               );
                             },
                           );
@@ -173,7 +174,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 ),
               ),
             ),
-            SliverPadding(
+            /*SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               sliver: PagedSliverList<int, String>(
                 pagingController: controller.pagingController,
@@ -191,7 +192,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     }
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

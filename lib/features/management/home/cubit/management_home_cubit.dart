@@ -1,20 +1,16 @@
+import 'package:dartz/dartz.dart';
 import 'package:event_listing_app/app_export.dart';
 
 class ManagementHomeCubit extends Cubit<void> {
   final ILocalService db;
-
-  // final IInternetSatelliteRepository repository;
-  final PagingController<int, String> pagingController;
+  final IManagementHomeRepository repository;
+  final PagingController<int, OrganizerEventItem> pagingController;
 
   ManagementHomeCubit({
     required this.pagingController,
     required this.db,
-    // required this.repository,
-  }) : super(null) {
-    pagingController.addPageRequestListener((pageKey) {
-      get(pageKey: pageKey);
-    });
-  }
+    required this.repository,
+  }) : super(null);
 
   bool isLoadingMove = false;
 
@@ -23,34 +19,23 @@ class ManagementHomeCubit extends Cubit<void> {
     isLoadingMove = true;
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
-
-      pagingController.appendLastPage([
-        "https://picsum.photos/450/300",
-        "https://picsum.photos/450/300",
-        "https://picsum.photos/450/300",
-        "https://picsum.photos/450/300",
-        "https://picsum.photos/450/300",
-      ]);
-      /*final token = await db.getToken();
-      final Either<Failure, String> response = await repository.getAll(
-        url: ApiUrls.internetSatelliteGetAll(page: pageKey),
+      final token = await db.getToken();
+      final Either<Failure, OrganizerEventModel> response = await repository.getMyAllEvents(
+        url: ApiUrls.getMyEvents(page: pageKey),
         token: token,
       );
 
-      response.fold(
-        (failure) {
-          pagingController.error = failure.message;
-        },
-        (value) {
-          final newItems = value.internetSatellite ?? [];
-          if (newItems.isEmpty) {
-            pagingController.appendLastPage(newItems);
-          } else {
-            pagingController.appendPage(newItems, pageKey + 1);
-          }
-        },
-      );*/
+      response.fold((failure) {
+        pagingController.error = failure.message;
+      }, (value) {
+        final newItems = value.data?.result ?? [];
+        if (newItems.isEmpty) {
+          pagingController.appendLastPage(newItems);
+        } else {
+          pagingController.appendPage(newItems, pageKey + 1);
+        }
+      },
+      );
     } catch (e) {
       pagingController.error = 'An error occurred';
     } finally {

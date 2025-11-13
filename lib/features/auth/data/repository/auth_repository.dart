@@ -59,7 +59,7 @@ class AuthRepository extends IAuthRepository {
   }) async {
     final body = {
       'email': email,
-      'code': code,
+      'resetCode': int.tryParse(code),
     };
 
     final response =  await apiClient.post(
@@ -84,7 +84,7 @@ class AuthRepository extends IAuthRepository {
     final body = {
       "email": email,
       "confirmPassword": confirmPassword,
-      "newPassword": password,
+      "password": password,
     };
 
     final response =  await apiClient.post(

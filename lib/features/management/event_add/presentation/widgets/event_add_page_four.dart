@@ -1,4 +1,5 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
 class EventAddPageFour extends StatelessWidget {
@@ -9,10 +10,14 @@ class EventAddPageFour extends StatelessWidget {
     required this.link,
     required this.eventFee,
     required this.quillController,
+    required this.onTap,
+    required this.onComplete,
   });
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
+  final VoidCallback onTap;
+  final VoidCallback onComplete;
 
   final TextEditingController link;
   final TextEditingController eventFee;
@@ -35,49 +40,50 @@ class EventAddPageFour extends StatelessWidget {
             title: context.loc.eventWebsiteRegistrationLink,
             hintText: context.loc.googleForm_your_own_site_or_social_media_link,
             controller: link,
-            validator: TextFieldValidator.required(context),
+            validator: TextFieldValidator.website(context),
           ),
           CustomTextField(
             title: context.loc.eventRegistrationFee,
             hintText: r"$20",
             controller: eventFee,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: TextFieldValidator.required(context),
           ),
           CustomAlignText(text: context.loc.describeAboutYourEvent),
           QuillSimpleToolbar(
             controller: quillController,
             config: const QuillSimpleToolbarConfig(
-              showFontFamily: false,
-              showStrikeThrough: false,
-              showInlineCode: false,
-              showSubscript: false,
-              showSuperscript: false,
-              showBackgroundColorButton: false,
-              showClearFormat: false,
-              showListCheck: false,
-              showCodeBlock: false,
-              showQuote: true,
-              showSearchButton: false,
-              showLink: false,
-              showUnderLineButton: false,
-              showColorButton: false,
-              showRedo: false,
-              showUndo: false,
-              sectionDividerColor: AppColors.brandHoverColor,
-              color: AppColors.white,
-              decoration: BoxDecoration(
-                color: AppColors.black
-              ),
-              iconTheme: QuillIconTheme(
-                iconButtonSelectedData: IconButtonData(
-                  color: AppColors.softBrandColor,
-                  focusColor: AppColors.softBrandColor,
-                  isSelected: true,
+                showFontFamily: false,
+                showStrikeThrough: false,
+                showInlineCode: false,
+                showSubscript: false,
+                showSuperscript: false,
+                showBackgroundColorButton: false,
+                showClearFormat: false,
+                showListCheck: false,
+                showCodeBlock: false,
+                showQuote: true,
+                showSearchButton: false,
+                showLink: false,
+                showUnderLineButton: false,
+                showColorButton: false,
+                showRedo: false,
+                showUndo: false,
+                sectionDividerColor: AppColors.brandHoverColor,
+                color: AppColors.white,
+                decoration: BoxDecoration(
+                    color: AppColors.black
                 ),
-                iconButtonUnselectedData: IconButtonData(
-                  color: AppColors.skyLight,
+                iconTheme: QuillIconTheme(
+                    iconButtonSelectedData: IconButtonData(
+                      color: AppColors.softBrandColor,
+                      focusColor: AppColors.softBrandColor,
+                      isSelected: true,
+                    ),
+                    iconButtonUnselectedData: IconButtonData(
+                      color: AppColors.skyLight,
+                    )
                 )
-              )
             ),
           ),
           Container(
@@ -129,14 +135,34 @@ class EventAddPageFour extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      pageController.animateToPage(
-                        0,
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut,
-                      );
+                      final plainText = quillController.document.toPlainText().trim();
+                      if (plainText.isEmpty) {
+                        AppToast.warning(message: context.loc.pleaseDescribeYourEvent);
+                        return;
+                      }
+
+                      onTap.call();
                     }
                   },
-                  child: Text(context.loc.savePublish),
+                  child: BlocConsumer<EventAddBloc, EventAddState>(
+                    listener: (context, state) {
+                      if (state is EventState) {
+                        if (state.message != null) {
+                          AppToast.info(context: context, message: state.message ?? "");
+                        }
+                        if (state.isVerified) {
+                          onComplete.call();
+                        }
+                      }
+                    },
+                    builder: (context, state) {
+                      final data = state is EventState && state.isLoading;
+                      if(data) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return Text(context.loc.savePublish);
+                    },
+                  ),
                 ),
               ),
             ],

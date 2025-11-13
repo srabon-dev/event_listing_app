@@ -4,8 +4,9 @@ part 'event_details_state.dart';
 
 class EventDetailsCubit extends Cubit<EventDetailsState> {
   final ILocalService db;
+  final IEventDetailsRepository repository;
 
-  EventDetailsCubit({required this.db}) : super(EventDetailsInitial());
+  EventDetailsCubit({required this.db, required this.repository}) : super(EventDetailsInitial());
 
   bool isRunning = false;
 
@@ -16,17 +17,14 @@ class EventDetailsCubit extends Cubit<EventDetailsState> {
 
       emit(EventDetailsLoading());
 
-      await Future.delayed(const Duration(milliseconds: 800));
+      final token = await db.getToken();
+      final result = await repository.getEventDetails(token: token, url: ApiUrls.getEventDetails(id: id));
 
-      final items = {
-        "title": "Summer Elite Soccer Camp 2025",
-        "subTitle": "For ages 10–14 | Intermediate to Advanced | Hosted by All-Star Academy",
-        "imageUrl": "https://picsum.photos/450/300",
-        "status": "Registration Open",
-        "registrationDeadline":"15 May 2020 8:00 am"
-      };
+      result.fold(
+            (failure) => emit(EventDetailsError(failure.message)),
+            (profile) => emit(EventDetailsLoaded(profile)),
+      );
 
-      emit(EventDetailsLoaded(items));
     } catch (e) {
       emit(const EventDetailsError('Failed to load categories'));
     } finally {

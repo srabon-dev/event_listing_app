@@ -10,8 +10,8 @@ class CategoryLoading extends CategoryState {
 }
 
 class CategoryLoaded extends CategoryState {
-  final List<Map<String, String>> categories;
-  const CategoryLoaded(this.categories);
+  final CategoryModel categories;
+  const CategoryLoaded({required this.categories});
 
   @override
   List<Object?> get props => [categories];

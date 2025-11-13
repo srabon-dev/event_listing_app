@@ -1,76 +1,79 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:event_listing_app/app_export.dart';
 
-class CustomDropdownField extends StatelessWidget {
+class CustomDropdownField<T> extends StatelessWidget {
   final String hintText;
-  final List<String>? items;
-  final String? value;
-  final String extraText;
-  final void Function(String?)? onChanged;
-  final String? Function(String?)? validator;
+  final List<T> items;
+  final T? value;
+  final String Function(T)? labelBuilder;
+  final void Function(T?)? onChanged;
+  final String? Function(T?)? validator;
   final bool isRequired;
   final Color? fillColor;
-
-  final Map<String, String>? labels;
+  final String? errorText;
+  final bool enabled;
 
   const CustomDropdownField({
     super.key,
     required this.hintText,
     required this.items,
     this.value,
-    this.extraText = "",
+    this.labelBuilder,
     this.onChanged,
     this.validator,
     this.isRequired = false,
-    this.labels,
     this.fillColor,
+    this.errorText,
+    this.enabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    final safeItems = items ?? [];
-    final bool isValueValid = safeItems.contains(value);
     final message = AppLocalizations.of(context)!.fieldIsRequired;
 
-    String? Function(String?)? validation =
-        (isRequired
-            ? (val) => (val == null || val.isEmpty) ? message : null
-            : null);
+    String? Function(T?)? validation =
+    (isRequired ? (val) => (val == null) ? message : null : null);
     final validationFunction = validator ?? validation;
 
-    final isExtraTextNotEmpty = extraText.isNotEmpty;
+    final bool hasError = errorText != null && errorText!.isNotEmpty;
 
-    return DropdownButtonFormField2<String>(
+    return DropdownButtonFormField2<T>(
       isExpanded: true,
-      value: isValueValid ? value : null,
+      value: items.contains(value) ? value : null,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: hasError ? AppColors.errorColor : AppColors.brandHoverColor,
+            width: 1.2,
+          ),
+        ),
         filled: true,
         fillColor: fillColor ?? AppColors.white,
-        hintStyle: const TextStyle(color: AppColors.brandHoverColor),
-        errorStyle: const TextStyle(color: AppColors.brandHoverColor),
+        errorText: errorText,
+        errorStyle: const TextStyle(color: AppColors.errorColor),
       ),
       hint: Text(
         hintText,
-        style: const TextStyle(color: AppColors.brandHoverColor, fontSize: 14),
+        style: const TextStyle(
+          color: AppColors.brandHoverColor,
+          fontSize: 14,
+        ),
       ),
-      items:
-          safeItems.map((key) {
-            final label = labels?[key] ?? key;
-            return DropdownMenuItem<String>(
-              value: key,
-              child: Text(
-                label + (isExtraTextNotEmpty ? " $extraText" : ""),
-                style: const TextStyle(
-                  color: AppColors.brandHoverColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            );
-          }).toList(),
-      onChanged: safeItems.isEmpty ? null : onChanged,
+      items: items
+          .map((item) => DropdownMenuItem<T>(
+        value: item,
+        child: Text(
+          labelBuilder?.call(item) ?? item.toString(),
+          style: const TextStyle(
+            color: AppColors.brandHoverColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      )).toList(),
+      onChanged: enabled ? onChanged : null,
       validator: validationFunction,
       style: const TextStyle(
         color: AppColors.brandHoverColor,
@@ -85,13 +88,21 @@ class CustomDropdownField extends StatelessWidget {
         iconSize: 24,
       ),
       dropdownStyleData: DropdownStyleData(
+        maxHeight: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
       ),
       menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       ),
     );
   }

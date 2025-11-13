@@ -55,7 +55,8 @@ class EventAddPageOne extends StatelessWidget {
               } catch (_) {}
             },
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
+              height: 200,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.softBrandColor,
@@ -65,9 +66,14 @@ class EventAddPageOne extends StatelessWidget {
                 valueListenable: selectedImage,
                 builder: (context, imagePath, child) {
                   if (imagePath != null && imagePath.isNotEmpty) {
-                    return Image.file(File(imagePath));
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(File(imagePath), fit: BoxFit.cover,),
+                    );
                   }
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 12,
                     children: [
                       Assets.icons.upload.svg(height: 50, width: 50),
@@ -110,21 +116,23 @@ class EventAddPageOne extends StatelessWidget {
                 return Center(child: Text(state.message));
               }
 
-              if (state is CategoryLoaded && state.categories.isNotEmpty) {
-                final displayItems = state.categories.toList();
-                final itemList = displayItems
-                    .map((item) => item["name"] ?? "")
-                    .where((name) => name.isNotEmpty)
-                    .toSet()
-                    .toList();
-                return CustomDropdownField(
+              if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
+                final displayItems = state.categories.getSports().toList();
+
+                final selectedEntity = displayItems.cast<CategoryEntities?>().firstWhere(
+                      (e) => e?.id == selectedSportType.value,
+                  orElse: () => null,
+                );
+
+                return CustomDropdownField<CategoryEntities>(
                   hintText: context.loc.selectOne,
                   fillColor: AppColors.softBrandColor,
-                  value: selectedSportType.value,
-                  items: itemList,
-                  validator: TextFieldValidator.required(context),
+                  items: displayItems,
+                  labelBuilder: (s) => s.name,
+                  value: selectedEntity,
+                  isRequired: true,
                   onChanged: (value) {
-                    selectedSportType.value = value;
+                    selectedSportType.value = value?.id;
                   },
                 );
               }
@@ -132,26 +140,50 @@ class EventAddPageOne extends StatelessWidget {
             },
           ),
           CustomAlignText(text: context.loc.eventType),
-          ValueListenableBuilder(
-            valueListenable: selectedEventType,
-            builder: (context, item, child){
-              return CustomDropdownField(
-                hintText: context.loc.selectOne,
-                value: item,
-                fillColor: AppColors.softBrandColor,
-                validator: TextFieldValidator.required(context),
-                items: const ["Registration Open", "Event Started", "Event Finished"],
-                onChanged: (value) {
-                  selectedEventType.value = value;
-                },
-              );
+          BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryLoading) {
+                return const LoadingWidget();
+              }
+
+              if (state is CategoryError) {
+                return Center(child: Text(state.message));
+              }
+
+              if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
+                final displayItems = state.categories.getEvents().toList();
+
+                final selectedEntity = displayItems.cast<CategoryEntities?>().firstWhere(
+                      (e) => e?.id == selectedEventType.value,
+                  orElse: () => null,
+                );
+
+                return CustomDropdownField<CategoryEntities>(
+                  hintText: context.loc.selectOne,
+                  fillColor: AppColors.softBrandColor,
+                  labelBuilder: (s) => s.name,
+                  items: displayItems,
+                  value: selectedEntity,
+                  isRequired: true,
+                  onChanged: (value) {
+                    selectedEventType.value = value?.id;
+                  },
+                );
+              }
+              return Center(child: Text(context.loc.no_categories_found));
             },
           ),
           const Gap(12),
           CustomButton(
             text: context.loc.next,
             onTap: () {
-              if(formKey.currentState!.validate()){
+              if (formKey.currentState!.validate()) {
+                if (selectedImage.value == null || selectedImage.value!.isEmpty) {
+                  AppToast.warning(
+                    message: context.loc.pleaseUploadImage,
+                  );
+                  return;
+                }
                 pageController.nextPage(
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeInOut,

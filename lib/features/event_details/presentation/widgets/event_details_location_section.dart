@@ -1,7 +1,8 @@
 import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsLocationSection extends StatelessWidget {
-  const EventDetailsLocationSection({super.key});
+  const EventDetailsLocationSection({super.key, required this.data});
+  final EventDetailsEntity data;
 
   @override
   Widget build(BuildContext context) {

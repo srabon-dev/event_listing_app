@@ -1,6 +1,6 @@
 import 'package:event_listing_app/app_export.dart';
 
-class AppLogger{
+class AppLogger {
   AppLogger._();
 
   static void log(dynamic message, {AppLogType type = AppLogType.defaultLog}) {

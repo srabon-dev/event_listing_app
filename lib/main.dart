@@ -1,3 +1,5 @@
+import 'package:event_listing_app/features/management/event_add/data/repository/event_add_repository.dart';
+
 import 'app.dart';
 import 'app_export.dart';
 
@@ -26,6 +28,7 @@ Future<void> main() async {
         BlocProvider<ManagementHomeCubit>(
           create: (_) => ManagementHomeCubit(
             pagingController: PagingController(firstPageKey: 1),
+            repository: ManagementHomeRepository(apiClient: sl<IApiClient>()),
             db: sl<ILocalService>(),
           ),
         ),
@@ -48,7 +51,9 @@ Future<void> main() async {
             pagingController: PagingController(firstPageKey: 1),
             pagingController1: PagingController(firstPageKey: 1),
             pagingController2: PagingController(firstPageKey: 1),
+            pagingController3: PagingController(firstPageKey: 1),
             db: sl<ILocalService>(),
+            repository: ManagementRepository(apiClient: sl<IApiClient>())
           ),
         ),
         BlocProvider<SearchScreenCubit>(
@@ -57,7 +62,15 @@ Future<void> main() async {
             db: sl<ILocalService>(),
           ),
         ),
-        BlocProvider<CategoryCubit>(create: (_) => CategoryCubit(db: sl<ILocalService>())),
+        BlocProvider<EventAddBloc>(
+          create: (_) => EventAddBloc(
+            repository: EventAddRepository(apiClient: sl<IApiClient>()),
+            db: sl<ILocalService>(),
+          ),
+        ),
+        BlocProvider<CategoryCubit>(
+          create: (_) => CategoryCubit(repository: CategoryRepository(apiClient: sl<IApiClient>())),
+        ),
         BlocProvider<ProfileCubit>(
           create: (_) => ProfileCubit(
             repository: ProfileRepository(apiClient: sl<IApiClient>()),

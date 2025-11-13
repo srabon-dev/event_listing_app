@@ -68,6 +68,33 @@ class TextFieldValidator {
     };
   }
 
+  static String? Function(String?) website(BuildContext context) {
+    return (value) {
+      final trimmed = value?.trim() ?? '';
+
+      if (trimmed.isEmpty) {
+        return context.loc.fieldIsRequired;
+      }
+
+      final urlPattern = RegExp(
+        r'^(https?:\/\/)?'
+        r'([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}'
+        r'(\/[^\s]*)?$',
+        caseSensitive: false,
+      );
+
+      final hasValidFormat = urlPattern.hasMatch(trimmed);
+      final startsWithValidScheme = trimmed.startsWith('https://') || trimmed.startsWith('http://');
+
+      if (!hasValidFormat || !startsWithValidScheme) {
+        return context.loc.invalidWebsiteUrl;
+      }
+
+      return null;
+    };
+  }
+
+
   static String? Function(String?) name(BuildContext context) {
     return (value) {
       final trimmed = value?.trim() ?? '';

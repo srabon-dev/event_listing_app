@@ -8,5 +8,6 @@ class AppConfig {
   static const String defaultLanguageKey = "en";
 
   static const defaultProfile = "https://img.freepik.com/premium-photo/casual-young-man-shirt_146377-2992.jpg";
+  static const defaultCategory = "https://www.svgrepo.com/show/475622/football.svg";
 
 }

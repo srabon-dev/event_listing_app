@@ -1,7 +1,8 @@
 import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsAboutSection extends StatelessWidget {
-  const EventDetailsAboutSection({super.key});
+  const EventDetailsAboutSection({super.key, required this.data});
+  final EventDetailsEntity data;
 
   @override
   Widget build(BuildContext context) {
@@ -26,37 +27,37 @@ class EventDetailsAboutSection extends StatelessWidget {
                 context: context,
                 image: Assets.icons.event,
                 title: context.loc.registration_deadline,
-                value: "15 May 2020 8:00 am",
+                value: DateConverter.formatDateTime(dateTime: data.registrationEndDateTime),
               ),
               buildAboutCard(
                 context: context,
                 image: Assets.icons.age,
                 title: context.loc.ages,
-                value: "10–14",
+                value: getAgeRangeLabel(data.minAge ?? 0, data.maxAge ?? 0),
               ),
               buildAboutCard(
                 context: context,
                 image: Assets.icons.basketball,
                 title: context.loc.sport,
-                value: "Basketball",
+                value: data.sport?.name ?? context.loc.unknown,
               ),
               buildAboutCard(
                 context: context,
                 image: Assets.icons.slot,
                 title: context.loc.available_slot,
-                value: "100",
+                value: data.availableSlot?.toString() ?? context.loc.unknown,
               ),
               buildAboutCard(
                 context: context,
                 image: Assets.icons.tournament,
                 title: context.loc.eventType,
-                value: "Tournament",
+                value: data.eventType?.name ?? context.loc.unknown,
               ),
               buildAboutCard(
                 context: context,
                 image: Assets.icons.event,
                 title: context.loc.eventStartOn,
-                value: "18 May 2020 8:00 am",
+                value: DateConverter.formatDateTime(dateTime: data.eventStartDateTime),
               ),
             ],
           ),

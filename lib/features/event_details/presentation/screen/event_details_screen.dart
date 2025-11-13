@@ -14,7 +14,10 @@ class EventDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => EventDetailsCubit(db: sl<ILocalService>()),
+      create: (_) => EventDetailsCubit(
+        db: sl<ILocalService>(),
+        repository: EventDetailsRepository(apiClient: sl<IApiClient>()),
+      ),
       child: _View(id: id),
     );
   }
@@ -70,27 +73,15 @@ class _ViewState extends State<_View> {
                 },
                 child: CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
-                        child: EventDetailsTopSectionWidget(
-                            data: data,
-                        ),
-                    ),
+                    SliverToBoxAdapter(child: EventDetailsTopSectionWidget(data: data)),
                     const SliverGap(18),
-                    const SliverToBoxAdapter(
-                      child: EventDetailsAboutSection(),
-                    ),
+                    SliverToBoxAdapter(child: EventDetailsAboutSection(data: data)),
                     const SliverGap(18),
-                    const SliverToBoxAdapter(
-                      child: EventDetailsDescriptionSection(),
-                    ),
+                    SliverToBoxAdapter(child: EventDetailsDescriptionSection(data: data)),
                     const SliverGap(18),
-                    const SliverToBoxAdapter(
-                      child: EventDetailsOrganizerSection(),
-                    ),
+                    SliverToBoxAdapter(child: EventDetailsOrganizerSection(data: data)),
                     const SliverGap(18),
-                    const SliverToBoxAdapter(
-                      child: EventDetailsLocationSection(),
-                    ),
+                    SliverToBoxAdapter(child: EventDetailsLocationSection(data: data)),
                     const SliverGap(44),
                   ],
                 ),

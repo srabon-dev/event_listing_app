@@ -18,6 +18,10 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
     controller = context.read<ManagementHomeCubit>();
     categoryController = context.read<CategoryCubit>();
     navigationController = context.read<NavigationCubit>();
+
+    controller.pagingController.addPageRequestListener((pageKey) {
+      controller.get(pageKey: pageKey);
+    });
   }
 
   @override
@@ -111,7 +115,7 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                         if (state is CategoryLoading) {
                           return const Center(child: CircularProgressIndicator());
                         } else if (state is CategoryLoaded) {
-                          final items = state.categories.take(4).toList();
+                          final items = state.categories.getSports().take(4).toList();
 
                           return GridView.builder(
                             itemCount: items.length,
@@ -126,14 +130,14 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                             itemBuilder: (context, index) {
                               final item = items[index];
                               return CategoryBoxCardWidget(
-                                name: item["name"]!,
-                                image: item["image"]!,
-                                onTap: () {
+                                name: item.name,
+                                image: item.categoryImage,
+                                /*onTap: () {
                                   AppRouter.route.pushNamed(
                                     RoutePath.categoryEventsScreen,
-                                    extra: {"title": item["name"]!, "id": ""},
+                                    extra: {"title": item.name, "id": item.id},
                                   );
-                                },
+                                },*/
                               );
                             },
                           );
@@ -175,23 +179,20 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
             ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
-              sliver: PagedSliverList<int, String>(
+              sliver: PagedSliverList<int, OrganizerEventItem>(
                 pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<String>(
-                    itemBuilder: (BuildContext context, String item, int index){
+                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                    itemBuilder: (BuildContext context, OrganizerEventItem item, int index){
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
                         },
-                        event: EventCardEntity(
-                          id: "",
-                          coverImage: item,
-                        ),
+                        event: item.toEntity(),
                       );
                     }
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

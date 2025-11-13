@@ -1,7 +1,8 @@
 import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsOrganizerSection extends StatelessWidget {
-  const EventDetailsOrganizerSection({super.key});
+  const EventDetailsOrganizerSection({super.key, required this.data});
+  final EventDetailsEntity data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +25,20 @@ class EventDetailsOrganizerSection extends StatelessWidget {
                   color: AppColors.softBrandColor,
                   shape: BoxShape.circle,
                 ),
-                child: const CustomNetworkImage(imageUrl: "https://picsum.photos/450/300"),
+                child: CustomNetworkImage(imageUrl: data.organizer?.profileImage ?? "https://picsum.photos/450/300"),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Leslie Alexander",
+                    data.organizer?.name ?? "",
                     style: context.titleMedium.copyWith(fontWeight: FontWeight.w500),
                   ),
                   Row(
                     children: [
                       Assets.icons.star.svg(),
                       Text(
-                        "4.0 / 5.0",
+                        formatRating(data.averageRating ?? 0),
                         style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -68,7 +69,9 @@ class EventDetailsOrganizerSection extends StatelessWidget {
                         style: context.titleMedium.copyWith(fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "\$19.00",
+                        (data.registrationFee == null || data.registrationFee.toString().isEmpty)
+                            ? "Free"
+                            : "\$${data.registrationFee}",
                         style: context.titleLarge.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 28,

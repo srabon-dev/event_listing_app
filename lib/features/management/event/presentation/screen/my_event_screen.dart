@@ -11,10 +11,27 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
   late TabController _tabController;
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
+  late final MyEventCubit controller;
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
+
+    controller = context.read<MyEventCubit>();
+
+    controller.pagingController.addPageRequestListener((pageKey) {
+      controller.get(pageKey: pageKey);
+    });
+    controller.pagingController1.addPageRequestListener((pageKey) {
+      controller.get1(pageKey: pageKey);
+    });
+    controller.pagingController2.addPageRequestListener((pageKey) {
+      controller.get2(pageKey: pageKey);
+    });
+    controller.pagingController3.addPageRequestListener((pageKey) {
+      controller.get3(pageKey: pageKey);
+    });
   }
 
   @override
@@ -27,6 +44,7 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     final List<String> tabs = [
+      context.loc.upcoming,
       context.loc.registrationOpen,
       context.loc.eventStarted,
       context.loc.eventFinished,
@@ -93,59 +111,74 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
         children: [
           RefreshIndicator(
             onRefresh: () async {
-
+              controller.pagingController.refresh();
             },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
-              },
+            child: PagedListView<int, OrganizerEventItem>(
+              pagingController: controller.pagingController,
+              builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                itemBuilder: (_, item, _) {
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                    },
+                    event: item.toEntity(),
+                  );
+                }
+              ),
             ),
           ),
           RefreshIndicator(
             onRefresh: () async {
-
+              controller.pagingController1.refresh();
             },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
-              },
+            child: PagedListView<int, OrganizerEventItem>(
+              pagingController: controller.pagingController1,
+              builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                itemBuilder: (_, item, _) {
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                    },
+                    event: item.toEntity(),
+                  );
+                }
+              ),
             ),
           ),
           RefreshIndicator(
             onRefresh: () async {
-
+              controller.pagingController2.refresh();
             },
-            child: ListView.builder(
-              itemCount: 20,
-              itemBuilder: (context, index){
-                return EventCardWidget(
-                  onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                  },
-                  event: EventCardEntity(
-                    id: "",
-                    coverImage: "https://picsum.photos/450/300",
-                  ),
-                );
-              },
+            child: PagedListView<int, OrganizerEventItem>(
+              pagingController: controller.pagingController2,
+              builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                itemBuilder: (_, item, _) {
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                    },
+                    event: item.toEntity(),
+                  );
+                }
+              ),
+            ),
+          ),
+          RefreshIndicator(
+            onRefresh: () async {
+              controller.pagingController3.refresh();
+            },
+            child: PagedListView<int, OrganizerEventItem>(
+              pagingController: controller.pagingController3,
+              builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                itemBuilder: (_, item, _) {
+                  return EventCardWidget(
+                    onTap: (){
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                    },
+                    event: item.toEntity(),
+                  );
+                }
+              ),
             ),
           ),
         ],

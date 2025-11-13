@@ -2,10 +2,11 @@ import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsTopSectionWidget extends StatelessWidget {
   const EventDetailsTopSectionWidget({super.key, required this.data});
-  final Map<String, String> data;
+  final EventDetailsEntity data;
 
   @override
   Widget build(BuildContext context) {
+    final cleanStatus = data.status?.replaceAll('_', ' ') ?? context.loc.unknown;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 8,
@@ -13,14 +14,14 @@ class EventDetailsTopSectionWidget extends StatelessWidget {
         CustomNetworkImage(
           height: 200,
           width: context.width,
-          imageUrl: data['imageUrl'] ?? "",
+          imageUrl: data.image,
           borderRadius: BorderRadius.circular(8),
         ),
         Text(
-          data['title'] ?? context.loc.unknown,
+          data.name,
           style: context.titleLarge.copyWith(fontWeight: FontWeight.w500),
         ),
-        Text(data['subTitle'] ?? context.loc.unknown, style: context.bodyMedium),
+        Text(data.shortDescription ?? context.loc.unknown, style: context.bodyMedium),
         ElevatedButton(
           onPressed: () {},
           style: const ButtonStyle(
@@ -28,7 +29,7 @@ class EventDetailsTopSectionWidget extends StatelessWidget {
             elevation: WidgetStatePropertyAll(0),
           ),
           child: Text(
-            data["status"] ?? context.loc.unknown,
+            cleanStatus,
             style: context.titleSmall.copyWith(color: AppColors.skyMedium, fontWeight: FontWeight.w500),
           ),
         ),

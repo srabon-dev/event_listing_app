@@ -1,3 +1,4 @@
+/*
 import 'package:event_listing_app/app_export.dart';
 
 class CategoryEventsScreen extends StatelessWidget {
@@ -50,7 +51,8 @@ class _ViewState extends State<_View> {
         title: Text(widget.title),
         titleTextStyle: context.titleMedium,
       ),
-      body: RefreshIndicator(
+      */
+/*body: RefreshIndicator(
         onRefresh: () async {},
         child: PagedListView<int, String>(
           pagingController: controller.pagingController,
@@ -68,7 +70,9 @@ class _ViewState extends State<_View> {
             },
           ),
         ),
-      ),
+      ),*//*
+
     );
   }
 }
+*/

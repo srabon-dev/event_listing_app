@@ -36,9 +36,9 @@ class _EventAddScreenState extends State<EventAddScreen> {
   // page Three
   final ValueNotifier<String?> selectedAgesGroup = ValueNotifier(null);
   final ValueNotifier<String?> selectedSkillLevel = ValueNotifier(null);
+  final ValueNotifier<PickedLocation?> location = ValueNotifier(null);
   final TextEditingController availableSlot = TextEditingController();
   final TextEditingController zipCode = TextEditingController();
-  final TextEditingController location = TextEditingController();
   final TextEditingController city = TextEditingController();
 
   //Page Four
@@ -58,8 +58,53 @@ class _EventAddScreenState extends State<EventAddScreen> {
     selectedSportType.dispose();
     selectedEventType.dispose();
 
+    registrationDate.dispose();
+    registrationEndDate.dispose();
+
+    eventStartDate.dispose();
+    eventEndDate.dispose();
+
+    selectedAgesGroup.dispose();
+    selectedSkillLevel.dispose();
+    availableSlot.dispose();
+    zipCode.dispose();
+    location.dispose();
+    city.dispose();
+
+    link.dispose();
+    eventFee.dispose();
+    quillController.dispose();
+
     super.dispose();
   }
+
+  void clear() {
+    eventName.clear();
+    eventDescription.clear();
+    eventPhoneNumber.clear();
+    selectedImage.value = null;
+    selectedSportType.value = null;
+    selectedEventType.value = null;
+
+    registrationDate.value = null;
+    registrationEndDate.value = null;
+    eventStartDate.value = null;
+    eventEndDate.value = null;
+
+    selectedAgesGroup.value = null;
+    selectedSkillLevel.value = null;
+    availableSlot.clear();
+    zipCode.clear();
+    location.value = null;
+    city.clear();
+
+    link.clear();
+    eventFee.clear();
+    quillController.clear();
+
+    pageController.jumpToPage(0);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +144,6 @@ class _EventAddScreenState extends State<EventAddScreen> {
             EventAddPageThree(
               pageController: pageController,
               formKey: formKey,
-
               selectedAgesGroup: selectedAgesGroup,
               selectedSkillLevel: selectedSkillLevel,
               availableSlot: availableSlot,
@@ -110,10 +154,66 @@ class _EventAddScreenState extends State<EventAddScreen> {
             EventAddPageFour(
               pageController: pageController,
               formKey: formKey,
-
               link: link,
               eventFee: eventFee,
               quillController: quillController,
+              onComplete: () {
+                clear();
+              },
+              onTap: (){
+                if (formKey.currentState!.validate()) {
+                  final selected = selectedAgesGroup.value ?? "Any Age";
+
+                  int minAge = 0;
+                  int maxAge = 1000;
+
+                  if (selected == "Any Age") {
+                    minAge = 0;
+                    maxAge = 1000;
+                  } else if (selected.contains("–")) {
+                    final parts = selected.split("–");
+                    minAge = int.tryParse(parts.first.trim()) ?? 0;
+                    maxAge = int.tryParse(parts.last.replaceAll(RegExp(r'[^0-9]'), '').trim()) ?? 1000;
+                  } else if (selected.contains("+")) {
+                    minAge = int.tryParse(selected.replaceAll(RegExp(r'[^0-9]'), '').trim()) ?? 0;
+                    maxAge = 1000;
+                  }
+
+                  final entities = EventAddEntities(
+                    name: eventName.text,
+                    shortDescription: eventDescription.text,
+                    sport: selectedSportType.value ?? "",
+                    eventType: selectedEventType.value ?? "",
+                    registrationStartDate: registrationDate.value!,
+                    registrationEndDateTime: registrationEndDate.value!,
+                    eventStartDateTime: eventStartDate.value!,
+                    eventEndDateTime: eventEndDate.value!,
+                    minAge: minAge,
+                    maxAge: maxAge,
+                    skillLevel: selectedSkillLevel.value ?? "",
+                    availableSlot: int.tryParse(availableSlot.text.trim()) ?? 0,
+                    zipCode: zipCode.text.trim(),
+                    address: location.value?.address ?? "",
+                    latitude: location.value?.latitude ?? 0.0,
+                    longitude: location.value?.longitude ?? 0.0,
+                    city: city.text,
+                    websiteLink: link.text.trim(),
+                    registrationFee: double.tryParse(eventFee.text.trim()) ?? 0.0,
+                    description: quillController.document.toPlainText().trim(),
+                  );
+
+                  final List<String> imagePath = selectedImage.value != null ? [selectedImage.value!] : [];
+
+
+
+                  context.read<EventAddBloc>().add(
+                    EventAdd(
+                      entities: entities,
+                      imagePath: imagePath,
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),

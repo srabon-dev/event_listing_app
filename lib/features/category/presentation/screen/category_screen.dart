@@ -39,8 +39,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
               return Center(child: Text(state.message));
             }
 
-            if (state is CategoryLoaded && state.categories.isNotEmpty) {
-              final displayItems = state.categories.toList();
+            if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
+              final displayItems = state.categories.getSports().toList();
               return RefreshIndicator(
                 onRefresh: () async {
                   controller.getCategories();
@@ -61,14 +61,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   itemBuilder: (context, index) {
                     final item = displayItems[index];
                     return CategoryBoxCardWidget(
-                      name: item["name"]!,
-                      image: item["image"]!,
-                      onTap: () {
+                      name: item.name,
+                      image: item.categoryImage,
+                      /*onTap: () {
                         AppRouter.route.pushNamed(
                           RoutePath.categoryEventsScreen,
-                          extra: {"title": item["name"]!, "id": ""},
+                          extra: {"title": item.name, "id": item.id},
                         );
-                      },
+                      },*/
                     );
                   },
                 ),

@@ -15,7 +15,7 @@ final class EventDetailsLoading extends EventDetailsState {
 }
 
 class EventDetailsLoaded extends EventDetailsState {
-  final Map<String, String> data;
+  final EventDetailsEntity data;
   const EventDetailsLoaded(this.data);
 
   @override

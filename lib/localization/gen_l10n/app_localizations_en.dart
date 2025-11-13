@@ -133,6 +133,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get management_onboarding_title_three => 'Go Live & Reach Families';
 
   @override
+  String get pleaseUploadImage => 'Please upload an event image';
+
+  @override
+  String get pleaseSelectAllDates => 'Please Select All Dates';
+
+  @override
+  String get pleaseSelectAgeGroup => 'Please Select Age Group';
+
+  @override
+  String get pleaseSelectSkillLevel => 'Please Select Skill Level';
+
+  @override
+  String get pleaseDescribeYourEvent => 'Please Describe Your Event';
+
+  @override
   String get skip => 'Skip';
 
   @override
@@ -246,6 +261,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get log_in_to_your_account_to_find =>
       'Log in to your account to find events or manage your listings.';
+
+  @override
+  String get invalidWebsiteUrl => 'Please enter a valid website URL.';
+
+  @override
+  String get upcoming => 'Upcoming';
 
   @override
   String get logIn => 'Log In';

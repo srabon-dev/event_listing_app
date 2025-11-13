@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
       endDrawer: SearchDrawer(
         controller: controller,
       ),
-      body: Padding(
+      /*body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         child: RefreshIndicator(
           onRefresh: () async {
@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ),
-      ),
+      ),*/
     );
   }
 }

@@ -1,23 +1,37 @@
-class EventCardEntity {
-  final String? title;
-  final String? location;
-  final String? coverImage;
-  final DateTime? eventDateStart;
-  final DateTime? eventDateEnd;
-  final String? ages;
-  final String? category;
-  final String? ratings;
+class ManagementEntities {
   final String id;
+  final String name;
+  final String? shortDescription;
+  final String? description;
+  final String? sport;
+  final String? eventType;
+  final DateTime eventStart;
+  final DateTime eventEnd;
+  final num? minAge;
+  final num? maxAge;
+  final String? skillLevel;
+  final num? availableSlot;
+  final String? city;
+  final String? address;
+  final String? image;
+  final num? rating;
 
-  const EventCardEntity({
-    this.title,
-    this.location,
-    this.coverImage,
-    this.eventDateStart,
-    this.eventDateEnd,
-    this.ages,
-    this.category,
-    this.ratings,
+  ManagementEntities({
     required this.id,
+    required this.name,
+    this.shortDescription,
+    this.description,
+    this.sport,
+    this.eventType,
+    required this.eventStart,
+    required this.eventEnd,
+    this.minAge,
+    this.maxAge,
+    this.skillLevel,
+    this.availableSlot,
+    this.city,
+    this.address,
+    this.image,
+    this.rating,
   });
 }

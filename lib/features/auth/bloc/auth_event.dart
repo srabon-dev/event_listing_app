@@ -68,6 +68,7 @@ class SignUpEvent extends AuthEvent {
   @override
   List<Object?> get props => [name, email, password, confirmPassword];
 }
+
 class SignUpOTPEvent extends AuthEvent {
   const SignUpOTPEvent({required this.email, required this.otp});
 

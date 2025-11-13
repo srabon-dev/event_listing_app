@@ -2,7 +2,7 @@ import '../../../app_export.dart';
 
 class EventCardWidget extends StatelessWidget {
   const EventCardWidget({super.key, required this.event, this.onTap});
-  final EventCardEntity event;
+  final ManagementEntities event;
   final VoidCallback? onTap;
 
   @override
@@ -22,17 +22,17 @@ class EventCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CurvedCornerCard(
-              imageUrl: event.coverImage ?? "https://picsum.photos/450/300",
-              dateTime: DateConverter.formatDateRange(startDate: event.eventDateStart, endDate: event.eventDateEnd),
+              imageUrl: event.image ?? "https://picsum.photos/450/300",
+              dateTime: DateConverter.formatDateRange(startDate: event.eventStart, endDate: event.eventEnd),
               height: 250,
             ),
-            Text(event.title ?? context.loc.unknown, style: context.headlineSmall),
+            Text(event.name ?? context.loc.unknown, style: context.headlineSmall),
             Row(
               spacing: 6,
               children: [
                 Assets.icons.location.svg(height: 20, width: 20),
                 Text(
-                  event.location ?? context.loc.unknown,
+                  event.address ?? context.loc.unknown,
                   style: context.titleMedium.copyWith(fontWeight: FontWeight.w100),
                 ),
               ],
@@ -47,7 +47,7 @@ class EventCardWidget extends StatelessWidget {
                     children: [
                       Text(context.loc.ages, style: context.titleMedium),
                       Text(
-                        event.ages ?? context.loc.unknown,
+                        getAgeRangeLabel(event.minAge ?? 0, event.maxAge ?? 0),
                         style: context.titleMedium.copyWith(fontWeight: FontWeight.w100),
                         maxLines: 1,
                       ),
@@ -61,7 +61,7 @@ class EventCardWidget extends StatelessWidget {
                     children: [
                       Text(context.loc.sport, style: context.titleMedium),
                       Text(
-                        event.category ?? context.loc.unknown,
+                        event.sport ?? context.loc.unknown,
                         style: context.titleMedium.copyWith(fontWeight: FontWeight.w100),
                         maxLines: 1,
                       ),
@@ -79,7 +79,7 @@ class EventCardWidget extends StatelessWidget {
                         children: [
                           Assets.icons.star.svg(),
                           Text(
-                            event.ratings ?? context.loc.unknown,
+                            event.rating?.toString() ?? context.loc.unknown,
                             style: context.titleMedium.copyWith(
                               fontWeight: FontWeight.w100,
                             ),
