@@ -45,7 +45,7 @@ class EventDetailsLocationSection extends StatelessWidget {
                           style: context.titleMedium.copyWith(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "Los Angeles, CA – Griffith Park Fields",
+                          data.address ?? context.loc.unknown,
                           maxLines: 2,
                           style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400),
                         ),
@@ -61,7 +61,13 @@ class EventDetailsLocationSection extends StatelessWidget {
                   border: Border.all(color: AppColors.skyLight),
                   borderRadius: BorderRadius.circular(12)
                 ),
-                child: const Center(child: Text("Google Map")),
+                child: StaticMapView(
+                  height: 200,
+                  width: context.width,
+                  lat: data.location?.coordinates?.lastOrNull,
+                  lng: data.location?.coordinates?.firstOrNull,
+                  apiKey: AppConfig.googleMapAPIKey,
+                ),
               ),
             ],
           ),

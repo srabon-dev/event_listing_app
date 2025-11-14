@@ -99,7 +99,7 @@ extension EventDetailsMapper on EventDetailsModel {
       email: data?.organizer!.email,
       phone: data?.organizer!.phone,
       address: data?.organizer!.address,
-      profileImage: data?.organizer!.profileImage,
+      profileImage: data?.organizer!.profileImage != null && data!.organizer!.profileImage!.isNotEmpty? data?.organizer!.profileImage : "https://picsum.photos/450/300" ,
     ) : null,
     location: data?.location != null ? EventDetailsLocationEntity(
       type: data?.location!.type,

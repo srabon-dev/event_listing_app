@@ -2,6 +2,7 @@ import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsOrganizerSection extends StatelessWidget {
   const EventDetailsOrganizerSection({super.key, required this.data});
+
   final EventDetailsEntity data;
 
   @override
@@ -20,12 +21,15 @@ class EventDetailsOrganizerSection extends StatelessWidget {
               Container(
                 height: 60,
                 width: 60,
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(8),
                 decoration: const BoxDecoration(
                   color: AppColors.softBrandColor,
                   shape: BoxShape.circle,
                 ),
-                child: CustomNetworkImage(imageUrl: data.organizer?.profileImage ?? "https://picsum.photos/450/300"),
+                child: CustomNetworkImage(
+                  imageUrl: data.organizer?.profileImage ?? "https://picsum.photos/450/300",
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,29 +120,30 @@ class EventDetailsOrganizerSection extends StatelessWidget {
                 children: [
                   buildRowCard(
                     context: context,
-                    networkImageUrl: "https://picsum.photos/450/300",
+                    networkImageUrl:
+                        data.organizer?.profileImage ?? "https://picsum.photos/450/300",
                     title: context.loc.organizedBy,
-                    value: "Youth Sport Club",
+                    value: data.organizer?.businessName ?? context.loc.unknown,
                     isOrganizer: true,
                   ),
                   buildRowCard(
                     context: context,
                     svgIcon: Assets.icons.starGray,
                     title: context.loc.ratings,
-                    value: "4.9 (24)",
+                    value: data.averageRating?.toString() ?? context.loc.unknown,
                     isRating: true,
                   ),
                   buildRowCard(
                     context: context,
                     svgIcon: Assets.icons.email,
                     title: context.loc.contactEmail,
-                    value: "info@youthSportclub.com",
+                    value: data.organizer?.email ?? context.loc.unknown,
                   ),
                   buildRowCard(
                     context: context,
                     svgIcon: Assets.icons.call,
                     title: context.loc.contactPhone,
-                    value: "+1 (555) 123-4567",
+                    value: data.organizer?.phone ?? context.loc.unknown,
                   ),
                 ],
               ),
@@ -163,10 +168,7 @@ class EventDetailsOrganizerSection extends StatelessWidget {
 
     Widget buildImageWidget() {
       if (hasSvg) {
-        return Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: svgIcon.svg(),
-        );
+        return Padding(padding: const EdgeInsets.all(5.0), child: svgIcon.svg());
       } else if (hasNetworkImage) {
         return CustomNetworkImage(
           imageUrl: networkImageUrl!,

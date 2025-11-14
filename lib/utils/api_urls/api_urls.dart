@@ -30,6 +30,45 @@ class ApiUrls {
 
     return buffer.toString();
   }
+  static String getAllEvents({String? status, required int page}) {
+    final buffer = StringBuffer('$base/event/get-all?page=$page&limit=10');
+
+    if (status != null && status.isNotEmpty) {
+      buffer.write('&status=$status');
+    }
+
+    return buffer.toString();
+  }
+
+  static String getAllSearchEvents({
+    required int page,
+    String? status,
+    String? searchTerm,
+    String? sport,
+    String? eventType,
+    int? minAge,
+    int? maxAge,
+    String? skillLevel,
+  }) {
+    final buffer = StringBuffer('$base/event/get-all?page=$page');
+
+    void appendParam(String key, String? value) {
+      if (value != null && value.isNotEmpty) {
+        buffer.write('&$key=$value');
+      }
+    }
+
+    appendParam('status', status);
+    appendParam('searchTerm', searchTerm);
+    appendParam('sport', sport);
+    appendParam('eventType', eventType);
+    appendParam('minAge', minAge.toString());
+    appendParam('maxAge', maxAge.toString());
+    appendParam('skillLevel', skillLevel);
+
+    return buffer.toString();
+  }
+
 
 
   static String privacy() => '$base/manage/get-privacy-policy';

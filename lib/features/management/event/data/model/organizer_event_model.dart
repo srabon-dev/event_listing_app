@@ -40,7 +40,7 @@ class OrganizerData {
 
 class OrganizerEventItem {
   final String? id;
-  final String? organizer;
+  // final String? organizer;
   final String? name;
   final String? shortDescription;
   final OrganizerEventType? sport;
@@ -67,7 +67,7 @@ class OrganizerEventItem {
 
   OrganizerEventItem({
     this.id,
-    this.organizer,
+    // this.organizer,
     this.name,
     this.shortDescription,
     this.sport,
@@ -95,7 +95,7 @@ class OrganizerEventItem {
 
   factory OrganizerEventItem.fromJson(Map<String, dynamic> json) => OrganizerEventItem(
     id: json["_id"],
-    organizer: json["organizer"],
+    // organizer: json["organizer"],
     name: json["name"],
     shortDescription: json["shortDescription"],
     sport: json["sport"] == null ? null : OrganizerEventType.fromJson(json["sport"]),
@@ -123,7 +123,7 @@ class OrganizerEventItem {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "organizer": organizer,
+    // "organizer": organizer,
     "name": name,
     "shortDescription": shortDescription,
     "sport": sport?.toJson(),

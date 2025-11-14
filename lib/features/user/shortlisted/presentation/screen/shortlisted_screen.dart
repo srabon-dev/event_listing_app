@@ -10,11 +10,23 @@ class ShortlistedScreen extends StatefulWidget {
 class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
+  late final ShortlistedCubit controller;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    controller = context.read<ShortlistedCubit>();
+
+    controller.pagingController.addPageRequestListener((pageKey) {
+      controller.get(pageKey: pageKey);
+    });
+    controller.pagingController1.addPageRequestListener((pageKey) {
+      controller.get1(pageKey: pageKey);
+    });
+    controller.pagingController2.addPageRequestListener((pageKey) {
+      controller.get2(pageKey: pageKey);
+    });
   }
 
   @override
@@ -95,65 +107,56 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
           children: [
             RefreshIndicator(
               onRefresh: () async {
-
+                controller.pagingController.refresh();
               },
-              child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index){
-                  return EventCardWidget(
-                    onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                    },
-                    event: ManagementEntities(
-                      id: "",
-                      name: "",
-                      eventEnd: DateTime.now(),
-                      eventStart: DateTime.now(),
-                    ),
-                  );
-                },
+              child: PagedListView<int, OrganizerEventItem>(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                    itemBuilder: (_, item, _) {
+                      return EventCardWidget(
+                        onTap: (){
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                        },
+                        event: item.toEntity(),
+                      );
+                    }
+                ),
               ),
             ),
             RefreshIndicator(
               onRefresh: () async {
-
+                controller.pagingController1.refresh();
               },
-              child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index){
-                  return EventCardWidget(
-                    onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                    },
-                    event: ManagementEntities(
-                      id: "",
-                      name: "",
-                      eventEnd: DateTime.now(),
-                      eventStart: DateTime.now(),
-                    ),
-                  );
-                },
+              child: PagedListView<int, OrganizerEventItem>(
+                pagingController: controller.pagingController1,
+                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                    itemBuilder: (_, item, _) {
+                      return EventCardWidget(
+                        onTap: (){
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                        },
+                        event: item.toEntity(),
+                      );
+                    }
+                ),
               ),
             ),
             RefreshIndicator(
               onRefresh: () async {
-
+                controller.pagingController2.refresh();
               },
-              child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index){
-                  return EventCardWidget(
-                    onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
-                    },
-                    event: ManagementEntities(
-                      id: "",
-                      name: "",
-                      eventEnd: DateTime.now(),
-                      eventStart: DateTime.now(),
-                    ),
-                  );
-                },
+              child: PagedListView<int, OrganizerEventItem>(
+                pagingController: controller.pagingController2,
+                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                    itemBuilder: (_, item, _) {
+                      return EventCardWidget(
+                        onTap: (){
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                        },
+                        event: item.toEntity(),
+                      );
+                    }
+                ),
               ),
             ),
           ],

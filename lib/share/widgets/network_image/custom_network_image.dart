@@ -36,16 +36,11 @@ class CustomNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null || imageUrl!.isEmpty) {
-      return Container(
+      return CachedNetworkImage(
         height: height,
         width: width,
-        decoration: BoxDecoration(
-          border: border,
-          color: Colors.grey.withValues(alpha: 0.6),
-          borderRadius: borderRadius,
-          shape: boxShape,
-        ),
-        child: const Icon(Icons.error),
+        imageUrl: "https://picsum.photos/450/300",
+        fit: BoxFit.cover,
       );
     }
 

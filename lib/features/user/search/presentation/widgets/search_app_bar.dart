@@ -1,7 +1,13 @@
 import 'package:event_listing_app/app_export.dart';
 
-class SearchAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const SearchAppBar({super.key, required this.searchController, required this.controller, required this.globalKey});
+class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const SearchAppBar({
+    super.key,
+    required this.searchController,
+    required this.controller,
+    required this.globalKey,
+  });
+
   final TextEditingController searchController;
   final SearchScreenCubit controller;
   final GlobalKey<ScaffoldState> globalKey;
@@ -24,7 +30,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget{
                 textInputAction: TextInputAction.done,
                 prefixIcon: const Icon(Icons.search),
                 onFieldSubmitted: (value) {
-                  controller.setSearch(value);
+                  controller.pagingController.refresh();
                 },
               ),
             ),

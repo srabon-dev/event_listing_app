@@ -48,6 +48,7 @@
   "pleaseSelectAgeGroup": "Please Select Age Group",
   "pleaseSelectSkillLevel": "Please Select Skill Level",
   "pleaseDescribeYourEvent": "Please Describe Your Event",
+  "status": "Event Status",
 
   "skip": "Skip",
   "next": "Next",

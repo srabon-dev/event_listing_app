@@ -75,7 +75,8 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-
+          controller.pagingController.refresh();
+          categoryController.getCategories();
         },
         child: CustomScrollView(
           slivers: [

@@ -148,6 +148,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get pleaseDescribeYourEvent => 'Please Describe Your Event';
 
   @override
+  String get status => 'Event Status';
+
+  @override
   String get skip => 'বাদ দিন';
 
   @override

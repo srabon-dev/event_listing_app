@@ -1,5 +1,3 @@
-import 'package:event_listing_app/features/management/event_add/data/repository/event_add_repository.dart';
-
 import 'app.dart';
 import 'app_export.dart';
 
@@ -23,6 +21,7 @@ Future<void> main() async {
           create: (_) => EventListCubit(
             pagingController: PagingController(firstPageKey: 1),
             db: sl<ILocalService>(),
+            repository: HomeRepository(apiClient: sl<IApiClient>())
           ),
         ),
         BlocProvider<ManagementHomeCubit>(
@@ -44,6 +43,7 @@ Future<void> main() async {
             pagingController1: PagingController(firstPageKey: 1),
             pagingController2: PagingController(firstPageKey: 1),
             db: sl<ILocalService>(),
+            repository: ShortlistedRepository(apiClient: sl<IApiClient>())
           ),
         ),
         BlocProvider<MyEventCubit>(
@@ -60,6 +60,7 @@ Future<void> main() async {
           create: (_) => SearchScreenCubit(
             pagingController: PagingController(firstPageKey: 1),
             db: sl<ILocalService>(),
+            repository: SearchRepository(apiClient: sl<IApiClient>())
           ),
         ),
         BlocProvider<EventAddBloc>(

@@ -10,5 +10,6 @@ export 'text_field/custom_error_text_field.dart';
 export 'dialog/custom_dialog.dart';
 export 'no_internet/error_widgets_exports.dart';
 export 'rich_text/rich_text_widget.dart';
+export 'map/static_map_view.dart';
 
 export 'card/event_card_widget.dart';

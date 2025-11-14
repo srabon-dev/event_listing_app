@@ -18,6 +18,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     controller = context.read<EventListCubit>();
     categoryController = context.read<CategoryCubit>();
     navigationController = context.read<NavigationCubit>();
+
+    controller.pagingController.addPageRequestListener((pageKey) {
+      controller.get(pageKey: pageKey);
+    });
   }
 
   @override
@@ -72,7 +76,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           categoryController.getCategories();
-
+          controller.pagingController.refresh();
         },
         child: CustomScrollView(
           slivers: [
@@ -174,25 +178,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 ),
               ),
             ),
-            /*SliverPadding(
+            SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
-              sliver: PagedSliverList<int, String>(
+              sliver: PagedSliverList<int, OrganizerEventItem>(
                 pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<String>(
-                    itemBuilder: (BuildContext context, String item, int index) {
+                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                    itemBuilder: (BuildContext context, OrganizerEventItem item, int index) {
                       return EventCardWidget(
-                        onTap: () {
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: "id");
+                        onTap: (){
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
                         },
-                        event: EventCardEntity(
-                          id: "",
-                          coverImage: item,
-                        ),
+                        event: item.toEntity(),
                       );
                     }
                 ),
               ),
-            ),*/
+            ),
           ],
         ),
       ),

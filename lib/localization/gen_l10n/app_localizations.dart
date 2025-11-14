@@ -350,6 +350,12 @@ abstract class AppLocalizations {
   /// **'Please Describe Your Event'**
   String get pleaseDescribeYourEvent;
 
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Status'**
+  String get status;
+
   /// No description provided for @skip.
   ///
   /// In en, this message translates to:
