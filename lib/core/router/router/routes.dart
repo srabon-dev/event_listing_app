@@ -148,9 +148,14 @@ class AppRouter {
         name: RoutePath.eventDetailsScreen,
         path: RoutePath.eventDetailsScreen.addBasePath,
         pageBuilder: (context, state) {
-          final id = state.extra as String? ?? "69102ad94e31099d62b8f014";
+          final extra = state.extra;
+          final map = (extra is Map<String, dynamic>) ? extra : {};
+
+          final id = map['id'] as String? ?? '';
+          final isUser = map['isUser'] as bool? ?? false;
+
           return _buildPageWithAnimation(
-            child: EventDetailsScreen(id: id),
+            child: EventDetailsScreen(id: id, isUser: isUser),
             state: state,
           );
         },

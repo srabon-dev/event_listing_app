@@ -1,57 +1,68 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailsOrganizerSection extends StatelessWidget {
-  const EventDetailsOrganizerSection({super.key, required this.data});
+  const EventDetailsOrganizerSection({
+    super.key,
+    required this.data,
+    required this.isUser,
+    required this.id,
+  });
 
+  final bool isUser;
   final EventDetailsEntity data;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.skyLight),
-          ),
-          child: Row(
-            spacing: 8,
-            children: [
-              Container(
-                height: 60,
-                width: 60,
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: AppColors.softBrandColor,
-                  shape: BoxShape.circle,
-                ),
-                child: CustomNetworkImage(
-                  imageUrl: data.organizer?.profileImage ?? "https://picsum.photos/450/300",
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data.organizer?.name ?? "",
-                    style: context.titleMedium.copyWith(fontWeight: FontWeight.w500),
+        if (isUser && data.ratingData?.user?.name != null)
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.skyLight),
+            ),
+            child: Row(
+              spacing: 8,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: AppColors.softBrandColor,
+                    shape: BoxShape.circle,
                   ),
-                  Row(
-                    children: [
-                      Assets.icons.star.svg(),
-                      Text(
-                        formatRating(data.averageRating ?? 0),
-                        style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400),
-                      ),
-                    ],
+                  child: CustomNetworkImage(
+                    imageUrl:
+                        data.ratingData?.user?.profileImage ?? "https://picsum.photos/450/300",
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                ],
-              ),
-            ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.ratingData?.user?.name ?? context.loc.unknown,
+                      style: context.titleMedium.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    Row(
+                      children: [
+                        Assets.icons.star.svg(),
+                        Text(
+                          formatRating(data.ratingData?.rating ?? 0),
+                          style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
@@ -86,31 +97,100 @@ class EventDetailsOrganizerSection extends StatelessWidget {
                   Row(
                     spacing: 12,
                     children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        padding: const EdgeInsets.all(14),
-                        decoration: const BoxDecoration(
-                          color: AppColors.softBrandColor,
-                          shape: BoxShape.circle,
+                      if (isUser)
+                        GestureDetector(
+                          onTap: () {
+                            context.read<BookmarkCubit>().toggleBookmark(id: id);
+                          },
+                          child: BlocConsumer<BookmarkCubit, BookmarkState>(
+                            listener: (context, state) {
+                              if (state is BookmarkToggle && state.message != null) {
+                                AppToast.success(message: state.message);
+                              }
+
+                              if (state is BookmarkToggle && state.isVerified) {
+                                context.read<EventDetailsCubit>().getEventDetails(id: id);
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state is BookmarkToggle && state.isLoading) {
+                                return const LoadingWidget();
+                              }
+                              return Container(
+                                height: 50,
+                                width: 50,
+                                padding: const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                  color: data.isBookmark == true
+                                      ? AppColors.brandHoverColor
+                                      : AppColors.softBrandColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Assets.icons.bookmark.svg(
+                                  colorFilter: data.isBookmark == true
+                                      ? const ColorFilter.mode(AppColors.white, BlendMode.srcIn)
+                                      : null,
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                        child: Assets.icons.bookmark.svg(),
-                      ),
-                      Container(
-                        height: 50,
-                        width: 50,
-                        padding: const EdgeInsets.all(14),
-                        decoration: const BoxDecoration(
-                          color: AppColors.softBrandColor,
-                          shape: BoxShape.circle,
+                      GestureDetector(
+                        onTap: () {
+                          try {
+                            SharePlus.instance.share(
+                              ShareParams(
+                                text:
+                                    'Check out this event: ${data.name}\n${data.websiteLink ?? ""}',
+                              ),
+                            );
+                          } finally {}
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          padding: const EdgeInsets.all(14),
+                          decoration: const BoxDecoration(
+                            color: AppColors.softBrandColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Assets.icons.share.svg(),
                         ),
-                        child: Assets.icons.share.svg(),
                       ),
                     ],
                   ),
                 ],
               ),
-              CustomButton(text: context.loc.goToEventRegistrationLink, onTap: () {}),
+              CustomButton(
+                text: context.loc.goToEventRegistrationLink,
+                onTap: () async {
+                  try {
+                    final url = data.websiteLink;
+
+                    if (url == null || url.trim().isEmpty) {
+                      AppToast.warning(
+                        message: "No registration link is available for this event.",
+                      );
+                      return;
+                    }
+
+                    final uri = Uri.parse(url);
+
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    } else {
+                      AppToast.warning(
+                        message: "We couldn't open the registration link. Please try again.",
+                      );
+                    }
+                  } catch (e) {
+                    AppToast.warning(
+                      message:
+                          "Unable to open the link. Check your internet connection and try again.",
+                    );
+                  }
+                },
+              ),
               Text(
                 context.loc.organizer_info,
                 style: context.titleLarge.copyWith(fontWeight: FontWeight.w500),
@@ -130,7 +210,7 @@ class EventDetailsOrganizerSection extends StatelessWidget {
                     context: context,
                     svgIcon: Assets.icons.starGray,
                     title: context.loc.ratings,
-                    value: data.averageRating?.toString() ?? context.loc.unknown,
+                    value: "${data.averageRating ?? 0} (${data.totalRating ?? 0})",
                     isRating: true,
                   ),
                   buildRowCard(

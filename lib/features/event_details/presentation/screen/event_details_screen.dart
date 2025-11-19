@@ -7,9 +7,10 @@ import '../widgets/event_details_organizer_section.dart';
 import '../widgets/event_details_top_section_widget.dart';
 
 class EventDetailsScreen extends StatelessWidget {
-  const EventDetailsScreen({super.key, required this.id});
+  const EventDetailsScreen({super.key, required this.id, required this.isUser});
 
   final String id;
+  final bool isUser;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +19,16 @@ class EventDetailsScreen extends StatelessWidget {
         db: sl<ILocalService>(),
         repository: EventDetailsRepository(apiClient: sl<IApiClient>()),
       ),
-      child: _View(id: id),
+      child: _View(id: id, isUser: isUser),
     );
   }
 }
 
 class _View extends StatefulWidget {
-  const _View({required this.id});
+  const _View({required this.id, required this.isUser});
 
   final String id;
+  final bool isUser;
 
   @override
   State<_View> createState() => _ViewState();
@@ -77,9 +79,22 @@ class _ViewState extends State<_View> {
                     const SliverGap(18),
                     SliverToBoxAdapter(child: EventDetailsAboutSection(data: data)),
                     const SliverGap(18),
-                    SliverToBoxAdapter(child: EventDetailsDescriptionSection(data: data)),
+                    SliverToBoxAdapter(
+                      child: EventDetailsDescriptionSection(
+                        data: data,
+                        isUser: widget.isUser,
+                        id: widget.id,
+                        controller: controller,
+                      ),
+                    ),
                     const SliverGap(18),
-                    SliverToBoxAdapter(child: EventDetailsOrganizerSection(data: data)),
+                    SliverToBoxAdapter(
+                      child: EventDetailsOrganizerSection(
+                        data: data,
+                        isUser: widget.isUser,
+                        id: widget.id,
+                      ),
+                    ),
                     const SliverGap(18),
                     SliverToBoxAdapter(child: EventDetailsLocationSection(data: data)),
                     const SliverGap(44),

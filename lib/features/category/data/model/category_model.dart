@@ -1,7 +1,7 @@
 class CategoryModel {
   final bool? success;
   final String? message;
-  final List<CategoryItem>? data;
+  final CategoryData? data;
 
   CategoryModel({
     this.success,
@@ -12,13 +12,29 @@ class CategoryModel {
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
     success: json["success"],
     message: json["message"],
-    data: json["data"] == null ? [] : List<CategoryItem>.from(json["data"]!.map((x) => CategoryItem.fromJson(x))),
+    data: json["data"] == null ? null : CategoryData.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": data?.toJson(),
+  };
+}
+
+class CategoryData {
+  final List<CategoryItem>? result;
+
+  CategoryData({
+    this.result,
+  });
+
+  factory CategoryData.fromJson(Map<String, dynamic> json) => CategoryData(
+    result: json["result"] == null ? [] : List<CategoryItem>.from(json["result"]!.map((x) => CategoryItem.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "result": result == null ? [] : List<dynamic>.from(result!.map((x) => x.toJson())),
   };
 }
 

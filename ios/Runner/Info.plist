@@ -56,5 +56,11 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to show nearby places on the map and pick an event location.</string>
 
+	<!-- Open external browser -->
+	<key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key><true/>
+    </dict>
+
 </dict>
 </plist>

@@ -21,6 +21,7 @@ class SearchScreenCubit extends Cubit<void> {
     String? eventType,
     String? selectedAge,
     String? skillLevel,
+    String? zipCode,
   }) async {
     if (isLoadingMove) return;
     isLoadingMove = true;
@@ -68,6 +69,7 @@ class SearchScreenCubit extends Cubit<void> {
           minAge: minAge,
           maxAge: maxAge,
           skillLevel: skillLevel,
+          zipCode: zipCode,
         ),
         token: token,
       );

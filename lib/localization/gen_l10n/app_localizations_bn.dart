@@ -151,6 +151,19 @@ class AppLocalizationsBn extends AppLocalizations {
   String get status => 'Event Status';
 
   @override
+  String get giveFeedback => 'Give Feedback';
+
+  @override
+  String get leaveFeedback => 'Leave Feedback';
+
+  @override
+  String get how_was_your_experience_attending_this_event =>
+      'How was your experience attending this event?';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
   String get skip => 'বাদ দিন';
 
   @override

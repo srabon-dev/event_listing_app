@@ -158,7 +158,7 @@ class EventAddPageFour extends StatelessWidget {
                     builder: (context, state) {
                       final data = state is EventState && state.isLoading;
                       if(data) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const LoadingWidget();
                       }
                       return Text(context.loc.savePublish);
                     },

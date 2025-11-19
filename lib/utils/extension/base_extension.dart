@@ -39,14 +39,22 @@ extension ContextExtensions on BuildContext {
 
 extension CategoryMapper on CategoryModel {
   List<CategoryEntities> toEntities() {
-    if (data == null || data!.isEmpty) return [];
+    final items = data?.result;
+    if (items == null || items.isEmpty) return [];
 
-    return data!.where((item) => item.id != null && item.id!.trim().isNotEmpty).map((item) => CategoryEntities(
-      id: item.id!,
-      name: item.name ?? "Unknown",
-      type: item.type ?? "",
-      categoryImage: item.categoryImage ?? AppConfig.defaultCategory,
-    )).toList();
+    return items.where((item) {
+      final idValid = item.id != null && item.id!.trim().isNotEmpty;
+      final img = item.categoryImage ?? "";
+      final isSvg = img.toLowerCase().trim().endsWith(".svg");
+
+      return idValid && isSvg;
+    }).map((item) => CategoryEntities(
+        id: item.id!,
+        name: item.name ?? "Unknown",
+        type: item.type ?? "",
+        categoryImage: item.categoryImage ?? AppConfig.defaultCategory,
+      ),
+    ).toList();
   }
 
   List<CategoryEntities> getAll() => toEntities();
@@ -74,9 +82,21 @@ extension EventDetailsMapper on EventDetailsModel {
     skillLevel: data?.skillLevel,
     isDeleted: data?.isDeleted,
     averageRating: data?.averageRating,
+    totalRating: data?.totalRating,
+    isBookmark: data?.isBookmark,
+    ratingData: data?.ratingData != null ? EventDetailsRatingDataEntity(
+      id: data!.ratingData!.id,
+      event: data!.ratingData!.event,
+      rating: data!.ratingData!.rating,
+      user: data!.ratingData!.user != null ? EventDetailsRatingUserEntity(
+        id: data!.ratingData!.user!.id,
+        name: data!.ratingData!.user!.name,
+        profileImage: data!.ratingData!.user!.profileImage,
+      ) : null,
+    ) : null,
     image: data?.image,
     status: data?.status,
-    registrationStartDate: data?.registrationStartDate,
+    registrationStartDate: data?.registrationStartDateTime,
     registrationEndDateTime: data?.registrationEndDateTime,
     eventStartDateTime: data?.eventStartDateTime,
     eventEndDateTime: data?.eventEndDateTime,

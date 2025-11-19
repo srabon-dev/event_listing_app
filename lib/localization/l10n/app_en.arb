@@ -49,6 +49,10 @@
   "pleaseSelectSkillLevel": "Please Select Skill Level",
   "pleaseDescribeYourEvent": "Please Describe Your Event",
   "status": "Event Status",
+  "giveFeedback": "Give Feedback",
+  "leaveFeedback": "Leave Feedback",
+  "how_was_your_experience_attending_this_event": "How was your experience attending this event?",
+  "submit": "Submit",
 
   "skip": "Skip",
   "next": "Next",

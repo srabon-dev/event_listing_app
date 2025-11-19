@@ -29,7 +29,7 @@ class EventDetailsData {
   final String? shortDescription;
   final EventDetailsEventType? sport;
   final EventDetailsEventType? eventType;
-  final DateTime? registrationStartDate;
+  final DateTime? registrationStartDateTime;
   final DateTime? registrationEndDateTime;
   final DateTime? eventStartDateTime;
   final DateTime? eventEndDateTime;
@@ -45,12 +45,15 @@ class EventDetailsData {
   final num? registrationFee;
   final String? description;
   final String? image;
-  final String? status;
   final bool? isDeleted;
+  final String? status;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final num? v;
   final num? averageRating;
+  final num? totalRating;
+  final EventDetailsRatingData? ratingData;
+  final bool? isBookmark;
 
   EventDetailsData({
     this.id,
@@ -59,7 +62,7 @@ class EventDetailsData {
     this.shortDescription,
     this.sport,
     this.eventType,
-    this.registrationStartDate,
+    this.registrationStartDateTime,
     this.registrationEndDateTime,
     this.eventStartDateTime,
     this.eventEndDateTime,
@@ -75,12 +78,15 @@ class EventDetailsData {
     this.registrationFee,
     this.description,
     this.image,
-    this.status,
     this.isDeleted,
+    this.status,
     this.createdAt,
     this.updatedAt,
     this.v,
     this.averageRating,
+    this.totalRating,
+    this.ratingData,
+    this.isBookmark,
   });
 
   factory EventDetailsData.fromJson(Map<String, dynamic> json) => EventDetailsData(
@@ -90,7 +96,7 @@ class EventDetailsData {
     shortDescription: json["shortDescription"],
     sport: json["sport"] == null ? null : EventDetailsEventType.fromJson(json["sport"]),
     eventType: json["eventType"] == null ? null : EventDetailsEventType.fromJson(json["eventType"]),
-    registrationStartDate: json["registrationStartDate"] == null ? null : DateTime.parse(json["registrationStartDate"]),
+    registrationStartDateTime: json["registrationStartDateTime"] == null ? null : DateTime.parse(json["registrationStartDateTime"]),
     registrationEndDateTime: json["registrationEndDateTime"] == null ? null : DateTime.parse(json["registrationEndDateTime"]),
     eventStartDateTime: json["eventStartDateTime"] == null ? null : DateTime.parse(json["eventStartDateTime"]),
     eventEndDateTime: json["eventEndDateTime"] == null ? null : DateTime.parse(json["eventEndDateTime"]),
@@ -106,22 +112,25 @@ class EventDetailsData {
     registrationFee: json["registrationFee"],
     description: json["description"],
     image: json["image"],
-    status: json["status"],
     isDeleted: json["isDeleted"],
+    status: json["status"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
-    averageRating: json["averageRating"],
+    averageRating: json["averageRating"]?.toDouble(),
+    totalRating: json["totalRating"],
+    ratingData: json["ratingData"] == null ? null : EventDetailsRatingData.fromJson(json["ratingData"]),
+    isBookmark: json["isBookmark"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "organizer": organizer,
+    "organizer": organizer?.toJson(),
     "name": name,
     "shortDescription": shortDescription,
     "sport": sport?.toJson(),
     "eventType": eventType?.toJson(),
-    "registrationStartDate": registrationStartDate?.toIso8601String(),
+    "registrationStartDateTime": registrationStartDateTime?.toIso8601String(),
     "registrationEndDateTime": registrationEndDateTime?.toIso8601String(),
     "eventStartDateTime": eventStartDateTime?.toIso8601String(),
     "eventEndDateTime": eventEndDateTime?.toIso8601String(),
@@ -136,13 +145,16 @@ class EventDetailsData {
     "websiteLink": websiteLink,
     "registrationFee": registrationFee,
     "description": description,
-    "images": image,
+    "image": image,
     "isDeleted": isDeleted,
     "status": status,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
     "averageRating": averageRating,
+    "totalRating": totalRating,
+    "ratingData": ratingData?.toJson(),
+    "isBookmark": isBookmark,
   };
 }
 
@@ -221,7 +233,7 @@ class EventDetailsOrganizer {
   final String? profileImage;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final int? v;
+  final num? v;
 
   EventDetailsOrganizer({
     this.id,
@@ -260,6 +272,46 @@ class EventDetailsOrganizer {
     "email": email,
     "address": address,
     "profile_image": profileImage,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+  };
+}
+
+class EventDetailsRatingData {
+  final String? id;
+  final EventDetailsOrganizer? user;
+  final String? event;
+  final num? rating;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final num? v;
+
+  EventDetailsRatingData({
+    this.id,
+    this.user,
+    this.event,
+    this.rating,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+  });
+
+  factory EventDetailsRatingData.fromJson(Map<String, dynamic> json) => EventDetailsRatingData(
+    id: json["_id"],
+    user: json["user"] == null ? null : EventDetailsOrganizer.fromJson(json["user"]),
+    event: json["event"],
+    rating: json["rating"]?.toDouble(),
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    v: json["__v"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "user": user?.toJson(),
+    "event": event,
+    "rating": rating,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,

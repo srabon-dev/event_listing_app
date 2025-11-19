@@ -37,11 +37,24 @@ Future<void> main() async {
             db: sl<ILocalService>(),
           ),
         ),
+        BlocProvider<BookmarkCubit>(
+          create: (_) => BookmarkCubit(
+            repository: BookmarkRepository(apiClient: sl<IApiClient>()),
+            db: sl<ILocalService>(),
+          ),
+        ),
+        BlocProvider<ReviewCubit>(
+          create: (_) => ReviewCubit(
+            repository: ReviewRepository(apiClient: sl<IApiClient>()),
+            db: sl<ILocalService>(),
+          ),
+        ),
         BlocProvider<ShortlistedCubit>(
           create: (_) => ShortlistedCubit(
             pagingController: PagingController(firstPageKey: 1),
             pagingController1: PagingController(firstPageKey: 1),
             pagingController2: PagingController(firstPageKey: 1),
+            pagingController3: PagingController(firstPageKey: 1),
             db: sl<ILocalService>(),
             repository: ShortlistedRepository(apiClient: sl<IApiClient>())
           ),

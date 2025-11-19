@@ -114,7 +114,7 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                     BlocBuilder<CategoryCubit, CategoryState>(
                       builder: (context, state) {
                         if (state is CategoryLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const LoadingWidget();
                         } else if (state is CategoryLoaded) {
                           final items = state.categories.getSports().take(4).toList();
 
@@ -183,14 +183,15 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
               sliver: PagedSliverList<int, OrganizerEventItem>(
                 pagingController: controller.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
-                    itemBuilder: (BuildContext context, OrganizerEventItem item, int index){
+                    itemBuilder: (BuildContext context, OrganizerEventItem item, int index) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false});
                         },
                         event: item.toEntity(),
                       );
-                    }
+                    },
+                  firstPageProgressIndicatorBuilder: (_)=> const LoadingWidget(),
                 ),
               ),
             ),

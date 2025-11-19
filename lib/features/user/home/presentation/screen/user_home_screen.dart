@@ -114,7 +114,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     BlocBuilder<CategoryCubit, CategoryState>(
                       builder: (context, state) {
                         if (state is CategoryLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const LoadingWidget();
                         } else if (state is CategoryLoaded) {
                           final items = state.categories.getSports().take(4).toList();
 
@@ -186,11 +186,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     itemBuilder: (BuildContext context, OrganizerEventItem item, int index) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
                         },
                         event: item.toEntity(),
                       );
-                    }
+                    },
+                  firstPageProgressIndicatorBuilder: (_)=> const LoadingWidget(),
                 ),
               ),
             ),

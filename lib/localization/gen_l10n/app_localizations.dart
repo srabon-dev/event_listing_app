@@ -356,6 +356,30 @@ abstract class AppLocalizations {
   /// **'Event Status'**
   String get status;
 
+  /// No description provided for @giveFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Give Feedback'**
+  String get giveFeedback;
+
+  /// No description provided for @leaveFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Feedback'**
+  String get leaveFeedback;
+
+  /// No description provided for @how_was_your_experience_attending_this_event.
+  ///
+  /// In en, this message translates to:
+  /// **'How was your experience attending this event?'**
+  String get how_was_your_experience_attending_this_event;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
   /// No description provided for @skip.
   ///
   /// In en, this message translates to:

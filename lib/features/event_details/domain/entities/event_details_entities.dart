@@ -14,6 +14,9 @@ class EventDetailsEntity {
   final String? skillLevel;
   final bool? isDeleted;
   final num? averageRating;
+  final num? totalRating;
+  final EventDetailsRatingDataEntity? ratingData;
+  final bool? isBookmark;
   final String? image;
   final String? status;
   final DateTime? registrationStartDate;
@@ -41,6 +44,9 @@ class EventDetailsEntity {
     this.skillLevel,
     this.isDeleted,
     this.averageRating,
+    this.totalRating,
+    this.ratingData,
+    this.isBookmark,
     this.image,
     this.status,
     this.registrationStartDate,
@@ -97,3 +103,30 @@ class EventDetailsLocationEntity {
     this.coordinates,
   });
 }
+
+class EventDetailsRatingDataEntity {
+  final String? id;
+  final String? event;
+  final num? rating;
+  final EventDetailsRatingUserEntity? user;
+
+  const EventDetailsRatingDataEntity({
+    this.id,
+    this.event,
+    this.rating,
+    this.user,
+  });
+}
+
+class EventDetailsRatingUserEntity {
+  final String? id;
+  final String? name;
+  final String? profileImage;
+
+  const EventDetailsRatingUserEntity({
+    this.id,
+    this.name,
+    this.profileImage,
+  });
+}
+

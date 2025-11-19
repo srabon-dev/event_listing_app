@@ -40,6 +40,19 @@ class ApiUrls {
     return buffer.toString();
   }
 
+  static String getFavoriteEvents({String? status, required int page}) {
+    final buffer = StringBuffer('$base/bookmark/my-bookmarks?page=$page&limit=10');
+
+    if (status != null && status.isNotEmpty) {
+      buffer.write('&eventStatus=$status');
+    }
+
+    return buffer.toString();
+  }
+
+  static String toggleBookmark({required String id}) => "$base/bookmark/add-delete-bookmark/$id";
+  static String addRating() => "$base/rating/add-rating";
+
   static String getAllSearchEvents({
     required int page,
     String? status,
@@ -49,6 +62,7 @@ class ApiUrls {
     int? minAge,
     int? maxAge,
     String? skillLevel,
+    String? zipCode,
   }) {
     final buffer = StringBuffer('$base/event/get-all?page=$page');
 
@@ -65,11 +79,13 @@ class ApiUrls {
     appendParam('minAge', minAge.toString());
     appendParam('maxAge', maxAge.toString());
     appendParam('skillLevel', skillLevel);
+    appendParam('zipCode', zipCode);
 
     return buffer.toString();
   }
 
-
+  static String getNotifications({required int page}) => '$base/notification/get-notifications?page=$page&limit=10';
+  static String deleteNotification({required String id}) => '$base//notification/delete-notification/$id';
 
   static String privacy() => '$base/manage/get-privacy-policy';
   static String terms() => '$base/manage/get-terms-conditions';

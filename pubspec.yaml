@@ -53,6 +53,7 @@ dependencies:
   #google_maps_flutter: ^2.12.3
   path_provider: ^2.1.5
   map_location_picker: ^3.1.0
+  url_launcher: ^6.3.2
 
   gap: ^3.0.1
   dropdown_button2: ^2.3.9
@@ -68,6 +69,8 @@ dependencies:
   meta: ^1.16.0
   mime: ^2.0.0
   flutter_quill: ^11.5.0
+  share_plus: ^12.0.1
+  flutter_rating: ^2.0.2
 
   flutter_localizations:
     sdk: flutter

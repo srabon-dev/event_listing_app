@@ -32,9 +32,12 @@ class CategoryBoxCardWidget extends StatelessWidget {
                 child: SvgPicture.network(image),
               ),
             ),
-            Text(
-              name,
-              style: context.titleLarge.copyWith(fontWeight: FontWeight.w500, fontSize: 24),
+            Flexible(
+              child: Text(
+                name,
+                overflow: TextOverflow.ellipsis,
+                style: context.titleLarge.copyWith(fontWeight: FontWeight.w500, fontSize: 24),
+              ),
             ),
           ],
         ),

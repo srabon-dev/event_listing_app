@@ -32,7 +32,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         body: BlocBuilder<CategoryCubit, CategoryState>(
           builder: (context, state) {
             if (state is CategoryLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const LoadingWidget();
             }
 
             if (state is CategoryError) {

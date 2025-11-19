@@ -7,11 +7,13 @@ class ShortlistedCubit extends Cubit<void> {
   final PagingController<int, OrganizerEventItem> pagingController;
   final PagingController<int, OrganizerEventItem> pagingController1;
   final PagingController<int, OrganizerEventItem> pagingController2;
+  final PagingController<int, OrganizerEventItem> pagingController3;
 
   ShortlistedCubit({
     required this.pagingController,
     required this.pagingController1,
     required this.pagingController2,
+    required this.pagingController3,
     required this.db,
     required this.repository,
   }) : super(null);
@@ -19,6 +21,7 @@ class ShortlistedCubit extends Cubit<void> {
   bool isLoading = false;
   bool isLoading1 = false;
   bool isLoading2 = false;
+  bool isLoading3 = false;
 
   Future<void> get({required int pageKey}) async {
     if (isLoading) return;
@@ -27,7 +30,7 @@ class ShortlistedCubit extends Cubit<void> {
     try {
       final token = await db.getToken();
       final response = await repository.getShortlistedEvents(
-        url: ApiUrls.getAllEvents(page: pageKey, status: "REGISTRATION_OPEN"),
+        url: ApiUrls.getFavoriteEvents(page: pageKey, status: "UPCOMING"),
         token: token,
       );
 
@@ -57,7 +60,7 @@ class ShortlistedCubit extends Cubit<void> {
     try {
       final token = await db.getToken();
       final response = await repository.getShortlistedEvents(
-        url: ApiUrls.getAllEvents(page: pageKey, status: "EVENT_STARTED"),
+        url: ApiUrls.getFavoriteEvents(page: pageKey, status: "REGISTRATION_OPEN"),
         token: token,
       );
 
@@ -87,7 +90,7 @@ class ShortlistedCubit extends Cubit<void> {
     try {
       final token = await db.getToken();
       final response = await repository.getShortlistedEvents(
-        url: ApiUrls.getAllEvents(page: pageKey, status: "EVENT_FINISHED"),
+        url: ApiUrls.getFavoriteEvents(page: pageKey, status: "EVENT_STARTED"),
         token: token,
       );
 
@@ -108,6 +111,37 @@ class ShortlistedCubit extends Cubit<void> {
       pagingController2.error = 'An error occurred';
     } finally {
       isLoading2 = false;
+    }
+  }
+
+  Future<void> get3({required int pageKey}) async {
+    if (isLoading3) return;
+    isLoading3 = true;
+
+    try {
+      final token = await db.getToken();
+      final response = await repository.getShortlistedEvents(
+        url: ApiUrls.getFavoriteEvents(page: pageKey, status: "EVENT_FINISHED"),
+        token: token,
+      );
+
+      response.fold((failure) {
+        pagingController3.error = failure.message;
+      }, (value) {
+        final newItems = value.data?.result ?? [];
+        if (newItems.isEmpty) {
+          pagingController3.appendLastPage(newItems);
+        } else {
+          pagingController3.appendPage(newItems, pageKey + 1);
+        }
+      },
+      );
+    } catch (e) {
+
+      print(e.toString());
+      pagingController3.error = 'An error occurred';
+    } finally {
+      isLoading3 = false;
     }
   }
 }

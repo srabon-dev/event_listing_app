@@ -119,7 +119,7 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                 itemBuilder: (_, item, _) {
                   return EventCardWidget(
                     onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false});
                     },
                     event: item.toEntity(),
                   );
@@ -137,7 +137,7 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                 itemBuilder: (_, item, _) {
                   return EventCardWidget(
                     onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false});
                     },
                     event: item.toEntity(),
                   );
@@ -155,7 +155,7 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                 itemBuilder: (_, item, _) {
                   return EventCardWidget(
                     onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra:{"id": item.id, "isUser": false});
                     },
                     event: item.toEntity(),
                   );
@@ -173,7 +173,7 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                 itemBuilder: (_, item, _) {
                   return EventCardWidget(
                     onTap: (){
-                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                      AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false});
                     },
                     event: item.toEntity(),
                   );

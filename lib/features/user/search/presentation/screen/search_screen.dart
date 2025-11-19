@@ -35,6 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
         eventType: selectedEventType.value,
         selectedAge: selectedAgesGroup.value,
         skillLevel: selectedSkillLevel.value,
+        zipCode: zipCode.text.trim(),
       );
     });
   }
@@ -94,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
               itemBuilder: (context, item, index) {
                 return EventCardWidget(
                   onTap: (){
-                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: item.id);
+                    AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
                   },
                   event: item.toEntity(),
                 );
