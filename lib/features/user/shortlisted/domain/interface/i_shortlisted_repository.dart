@@ -3,7 +3,7 @@ import 'package:event_listing_app/app_export.dart';
 
 abstract class IShortlistedRepository {
 
-  Future<Either<Failure, OrganizerEventModel>> getShortlistedEvents({
+  Future<Either<Failure, ShortlistedModel>> getShortlistedEvents({
     required String token,
     required String url,
   });

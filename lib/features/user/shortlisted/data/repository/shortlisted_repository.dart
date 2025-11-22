@@ -7,7 +7,7 @@ class ShortlistedRepository extends IShortlistedRepository {
   ShortlistedRepository({required this.apiClient});
 
   @override
-  Future<Either<Failure, OrganizerEventModel>> getShortlistedEvents({
+  Future<Either<Failure, ShortlistedModel>> getShortlistedEvents({
     required String token,
     required String url,
   }) async {
@@ -16,7 +16,7 @@ class ShortlistedRepository extends IShortlistedRepository {
     return response.fold((failure) {
       return Left(failure);
     }, (success) {
-      final profileModel = OrganizerEventModel.fromJson(success.data);
+      final profileModel = ShortlistedModel.fromJson(success.data);
       return Right(profileModel);
     },
     );

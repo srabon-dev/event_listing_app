@@ -113,15 +113,15 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
               onRefresh: () async {
                 controller.pagingController.refresh();
               },
-              child: PagedListView<int, OrganizerEventItem>(
+              child: PagedListView<int, ShortlistedItem>(
                 pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                builderDelegate: PagedChildBuilderDelegate<ShortlistedItem>(
                     itemBuilder: (_, item, _) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.event?.id, "isUser": true});
                         },
-                        event: item.toEntity(),
+                        event: item.toItemEntity(),
                       );
                     }
                 ),
@@ -131,15 +131,15 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
               onRefresh: () async {
                 controller.pagingController1.refresh();
               },
-              child: PagedListView<int, OrganizerEventItem>(
+              child: PagedListView<int, ShortlistedItem>(
                 pagingController: controller.pagingController1,
-                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                builderDelegate: PagedChildBuilderDelegate<ShortlistedItem>(
                     itemBuilder: (_, item, _) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.event?.id, "isUser": true});
                         },
-                        event: item.toEntity(),
+                        event: item.toItemEntity(),
                       );
                     }
                 ),
@@ -149,15 +149,15 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
               onRefresh: () async {
                 controller.pagingController2.refresh();
               },
-              child: PagedListView<int, OrganizerEventItem>(
+              child: PagedListView<int, ShortlistedItem>(
                 pagingController: controller.pagingController2,
-                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                builderDelegate: PagedChildBuilderDelegate<ShortlistedItem>(
                     itemBuilder: (_, item, _) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.event?.id, "isUser": true});
                         },
-                        event: item.toEntity(),
+                        event: item.toItemEntity(),
                       );
                     }
                 ),
@@ -167,15 +167,15 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
               onRefresh: () async {
                 controller.pagingController3.refresh();
               },
-              child: PagedListView<int, OrganizerEventItem>(
+              child: PagedListView<int, ShortlistedItem>(
                 pagingController: controller.pagingController3,
-                builderDelegate: PagedChildBuilderDelegate<OrganizerEventItem>(
+                builderDelegate: PagedChildBuilderDelegate<ShortlistedItem>(
                     itemBuilder: (_, item, _) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": true});
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.event?.id, "isUser": true});
                         },
-                        event: item.toEntity(),
+                        event: item.toItemEntity(),
                       );
                     }
                 ),

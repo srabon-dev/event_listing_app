@@ -4,10 +4,10 @@ class ShortlistedCubit extends Cubit<void> {
   final ILocalService db;
 
   final IShortlistedRepository repository;
-  final PagingController<int, OrganizerEventItem> pagingController;
-  final PagingController<int, OrganizerEventItem> pagingController1;
-  final PagingController<int, OrganizerEventItem> pagingController2;
-  final PagingController<int, OrganizerEventItem> pagingController3;
+  final PagingController<int, ShortlistedItem> pagingController;
+  final PagingController<int, ShortlistedItem> pagingController1;
+  final PagingController<int, ShortlistedItem> pagingController2;
+  final PagingController<int, ShortlistedItem> pagingController3;
 
   ShortlistedCubit({
     required this.pagingController,

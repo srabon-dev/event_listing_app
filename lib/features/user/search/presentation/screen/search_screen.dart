@@ -60,8 +60,6 @@ class _SearchScreenState extends State<SearchScreen> {
     selectedAgesGroup.dispose();
     selectedSkillLevel.dispose();
     selectedStatus.dispose();
-
-    searchController.dispose();
     zipCode.dispose();
 
     super.dispose();

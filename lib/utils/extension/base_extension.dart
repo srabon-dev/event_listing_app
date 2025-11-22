@@ -152,4 +152,27 @@ extension OrganizerEventMapper on OrganizerEventItem {
   }
 }
 
+extension ShortlistedEventMapper on ShortlistedItem {
+  ManagementEntities toItemEntity() {
+    return ManagementEntities(
+      id: event?.id ?? '',
+      name: event?.name ?? '',
+      shortDescription: event?.shortDescription,
+      description: event?.description,
+      sport: event?.sport?.name,
+      eventType: event?.eventType?.name,
+      eventStart: event?.eventStartDateTime ?? DateTime.now(),
+      eventEnd: event?.eventEndDateTime ?? DateTime.now(),
+      minAge: event?.minAge,
+      maxAge: event?.maxAge,
+      skillLevel: event?.skillLevel,
+      availableSlot: event?.availableSlot,
+      city: event?.city,
+      address: event?.address,
+      image: event?.image,
+      rating: event?.avgRating,
+    );
+  }
+}
+
 

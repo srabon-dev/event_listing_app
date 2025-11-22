@@ -13,12 +13,12 @@ class AppToast {
     final effectiveContext = context ?? AppRouter.navigatorKey.currentContext;
     if (effectiveContext == null) return;
 
+    final messenger = ScaffoldMessenger.maybeOf(effectiveContext);
+    if (messenger == null) return;
+
     final displayMessage = (message?.trim().isEmpty ?? true)
         ? effectiveContext.loc.somethingWentWrong
         : message!;
-
-    final messenger = ScaffoldMessenger.maybeOf(effectiveContext);
-    if (messenger == null) return;
 
     final defaultBgColor = backgroundColor ??
         switch (type) {
@@ -31,17 +31,17 @@ class AppToast {
     final effectiveTextColor = textColor ?? AppColors.white;
 
     messenger.clearSnackBars();
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(
-          displayMessage,
-          style: TextStyle(color: effectiveTextColor),
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!(effectiveContext as Element).mounted) return;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(displayMessage, style: TextStyle(color: effectiveTextColor)),
+          behavior: position ?? SnackBarBehavior.floating,
+          backgroundColor: defaultBgColor,
+          duration: const Duration(seconds: 2),
         ),
-        behavior: position ?? SnackBarBehavior.floating,
-        backgroundColor: defaultBgColor,
-        duration: const Duration(seconds: 2),
-      ),
-    );
+      );
+    });
   }
 
   static void success({
