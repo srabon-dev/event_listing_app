@@ -1,8 +1,11 @@
 import 'package:event_listing_app/app_export.dart';
 
 class EventDetailsLocationSection extends StatelessWidget {
-  const EventDetailsLocationSection({super.key, required this.data});
+  const EventDetailsLocationSection({super.key, required this.data, required this.isUser, required this.id, required this.cubit});
+  final String id;
+  final EventDetailsCubit cubit;
   final EventDetailsEntity data;
+  final bool isUser;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class EventDetailsLocationSection extends StatelessWidget {
                 width: context.width,
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.skyLight),
-                  borderRadius: BorderRadius.circular(12)
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: StaticMapView(
                   height: 200,
@@ -72,6 +75,69 @@ class EventDetailsLocationSection extends StatelessWidget {
             ],
           ),
         ),
+        if (!isUser)
+          ElevatedButton(
+            onPressed: () {
+              showCustomAnimatedDialog(
+                context: context,
+                actionButton: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          AppRouter.route.pop();
+                        }
+                      },
+                      child: const Text("No"),
+                    ),
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<EventDeleteCubit>().deleteEvent(id: id);
+                      },
+                      child: BlocConsumer<EventDeleteCubit, EventDeleteState>(
+                        listener: (context, state) {
+                          if(state is DeleteEventState){
+                            if(state.message != null && state.message!.isNotEmpty) {
+                              AppToast.success(message: state.message);
+                            }
+                            if(state.isVerified){
+                              if (Navigator.canPop(context)) {
+                                AppRouter.route.pop();
+                              }
+                              cubit.getEventDetails(id: id);
+                            }
+                          }
+                        },
+                        builder: (context, state) {
+                          final loading = state is DeleteEventState && state.isLoading;
+                          if(loading) {
+                            return const LoadingWidget(color: AppColors.white,);
+                          }
+                          return const Text("Yes");
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+                title: "Delete Event",
+                subtitle: "Are you sure you want delete event?",
+              );
+            },
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(AppColors.white),
+              elevation: WidgetStatePropertyAll(0),
+              side: WidgetStatePropertyAll(BorderSide(color: AppColors.errorColor)),
+            ),
+            child: Text(
+              "Delete Event",
+              style: context.titleMedium.copyWith(
+                color: AppColors.errorColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
       ],
     );
   }

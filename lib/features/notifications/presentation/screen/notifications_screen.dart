@@ -68,7 +68,12 @@ class _ViewState extends State<_View> {
           pagingController: pagingController,
           builderDelegate: PagedChildBuilderDelegate<NotificationItem>(
             itemBuilder: (BuildContext context, NotificationItem item, int index) {
-              return BlocBuilder<RemoveNotificationCubit, RemoveNotificationState>(
+              return BlocConsumer<RemoveNotificationCubit, RemoveNotificationState>(
+                listener: (_, state) {
+                  if (state is RemoveNotificationStatus && state.isVerified) {
+                    pagingController.refresh();
+                  }
+                },
                 buildWhen: (prev, curr) {
                   if (curr is RemoveNotificationStatus) {
                     return curr.deletingId == item.id;

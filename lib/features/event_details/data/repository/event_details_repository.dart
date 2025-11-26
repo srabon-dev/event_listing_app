@@ -7,14 +7,36 @@ class EventDetailsRepository extends IEventDetailsRepository {
   EventDetailsRepository({required this.apiClient});
 
   @override
-  Future<Either<Failure, EventDetailsEntity>> getEventDetails({required String token, required String url}) async {
+  Future<Either<Failure, EventDetailsEntity>> getEventDetails({
+    required String token,
+    required String url,
+  }) async {
     final response = await apiClient.get(url: url, token: token);
 
-    return response.fold((failure) {
+    return response.fold(
+      (failure) {
         return Left(failure);
-      }, (success) {
+      },
+      (success) {
         final model = EventDetailsModel.fromJson(success.data);
         return Right(model.toEntity());
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, Response>> deleteEvent({
+    required String token,
+    required String url,
+  }) async {
+    final response = await apiClient.delete(url: url, token: token);
+
+    return response.fold(
+      (failure) {
+        return Left(failure);
+      },
+      (success) {
+        return Right(success);
       },
     );
   }

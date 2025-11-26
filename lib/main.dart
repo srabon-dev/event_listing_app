@@ -24,6 +24,12 @@ Future<void> main() async {
             repository: HomeRepository(apiClient: sl<IApiClient>())
           ),
         ),
+        BlocProvider<EventDeleteCubit>(
+          create: (_) => EventDeleteCubit(
+            db: sl<ILocalService>(),
+            repository: EventDetailsRepository(apiClient: sl<IApiClient>())
+          ),
+        ),
         BlocProvider<ManagementHomeCubit>(
           create: (_) => ManagementHomeCubit(
             pagingController: PagingController(firstPageKey: 1),

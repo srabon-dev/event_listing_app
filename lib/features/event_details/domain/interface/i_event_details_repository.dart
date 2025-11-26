@@ -6,4 +6,9 @@ abstract class IEventDetailsRepository {
     required String token,
     required String url,
   });
+
+  Future<Either<Failure, Response>> deleteEvent({
+    required String token,
+    required String url,
+  });
 }

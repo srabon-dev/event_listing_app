@@ -21,6 +21,7 @@ class ApiUrls {
   static String category() => '$base/category/all-categories';
   static String eventAdd() => '$base/event/create';
   static String getEventDetails({required String id}) => '$base/event/get-single/$id';
+  static String deleteEvent({required String id}) => '$base/event/delete/$id';
   static String getMyEvents({String? status, required int page}) {
     final buffer = StringBuffer('$base/event/my-events?page=$page&limit=10');
 
@@ -85,7 +86,7 @@ class ApiUrls {
   }
 
   static String getNotifications({required int page}) => '$base/notification/get-notifications?page=$page&limit=10';
-  static String deleteNotification({required String id}) => '$base//notification/delete-notification/$id';
+  static String deleteNotification({required String id}) => '$base/notification/delete-notification/$id';
 
   static String privacy() => '$base/manage/get-privacy-policy';
   static String terms() => '$base/manage/get-terms-conditions';

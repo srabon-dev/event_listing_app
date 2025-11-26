@@ -96,7 +96,14 @@ class _ViewState extends State<_View> {
                       ),
                     ),
                     const SliverGap(18),
-                    SliverToBoxAdapter(child: EventDetailsLocationSection(data: data)),
+                    SliverToBoxAdapter(
+                      child: EventDetailsLocationSection(
+                        data: data,
+                        isUser: widget.isUser,
+                        id: widget.id,
+                        cubit: controller,
+                      ),
+                    ),
                     const SliverGap(44),
                   ],
                 ),

@@ -208,7 +208,7 @@ class _DialogCardState extends State<_DialogCard> {
                 },
                 builder: (context, state) {
                   if(state is ReviewAdd && state.isLoading){
-                    return const LoadingWidget();
+                    return const LoadingWidget(color: AppColors.white,);
                   }
                   return Text(context.loc.submit);
                 },

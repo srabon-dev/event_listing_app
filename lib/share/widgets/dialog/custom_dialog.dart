@@ -45,6 +45,7 @@ void showCustomAnimatedDialog({
                         const Gap(24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          spacing: 12,
                           children: actionButton ?? [],
                         ),
                       ],

@@ -47,7 +47,6 @@ class EventAddPageFour extends StatelessWidget {
             hintText: r"$20",
             controller: eventFee,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            validator: TextFieldValidator.required(context),
           ),
           CustomAlignText(text: context.loc.describeAboutYourEvent),
           QuillSimpleToolbar(
@@ -159,7 +158,7 @@ class EventAddPageFour extends StatelessWidget {
                     builder: (context, state) {
                       final data = state is EventState && state.isLoading;
                       if(data) {
-                        return const LoadingWidget();
+                        return const LoadingWidget(color: AppColors.white,);
                       }
                       return Text(context.loc.savePublish);
                     },
