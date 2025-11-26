@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-
-import '../../../localization/localization_export.dart';
+import 'package:event_listing_app/app_export.dart';
 
 class NoInternetCard extends StatelessWidget {
   const NoInternetCard({super.key, required this.onTap});
@@ -14,12 +11,15 @@ class NoInternetCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Gap(20),
-          Text(
-            AppLocalizations.of(context)!.oops_You_re_offline_check_your_connection_and_give_it_another_shot,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black),
+          Assets.images.empty.image(
+              height: 100,
+              width: 100
           ),
-          const Gap(20),
+          Text(
+            "Oops! No Internet",
+            style: context.titleMedium,
+          ),
+          const Text("It looks like you’re offline.", maxLines: 2),
           ElevatedButton(
             onPressed: onTap,
             style: ElevatedButton.styleFrom(

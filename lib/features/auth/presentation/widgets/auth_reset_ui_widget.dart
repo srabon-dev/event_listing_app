@@ -26,7 +26,7 @@ class AuthResetUiWidget extends StatelessWidget {
         const Gap(18),
         CustomTextField(
           title: context.loc.password,
-          hintText: context.loc.enterYourPassword,
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: password,
           isPassword: true,
@@ -35,7 +35,7 @@ class AuthResetUiWidget extends StatelessWidget {
         const Gap(18),
         CustomTextField(
           title: context.loc.confirmPassword,
-          hintText: context.loc.confirmPassword,
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: confirmPassword,
           isPassword: true,

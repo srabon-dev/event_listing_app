@@ -9,7 +9,7 @@ class ForgetScreen extends StatefulWidget {
 }
 
 class _ForgetScreenState extends State<ForgetScreen> {
-  final email = TextEditingController(text: kDebugMode? "user@gmail.com": null);
+  final email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override

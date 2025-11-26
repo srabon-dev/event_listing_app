@@ -44,10 +44,8 @@ extension CategoryMapper on CategoryModel {
 
     return items.where((item) {
       final idValid = item.id != null && item.id!.trim().isNotEmpty;
-      final img = item.categoryImage ?? "";
-      final isSvg = img.toLowerCase().trim().endsWith(".svg");
 
-      return idValid && isSvg;
+      return idValid;
     }).map((item) => CategoryEntities(
         id: item.id!,
         name: item.name ?? "Unknown",

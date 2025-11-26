@@ -1,28 +1,29 @@
 import '../../../app_export.dart';
 
 class NoDataCard extends StatelessWidget {
-  const NoDataCard({super.key, required this.onTap});
-
-  final VoidCallback onTap;
+  const NoDataCard({super.key, this.text});
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Gap(24),
-          Text(
-            context.loc.no_items_found,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
-          ),
-          const Gap(12),
-          Text(context.loc.the_list_is_currently_empty, maxLines: 2),
-          const Gap(24),
-          // ElevatedButton(onPressed: onTap, child: CustomText(text: "try_again".tr)),
-        ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Assets.images.box.image(
+              height: 100,
+              width: 100
+            ),
+            Text(
+              "Looks a bit empty here.",
+              style: context.titleMedium,
+            ),
+            Text(text ?? "New events will appear once they’re available.", maxLines: 2),
+          ],
+        ),
       ),
     );
   }

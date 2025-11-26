@@ -25,10 +25,13 @@ class OnboardingInfoWidget extends StatelessWidget {
           const Gap(64),
           Text(
             title,
-            style: context.titleLarge,
+            style: context.titleLarge.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 20
+            ),
           ),
           const Gap(12),
-          Text(slogan, style: context.bodyLarge, maxLines: 4, textAlign: TextAlign.center,),
+          Text(slogan, style: context.bodyLarge, maxLines: 6, textAlign: TextAlign.center,),
           const Gap(44),
         ],
       ),

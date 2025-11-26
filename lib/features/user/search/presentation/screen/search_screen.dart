@@ -111,7 +111,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 return const LoadingWidget();
               },
               noItemsFoundIndicatorBuilder: (_) {
-                return NoDataCard(onTap: () => controller.pagingController.refresh());
+                return const NoDataCard();
               },
             ),
           ),

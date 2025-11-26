@@ -12,7 +12,7 @@ class AuthLoginUiWidget extends StatelessWidget {
       children: [
         CustomTextField(
           title: context.loc.email_address,
-          hintText: context.loc.pleaseEnterYourEmail,
+          hintText: "NeilMarshall@gmail.com",
           keyboardType: TextInputType.emailAddress,
           controller: email,
           validator: TextFieldValidator.email(context),
@@ -20,7 +20,7 @@ class AuthLoginUiWidget extends StatelessWidget {
         const Gap(18),
         CustomTextField(
           title: context.loc.password,
-          hintText: context.loc.enterYourPassword,
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: password,
           isPassword: true,

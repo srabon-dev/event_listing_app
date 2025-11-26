@@ -41,6 +41,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
             if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
               final displayItems = state.categories.getSports().toList();
+
+              if(displayItems.isEmpty){
+                return const NoDataCard(
+                  text: "Category will appear once they’re available.",
+                );
+              }
+
               return RefreshIndicator(
                 onRefresh: () async {
                   controller.getCategories();
@@ -56,10 +63,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 1.4,
+                    mainAxisExtent: 140,
                   ),
                   itemBuilder: (context, index) {
                     final item = displayItems[index];
+
                     return CategoryBoxCardWidget(
                       name: item.name,
                       image: item.categoryImage,

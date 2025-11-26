@@ -46,7 +46,6 @@ class ShortlistedCubit extends Cubit<void> {
       },
       );
     } catch (e) {
-      print(e.toString());
       pagingController.error = 'An error occurred';
     } finally {
       isLoading = false;
@@ -76,7 +75,6 @@ class ShortlistedCubit extends Cubit<void> {
       },
       );
     } catch (e) {
-      print(e.toString());
       pagingController1.error = 'An error occurred';
     } finally {
       isLoading1 = false;
@@ -106,8 +104,6 @@ class ShortlistedCubit extends Cubit<void> {
       },
       );
     } catch (e) {
-
-      print(e.toString());
       pagingController2.error = 'An error occurred';
     } finally {
       isLoading2 = false;
@@ -137,8 +133,6 @@ class ShortlistedCubit extends Cubit<void> {
       },
       );
     } catch (e) {
-
-      print(e.toString());
       pagingController3.error = 'An error occurred';
     } finally {
       isLoading3 = false;

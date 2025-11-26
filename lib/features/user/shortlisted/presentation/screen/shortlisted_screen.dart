@@ -123,7 +123,10 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                         },
                         event: item.toItemEntity(),
                       );
-                    }
+                    },
+                  noItemsFoundIndicatorBuilder: (_) {
+                    return const NoDataCard();
+                  },
                 ),
               ),
             ),
@@ -141,7 +144,10 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                         },
                         event: item.toItemEntity(),
                       );
-                    }
+                    },
+                  noItemsFoundIndicatorBuilder: (_) {
+                    return const NoDataCard();
+                  },
                 ),
               ),
             ),
@@ -159,7 +165,10 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                         },
                         event: item.toItemEntity(),
                       );
-                    }
+                    },
+                  noItemsFoundIndicatorBuilder: (_) {
+                    return const NoDataCard();
+                  },
                 ),
               ),
             ),
@@ -177,7 +186,10 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> with SingleTicker
                         },
                         event: item.toItemEntity(),
                       );
-                    }
+                    },
+                  noItemsFoundIndicatorBuilder: (_) {
+                    return const NoDataCard();
+                  },
                 ),
               ),
             ),

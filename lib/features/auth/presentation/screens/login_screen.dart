@@ -9,8 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final email = TextEditingController(text: kDebugMode ? "rv1@yopmail.com" : "");
-  final password = TextEditingController(text: kDebugMode ? "123456" : "");
+  final email = TextEditingController();
+  final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override

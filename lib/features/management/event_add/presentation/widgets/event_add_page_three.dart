@@ -71,14 +71,14 @@ class EventAddPageThree extends StatelessWidget {
           ),
           CustomTextField(
             title: context.loc.available_slot,
-            hintText: context.loc.available_slot,
+            hintText: "e.g.,100",
             controller: availableSlot,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.zipCode,
-            hintText: context.loc.enterZipCode,
+            hintText: "90027",
             controller: zipCode,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: TextFieldValidator.required(context),
@@ -91,14 +91,13 @@ class EventAddPageThree extends StatelessWidget {
                 name: item?.address ?? context.loc.enterLocationNameVenue,
                 onTap: () async {
                   location.value = await openLocationPicker(context);
-                  print(location.value?.address);
                 },
               );
             },
           ),
           CustomTextField(
             title: context.loc.cityState,
-            hintText: context.loc.enterCityState,
+            hintText: "Los Angeles, CA",
             controller: city,
             validator: TextFieldValidator.required(context),
           ),

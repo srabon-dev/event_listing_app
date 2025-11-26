@@ -25,7 +25,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
               Text(context.loc.discover_register_events, style: context.bodyLarge.copyWith(fontWeight: FontWeight.w400, color: AppColors.secondaryText),),
               const Gap(12),
               Row(
-                spacing: 18,
+                spacing: 8,
                 children: [
                   Expanded(
                     child: GestureDetector(
@@ -34,7 +34,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
                         setState(() {});
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
                           color: isFindEvent?AppColors.softBrandColor:AppColors.white.withValues(alpha: 0.5),
                             border: isFindEvent? Border.all(color: AppColors.brandHoverColor): null,
@@ -44,7 +44,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
                           spacing: 12,
                           children: [
                             Assets.images.findEvent.image(),
-                            Text(context.loc.find_events, style: context.titleLarge,)
+                            Text(context.loc.find_events, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500, fontSize: 18),)
                           ],
                         ),
                       ),
@@ -57,7 +57,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
                         setState(() {});
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
                           color: isFindEvent? AppColors.white.withValues(alpha: 0.5): AppColors.softBrandColor,
                           border: isFindEvent? null: Border.all(color: AppColors.brandHoverColor),
@@ -67,7 +67,7 @@ class _AuthRolePickScreenState extends State<AuthRolePickScreen> {
                           spacing: 12,
                           children: [
                             Assets.images.listEvent.image(),
-                            Text(context.loc.list_events, style: context.titleLarge,)
+                            Text(context.loc.list_events, style: context.titleMedium.copyWith(fontWeight: FontWeight.w500, fontSize: 18),)
                           ],
                         ),
                       ),

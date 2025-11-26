@@ -13,12 +13,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final businessName = TextEditingController(text: kDebugMode ? "Test" : "");
-  final name = TextEditingController(text: kDebugMode ? "Test" : "");
-  final email = TextEditingController(text: kDebugMode ? "rv@yopmail.com" : "");
+  final businessName = TextEditingController();
+  final name = TextEditingController();
+  final email = TextEditingController();
   final phone = TextEditingController();
-  final password = TextEditingController(text: kDebugMode ? "%%66Test" : "");
-  final confirmPassword = TextEditingController(text: kDebugMode ? "%%66Test" : "");
+  final password = TextEditingController();
+  final confirmPassword = TextEditingController();
   final ValueNotifier<bool> isAgree = ValueNotifier(false);
   final _formKey = GlobalKey<FormState>();
 

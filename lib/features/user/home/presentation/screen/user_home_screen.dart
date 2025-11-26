@@ -118,6 +118,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         } else if (state is CategoryLoaded) {
                           final items = state.categories.getSports().take(4).toList();
 
+                          if(items.isEmpty){
+                            return const NoDataCard(
+                              text: "Category will appear once they’re available.",
+                            );
+                          }
+
                           return GridView.builder(
                             itemCount: items.length,
                             physics: const NeverScrollableScrollPhysics(),
@@ -126,7 +132,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 12,
-                              childAspectRatio: 1.4,
+                              mainAxisExtent: 140,
                             ),
                             itemBuilder: (context, index) {
                               final item = items[index];
@@ -143,7 +149,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             },
                           );
                         } else if (state is CategoryError) {
-                          return Center(child: Text(state.message));
+                          return ErrorCard(onTap: () {  }, text: state.message,);
                         } else {
                           return const SizedBox.shrink();
                         }
@@ -192,6 +198,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       );
                     },
                   firstPageProgressIndicatorBuilder: (_)=> const LoadingWidget(),
+                  noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
                 ),
               ),
             ),

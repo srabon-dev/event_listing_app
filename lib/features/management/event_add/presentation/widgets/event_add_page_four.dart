@@ -38,7 +38,7 @@ class EventAddPageFour extends StatelessWidget {
           const Gap(12),
           CustomTextField(
             title: context.loc.eventWebsiteRegistrationLink,
-            hintText: context.loc.googleForm_your_own_site_or_social_media_link,
+            hintText: "e.g., Google Form, your own site, or social media link",
             controller: link,
             validator: TextFieldValidator.website(context),
           ),
@@ -71,6 +71,7 @@ class EventAddPageFour extends StatelessWidget {
                 showUndo: false,
                 sectionDividerColor: AppColors.brandHoverColor,
                 color: AppColors.white,
+
                 decoration: BoxDecoration(
                     color: AppColors.black
                 ),

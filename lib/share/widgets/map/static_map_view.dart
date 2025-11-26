@@ -39,8 +39,6 @@ class StaticMapView extends StatelessWidget {
 
     _urlCache[url] = url;
 
-    print(_urlCache[url]);
-
     return CustomNetworkImage(
       imageUrl: _urlCache[url],
       height: height,

@@ -26,14 +26,17 @@ class EventCardWidget extends StatelessWidget {
               dateTime: DateConverter.formatDateRange(startDate: event.eventStart, endDate: event.eventEnd),
               height: 250,
             ),
-            Text(event.name ?? context.loc.unknown, style: context.headlineSmall),
+            Text(event.name, style: context.headlineSmall),
             Row(
               spacing: 6,
               children: [
                 Assets.icons.location.svg(height: 20, width: 20),
-                Text(
-                  event.address ?? context.loc.unknown,
-                  style: context.titleMedium.copyWith(fontWeight: FontWeight.w100),
+                Flexible(
+                  child: Text(
+                    event.address ?? context.loc.unknown,
+                    maxLines: 2,
+                    style: context.titleMedium.copyWith(fontWeight: FontWeight.w100),
+                  ),
                 ),
               ],
             ),
@@ -79,7 +82,7 @@ class EventCardWidget extends StatelessWidget {
                         children: [
                           Assets.icons.star.svg(),
                           Text(
-                            event.rating?.toString() ?? context.loc.unknown,
+                            event.rating?.toStringAsFixed(2) ?? context.loc.unknown,
                             style: context.titleMedium.copyWith(
                               fontWeight: FontWeight.w100,
                             ),

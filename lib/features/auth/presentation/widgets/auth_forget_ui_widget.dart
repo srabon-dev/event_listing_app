@@ -20,7 +20,7 @@ class AuthForgetUiWidget extends StatelessWidget {
         const Gap(24),
         CustomTextField(
           title: context.loc.email_address,
-          hintText: context.loc.pleaseEnterYourEmail,
+          hintText: "Ne***************************om",
           keyboardType: TextInputType.emailAddress,
           controller: email,
           validator: TextFieldValidator.email(context),

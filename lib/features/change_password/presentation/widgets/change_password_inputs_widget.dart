@@ -19,7 +19,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
       children: [
         CustomTextField(
           title: context.loc.currentPassword,
-          hintText: "xxxx",
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: currentPassword,
           isPassword: true,
@@ -27,7 +27,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
         ),
         CustomTextField(
           title: context.loc.newPassword,
-          hintText: "xxxx",
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: newPassword,
           isPassword: true,
@@ -35,7 +35,7 @@ class ChangePasswordInputsWidget extends StatelessWidget {
         ),
         CustomTextField(
           title: context.loc.repeatPassword,
-          hintText: "xxxx",
+          hintText: "••••••••",
           keyboardType: TextInputType.text,
           controller: confirmNewPassword,
           isPassword: true,

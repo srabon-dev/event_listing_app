@@ -89,19 +89,19 @@ class EventAddPageOne extends StatelessWidget {
           ),
           CustomTextField(
             title: context.loc.eventName,
-            hintText: context.loc.eventName,
+            hintText: "e.g., Summer Elite Soccer Camp 2025",
             controller: eventName,
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.eventShortDescription,
-            hintText: context.loc.eventShortDescription,
+            hintText: "e.g., A 3-day intensive camp for players aged 10–14, focusing on skills, tactics, and small-sided games.",
             controller: eventDescription,
             validator: TextFieldValidator.required(context),
           ),
           CustomTextField(
             title: context.loc.phoneNumber,
-            hintText: context.loc.phoneNumber,
+            hintText: "e.g. (480) 555-0103",
             controller: eventPhoneNumber,
             validator: TextFieldValidator.required(context),
           ),
@@ -113,7 +113,7 @@ class EventAddPageOne extends StatelessWidget {
               }
 
               if (state is CategoryError) {
-                return Center(child: Text(state.message));
+                return ErrorCard(onTap: () {  }, text: state.message,);
               }
 
               if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
@@ -136,7 +136,9 @@ class EventAddPageOne extends StatelessWidget {
                   },
                 );
               }
-              return Center(child: Text(context.loc.no_categories_found));
+              return const NoDataCard(
+                text: "Category will appear once they’re available.",
+              );
             },
           ),
           CustomAlignText(text: context.loc.eventType),
@@ -147,7 +149,7 @@ class EventAddPageOne extends StatelessWidget {
               }
 
               if (state is CategoryError) {
-                return Center(child: Text(state.message));
+                return ErrorCard(onTap: () {  }, text: state.message,);
               }
 
               if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
@@ -170,7 +172,9 @@ class EventAddPageOne extends StatelessWidget {
                   },
                 );
               }
-              return Center(child: Text(context.loc.no_categories_found));
+              return const NoDataCard(
+                text: "Event will appear once they’re available.",
+              );
             },
           ),
           const Gap(12),

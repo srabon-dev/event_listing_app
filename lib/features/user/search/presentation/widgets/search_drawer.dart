@@ -44,7 +44,7 @@ class SearchDrawer extends StatelessWidget {
                   }
 
                   if (state is CategoryError) {
-                    return Center(child: Text(state.message));
+                    return ErrorCard(onTap: () {  }, text: state.message,);
                   }
 
                   if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
@@ -66,7 +66,9 @@ class SearchDrawer extends StatelessWidget {
                       },
                     );
                   }
-                  return Center(child: Text(context.loc.no_categories_found));
+                  return const NoDataCard(
+                    text: "Category will appear once they’re available.",
+                  );
                 },
               ),
               CustomAlignText(text: context.loc.ageGroup),
@@ -96,7 +98,7 @@ class SearchDrawer extends StatelessWidget {
                   }
 
                   if (state is CategoryError) {
-                    return Center(child: Text(state.message));
+                    return ErrorCard(onTap: () {  }, text: state.message,);
                   }
 
                   if (state is CategoryLoaded && state.categories.getSports().isNotEmpty) {
@@ -117,7 +119,9 @@ class SearchDrawer extends StatelessWidget {
                       },
                     );
                   }
-                  return Center(child: Text(context.loc.no_categories_found));
+                  return const NoDataCard(
+                    text: "Event will appear once they’re available.",
+                  );
                 },
               ),
               CustomAlignText(text: context.loc.skillLevel),

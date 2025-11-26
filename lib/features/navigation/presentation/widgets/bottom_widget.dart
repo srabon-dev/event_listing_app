@@ -52,7 +52,7 @@ class BottomWidget extends StatelessWidget {
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: selected ? AppColors.brandHoverColor.withOpacity(0.15) : Colors.transparent,
+                        color: selected ? AppColors.brandHoverColor.withValues(alpha: 0.15) : Colors.transparent,
                         border: Border(
                           top: BorderSide(
                             color: selected ? AppColors.brandHoverColor : Colors.transparent,
@@ -64,15 +64,15 @@ class BottomWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           (items[i]['icon'] as SvgGenImage).svg(
-                            height: 24,
-                            width: 24,
+                            height: 20,
+                            width: 20,
                           ),
                           const SizedBox(height: 4),
                           Text(
                             items[i]['label'] as String,
                             style: const TextStyle(
                               color: AppColors.brandHoverColor,
-                              fontSize: 12,
+                              fontSize: 10,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

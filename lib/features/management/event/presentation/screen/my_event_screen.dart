@@ -123,7 +123,8 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                     },
                     event: item.toEntity(),
                   );
-                }
+                },
+                noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
               ),
             ),
           ),
@@ -141,7 +142,8 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                     },
                     event: item.toEntity(),
                   );
-                }
+                },
+                noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
               ),
             ),
           ),
@@ -159,7 +161,8 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                     },
                     event: item.toEntity(),
                   );
-                }
+                },
+                noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
               ),
             ),
           ),
@@ -177,7 +180,8 @@ class _MyEventScreenState extends State<MyEventScreen> with SingleTickerProvider
                     },
                     event: item.toEntity(),
                   );
-                }
+                },
+                noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
               ),
             ),
           ),

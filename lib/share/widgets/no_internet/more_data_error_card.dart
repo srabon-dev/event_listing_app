@@ -16,7 +16,7 @@ class MoreDataErrorCard extends StatelessWidget {
             Text(
               context.loc.something_went_wrong_tap_to_try_again,
               maxLines: 3,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
               ),

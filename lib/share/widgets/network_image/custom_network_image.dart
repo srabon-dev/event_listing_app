@@ -51,7 +51,7 @@ class CustomNetworkImage extends StatelessWidget {
         decoration: BoxDecoration(
           border: border,
           borderRadius: borderRadius,
-          color: backgroundColor ?? Colors.grey.withOpacity(0.2),
+          color: backgroundColor ?? Colors.grey.withValues(alpha: 0.2),
           shape: boxShape,
         ),
         child: SvgPicture.network(

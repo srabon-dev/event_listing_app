@@ -116,8 +116,12 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                         if (state is CategoryLoading) {
                           return const LoadingWidget();
                         } else if (state is CategoryLoaded) {
-                          final items = state.categories.getSports().take(4).toList();
-
+                          final items = state.categories.getSports().toList();
+                          if(items.isEmpty){
+                            return const NoDataCard(
+                              text: "Category will appear once they’re available.",
+                            );
+                          }
                           return GridView.builder(
                             itemCount: items.length,
                             physics: const NeverScrollableScrollPhysics(),
@@ -126,7 +130,7 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 12,
-                              childAspectRatio: 1.4,
+                              mainAxisExtent: 140,
                             ),
                             itemBuilder: (context, index) {
                               final item = items[index];
@@ -143,7 +147,7 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                             },
                           );
                         } else if (state is CategoryError) {
-                          return Center(child: Text(state.message));
+                          return ErrorCard(onTap: () {  }, text: state.message,);
                         } else {
                           return const SizedBox.shrink();
                         }
@@ -192,6 +196,7 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                       );
                     },
                   firstPageProgressIndicatorBuilder: (_)=> const LoadingWidget(),
+                  noItemsFoundIndicatorBuilder: (_)=> const NoDataCard(),
                 ),
               ),
             ),

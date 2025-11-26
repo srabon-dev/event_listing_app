@@ -216,9 +216,15 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/box.png
+  AssetGenImage get box => const AssetGenImage('assets/images/box.png');
+
   /// File path: assets/images/category_bg.png
   AssetGenImage get categoryBg =>
       const AssetGenImage('assets/images/category_bg.png');
+
+  /// File path: assets/images/empty.png
+  AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
   /// File path: assets/images/find_event.png
   AssetGenImage get findEvent =>
@@ -265,7 +271,9 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    box,
     categoryBg,
+    empty,
     findEvent,
     listEvent,
     logo,
