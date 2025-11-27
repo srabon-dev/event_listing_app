@@ -60,11 +60,11 @@ class _ViewState extends State<_View> {
             if (state is EventDetailsLoading) {
               return const LoadingWidget();
             } else if (state is EventDetailsError) {
-              return ErrorCard(
+              return NoDataCard(
                 text: state.message,
-                onTap: () {
+                /*onTap: () {
                   controller.getEventDetails(id: widget.id);
-                },
+                },*/
               );
             } else if (state is EventDetailsLoaded) {
               final data = state.data;

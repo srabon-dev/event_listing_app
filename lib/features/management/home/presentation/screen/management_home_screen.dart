@@ -190,7 +190,11 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                     itemBuilder: (BuildContext context, OrganizerEventItem item, int index) {
                       return EventCardWidget(
                         onTap: (){
-                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false});
+                          AppRouter.route.pushNamed(RoutePath.eventDetailsScreen, extra: {"id": item.id, "isUser": false}).then((value){
+                            if(value == true){
+                              controller.pagingController.refresh();
+                            }
+                          });
                         },
                         event: item.toEntity(),
                       );

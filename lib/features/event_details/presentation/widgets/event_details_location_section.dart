@@ -102,11 +102,13 @@ class EventDetailsLocationSection extends StatelessWidget {
                             if(state.message != null && state.message!.isNotEmpty) {
                               AppToast.success(message: state.message);
                             }
-                            if(state.isVerified){
+                            if(state.isVerified) {
                               if (Navigator.canPop(context)) {
                                 AppRouter.route.pop();
+                                if (Navigator.canPop(context)) {
+                                  AppRouter.route.pop(true);
+                                }
                               }
-                              cubit.getEventDetails(id: id);
                             }
                           }
                         },

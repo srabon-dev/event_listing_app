@@ -62,7 +62,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(registrationDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: registrationDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: registrationDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       registrationEndDate.value = dateTime;
                     }
@@ -83,7 +83,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(registrationDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: registrationDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: registrationDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       registrationEndDate.value = dateTime;
                     }
@@ -104,7 +104,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(registrationEndDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       eventStartDate.value = dateTime;
                     }
@@ -125,7 +125,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(registrationEndDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       eventStartDate.value = dateTime;
                     }
@@ -146,7 +146,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(eventStartDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       eventEndDate.value = dateTime;
                     }
@@ -167,7 +167,7 @@ class EventAddPageTwo extends StatelessWidget {
                 onTap: () async {
                   try{
                     if(eventStartDate.value == null) return;
-                    final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value);
+                    final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value?.add(const Duration(hours: 1)));
                     if(dateTime != null){
                       eventEndDate.value = dateTime;
                     }

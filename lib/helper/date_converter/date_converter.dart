@@ -36,7 +36,7 @@ class DateConverter{
 
     // Case 1: Same month and year → "June 15–17, 2025"
     if (sameMonth && sameYear) {
-      final month = DateFormat('MMMM').format(start);
+      final month = DateFormat('MMM').format(start);
       final startDay = DateFormat('d').format(start);
       final endDay = DateFormat('d').format(end);
       // final year = DateFormat('y').format(start);
@@ -46,14 +46,14 @@ class DateConverter{
 
     // Case 2: Different months, same year → "June 28 – July 2, 2025"
     if (!sameMonth && sameYear) {
-      final startText = DateFormat('MMMM d').format(start);
-      final endText = DateFormat('MMMM d').format(end);
+      final startText = DateFormat('MMM d').format(start);
+      final endText = DateFormat('MMM d').format(end);
       return '$startText – $endText';
     }
 
     // Case 3: Different years → "Dec 30, 2024 – Jan 2, 2025"
-    final startText = DateFormat('MMMM d, y').format(start);
-    final endText = DateFormat('MMMM d, y').format(end);
+    final startText = DateFormat('MMM d, y').format(start);
+    final endText = DateFormat('MMM d, y').format(end);
     return '$startText – $endText';
   }
 

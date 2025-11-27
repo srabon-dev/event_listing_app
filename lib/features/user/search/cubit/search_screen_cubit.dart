@@ -27,6 +27,7 @@ class SearchScreenCubit extends Cubit<void> {
     isLoadingMove = true;
 
     const validStatuses = [
+      "UPCOMING",
       "REGISTRATION_OPEN",
       "EVENT_STARTED",
       "EVENT_FINISHED",

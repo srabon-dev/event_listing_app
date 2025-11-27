@@ -168,6 +168,7 @@ class EventAddPageOne extends StatelessWidget {
                   value: selectedEntity,
                   isRequired: true,
                   onChanged: (value) {
+                    print(value?.id);
                     selectedEventType.value = value?.id;
                   },
                 );

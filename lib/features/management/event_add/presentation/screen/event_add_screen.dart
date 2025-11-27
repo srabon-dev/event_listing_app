@@ -159,6 +159,8 @@ class _EventAddScreenState extends State<EventAddScreen> {
               quillController: quillController,
               onComplete: () {
                 clear();
+                context.read<ManagementHomeCubit>().pagingController.refresh();
+                context.read<MyEventCubit>().pagingController.refresh();
               },
               onTap: (){
                 if (formKey.currentState!.validate()) {

@@ -139,7 +139,7 @@ class SearchDrawer extends StatelessWidget {
               CustomDropdownField(
                 hintText: context.loc.selectOne,
                 value: selectedStatus.value,
-                items: const ["Registration Open", "Event Started", "Event Finished"],
+                items: const ["Upcoming", "Registration Open", "Event Started", "Event Finished"],
                 onChanged: (value) {
                   selectedStatus.value = value;
                 },
