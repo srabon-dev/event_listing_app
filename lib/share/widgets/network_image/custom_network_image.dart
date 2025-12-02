@@ -21,7 +21,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.child,
     this.errorWidget,
     this.colorFilter,
-    this.imageUrl = "https://picsum.photos/450/300",
+    this.imageUrl,
     this.backgroundColor,
     this.height,
     this.width,
@@ -45,15 +45,9 @@ class CustomNetworkImage extends StatelessWidget {
     }
 
     if (isSvg) {
-      return Container(
+      return SizedBox(
         height: height,
         width: width,
-        decoration: BoxDecoration(
-          border: border,
-          borderRadius: borderRadius,
-          color: backgroundColor ?? Colors.grey.withValues(alpha: 0.2),
-          shape: boxShape,
-        ),
         child: SvgPicture.network(
           imageUrl ?? "",
           fit: fit ?? BoxFit.cover,

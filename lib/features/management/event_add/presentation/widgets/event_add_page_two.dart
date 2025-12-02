@@ -44,6 +44,10 @@ class EventAddPageTwo extends StatelessWidget {
                     final dateTime = await pickDateTime(context: context);
                     if(dateTime != null){
                       registrationDate.value = dateTime;
+
+                      registrationEndDate.value = null;
+                      eventStartDate.value = null;
+                      eventEndDate.value = null;
                     }
                   }catch(_){
 
@@ -63,8 +67,13 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(registrationDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: registrationDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(registrationDate.value!)) {
+                        return;
+                      }
                       registrationEndDate.value = dateTime;
+                      eventStartDate.value = null;
+                      eventEndDate.value = null;
                     }
                   }catch(_){
 
@@ -84,8 +93,13 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(registrationDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: registrationDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(registrationDate.value!)) {
+                        return;
+                      }
                       registrationEndDate.value = dateTime;
+                      eventStartDate.value = null;
+                      eventEndDate.value = null;
                     }
                   }catch(_){
 
@@ -105,8 +119,13 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(registrationEndDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(registrationEndDate.value!)) {
+                        return;
+                      }
+
                       eventStartDate.value = dateTime;
+                      eventEndDate.value = null;
                     }
                   }catch(_){
 
@@ -126,8 +145,13 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(registrationEndDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: registrationEndDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(registrationEndDate.value!)) {
+                        return;
+                      }
+
                       eventStartDate.value = dateTime;
+                      eventEndDate.value = null;
                     }
                   }catch(_){
 
@@ -147,7 +171,10 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(eventStartDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(eventStartDate.value!)) {
+                        return;
+                      }
                       eventEndDate.value = dateTime;
                     }
                   }catch(_){
@@ -168,7 +195,10 @@ class EventAddPageTwo extends StatelessWidget {
                   try{
                     if(eventStartDate.value == null) return;
                     final dateTime = await pickDateTime(context: context, minTime: eventStartDate.value?.add(const Duration(hours: 1)));
-                    if(dateTime != null){
+                    if (dateTime != null) {
+                      if (!dateTime.isAfter(eventStartDate.value!)) {
+                        return;
+                      }
                       eventEndDate.value = dateTime;
                     }
                   }catch(_){
@@ -232,6 +262,11 @@ class EventAddPageTwo extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isOrdered(DateTime? a, DateTime? b) {
+    if (a == null || b == null) return true;
+    return a.isBefore(b);
   }
 }
 

@@ -29,7 +29,7 @@ class CategoryBoxCardWidget extends StatelessWidget {
               width: 80,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.network(image),
+                child: CustomNetworkImage(imageUrl: image,),
               ),
             ),
             Flexible(

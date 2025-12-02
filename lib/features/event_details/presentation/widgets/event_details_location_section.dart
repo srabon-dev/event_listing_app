@@ -76,69 +76,98 @@ class EventDetailsLocationSection extends StatelessWidget {
           ),
         ),
         if (!isUser)
-          ElevatedButton(
-            onPressed: () {
-              showCustomAnimatedDialog(
-                context: context,
-                actionButton: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        if (Navigator.canPop(context)) {
-                          AppRouter.route.pop();
-                        }
-                      },
-                      child: const Text("No"),
-                    ),
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.read<EventDeleteCubit>().deleteEvent(id: id);
-                      },
-                      child: BlocConsumer<EventDeleteCubit, EventDeleteState>(
-                        listener: (context, state) {
-                          if(state is DeleteEventState){
-                            if(state.message != null && state.message!.isNotEmpty) {
-                              AppToast.success(message: state.message);
-                            }
-                            if(state.isVerified) {
+          Row(
+            spacing: 16,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    showCustomAnimatedDialog(
+                      context: context,
+                      actionButton: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
                               if (Navigator.canPop(context)) {
                                 AppRouter.route.pop();
-                                if (Navigator.canPop(context)) {
-                                  AppRouter.route.pop(true);
-                                }
                               }
-                            }
-                          }
-                        },
-                        builder: (context, state) {
-                          final loading = state is DeleteEventState && state.isLoading;
-                          if(loading) {
-                            return const LoadingWidget(color: AppColors.white,);
-                          }
-                          return const Text("Yes");
-                        },
-                      ),
+                            },
+                            child: const Text("No"),
+                          ),
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              context.read<EventDeleteCubit>().deleteEvent(id: id);
+                            },
+                            child: BlocConsumer<EventDeleteCubit, EventDeleteState>(
+                              listener: (context, state) {
+                                if(state is DeleteEventState){
+                                  if(state.message != null && state.message!.isNotEmpty) {
+                                    AppToast.success(message: state.message);
+                                  }
+                                  if(state.isVerified) {
+                                    if (Navigator.canPop(context)) {
+                                      AppRouter.route.pop();
+                                      if (Navigator.canPop(context)) {
+                                        AppRouter.route.pop(true);
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              builder: (context, state) {
+                                final loading = state is DeleteEventState && state.isLoading;
+                                if(loading) {
+                                  return const LoadingWidget(color: AppColors.white,);
+                                }
+                                return const Text("Yes");
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                      title: "Delete Event",
+                      subtitle: "Are you sure you want delete event?",
+                    );
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(AppColors.white),
+                    elevation: WidgetStatePropertyAll(0),
+                    side: WidgetStatePropertyAll(BorderSide(color: AppColors.errorColor)),
+                  ),
+                  child: Text(
+                    "Delete Event",
+                    style: context.titleMedium.copyWith(
+                      color: AppColors.errorColor,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
-                title: "Delete Event",
-                subtitle: "Are you sure you want delete event?",
-              );
-            },
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(AppColors.white),
-              elevation: WidgetStatePropertyAll(0),
-              side: WidgetStatePropertyAll(BorderSide(color: AppColors.errorColor)),
-            ),
-            child: Text(
-              "Delete Event",
-              style: context.titleMedium.copyWith(
-                color: AppColors.errorColor,
-                fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () async{
+                    try{
+                      AppRouter.route.pushNamed(RoutePath.eventEditScreen, extra: {"entity": data}).then((value){
+                        if(value == true){
+                          cubit.getEventDetails(id: id);
+                        }
+                      });
+                    }catch (_){
+
+                    }
+                  },
+                  child: Text(
+                    "Edit Event",
+                    style: context.titleMedium.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
       ],
     );

@@ -1,21 +1,21 @@
-part of 'event_add_bloc.dart';
+part of 'event_edit_bloc.dart';
 
-sealed class EventAddState extends Equatable {
-  const EventAddState();
+sealed class EventEditState extends Equatable {
+  const EventEditState();
 }
 
-final class EventAddInitial extends EventAddState {
+final class EventEditInitial extends EventEditState {
   @override
   List<Object> get props => [];
 }
 
-class EventAddNewState extends EventAddState {
+class EventEditNewState extends EventEditState {
   final bool isLoading;
   final String? error;
   final String? message;
   final bool isVerified;
 
-  const EventAddNewState({
+  const EventEditNewState({
     this.isLoading = false,
     this.error,
     this.message,

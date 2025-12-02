@@ -28,7 +28,7 @@
   "confirmPasswordIsRequired": "Confirm password is required",
   "enterYourConfirmPassword": "Enter confirm password",
   "passwordsDoNotMatch": "Password does not match.",
-
+  "edit_event": "Edit Event",
 
   "user_onboarding_one": "Search and browse youth Sport events near you — tryouts, camps, and tournaments. Filter by sport, age, and location to quickly discover the right events.",
   "user_onboarding_two": "Tap any event to see full information, including date, venue, age group, and skill level.",

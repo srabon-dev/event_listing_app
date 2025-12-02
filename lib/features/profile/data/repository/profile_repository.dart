@@ -18,6 +18,7 @@ class ProfileRepository extends IProfileRepository {
         return Left(failure);
       },
       (success) {
+
         final profileModel = ProfileModel.fromJson(success.data);
         return Right(profileModel.toEntity());
       },

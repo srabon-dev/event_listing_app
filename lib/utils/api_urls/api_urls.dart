@@ -20,6 +20,7 @@ class ApiUrls {
 
   static String category() => '$base/category/all-categories';
   static String eventAdd() => '$base/event/create';
+  static String eventEdit({required String id}) => '$base/event/update/$id';
   static String getEventDetails({required String id}) => '$base/event/get-single/$id';
   static String deleteEvent({required String id}) => '$base/event/delete/$id';
   static String getMyEvents({String? status, required int page}) {

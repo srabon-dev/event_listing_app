@@ -18,7 +18,7 @@ class EventAddBloc extends Bloc<EventAddEvent, EventAddState> {
       if(isRunning)return;
       isRunning = true;
 
-      emit(const EventState(isLoading: true));
+      emit(const EventAddNewState(isLoading: true));
       final token = await db.getToken();
 
       final response = await repository.addEvent(
@@ -30,14 +30,14 @@ class EventAddBloc extends Bloc<EventAddEvent, EventAddState> {
 
       response.fold(
         (failure) {
-          emit(EventState(isLoading: false, message: failure.message));
+          emit(EventAddNewState(isLoading: false, message: failure.message));
         },
         (success) {
-          emit(const EventState(isLoading: false, isVerified: true));
+          emit( EventAddNewState(isLoading: false, isVerified: true, message: success.data?["message"] ?? "Successfully Post Event"));
         },
       );
     } catch (e) {
-      emit(EventState(isLoading: false, error: e.toString()));
+      emit(EventAddNewState(isLoading: false, error: e.toString()));
     } finally {
       isRunning = false;
     }

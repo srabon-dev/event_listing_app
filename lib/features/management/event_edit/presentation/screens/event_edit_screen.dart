@@ -1,26 +1,42 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:event_listing_app/features/management/event_add/presentation/widgets/event_add_page_four.dart';
+import 'package:event_listing_app/features/management/event_add/presentation/widgets/event_add_page_one.dart';
+import 'package:event_listing_app/features/management/event_add/presentation/widgets/event_add_page_three.dart';
+import 'package:event_listing_app/features/management/event_add/presentation/widgets/event_add_page_two.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-import '../widgets/event_add_page_four.dart';
-import '../widgets/event_add_page_one.dart';
-import '../widgets/event_add_page_three.dart';
-import '../widgets/event_add_page_two.dart';
 
-class EventAddScreen extends StatefulWidget {
-  const EventAddScreen({super.key});
+class EventEditScreen extends StatelessWidget {
+  const EventEditScreen({super.key, required this.eventDetailsEntity});
+  final EventDetailsEntity eventDetailsEntity;
 
   @override
-  State<EventAddScreen> createState() => _EventAddScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => EventEditBloc(
+        db: sl<ILocalService>(),
+        repository: EventEditRepository(apiClient: sl<IApiClient>()),
+      ),
+      child: _View(eventDetailsEntity: eventDetailsEntity,),
+    );
+  }
 }
 
-class _EventAddScreenState extends State<EventAddScreen> {
+class _View extends StatefulWidget {
+  const _View({required this.eventDetailsEntity});
+  final EventDetailsEntity eventDetailsEntity;
+
+  @override
+  State<_View> createState() => _ViewState();
+}
+
+class _ViewState extends State<_View> {
   final PageController pageController = PageController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   //Page One
-  final TextEditingController eventName = TextEditingController();
-  final TextEditingController eventDescription = TextEditingController();
-  // final TextEditingController eventPhoneNumber = TextEditingController();
+  TextEditingController eventName = TextEditingController();
+  TextEditingController eventDescription = TextEditingController();
 
   final ValueNotifier<String?> selectedImage = ValueNotifier(null);
   final ValueNotifier<String?> selectedSportType = ValueNotifier(null);
@@ -37,14 +53,86 @@ class _EventAddScreenState extends State<EventAddScreen> {
   final ValueNotifier<String?> selectedAgesGroup = ValueNotifier(null);
   final ValueNotifier<String?> selectedSkillLevel = ValueNotifier(null);
   final ValueNotifier<PickedLocation?> location = ValueNotifier(null);
-  final TextEditingController availableSlot = TextEditingController();
-  final TextEditingController zipCode = TextEditingController();
-  final TextEditingController city = TextEditingController();
+  TextEditingController availableSlot = TextEditingController();
+  TextEditingController zipCode = TextEditingController();
+  TextEditingController city = TextEditingController();
 
   //Page Four
-  final TextEditingController link = TextEditingController();
-  final TextEditingController eventFee = TextEditingController();
+  TextEditingController link = TextEditingController();
+  TextEditingController eventFee = TextEditingController();
   final QuillController quillController = QuillController.basic();
+
+  @override
+  void initState() {
+    final e = widget.eventDetailsEntity;
+
+    eventName = TextEditingController(text: e.name);
+    eventDescription = TextEditingController(text: e.description);
+    selectedSportType.value = e.sport?.id;
+    selectedEventType.value = e.eventType?.id;
+
+    registrationDate.value = e.registrationStartDate;
+    registrationEndDate.value = e.registrationEndDateTime;
+    eventStartDate.value = e.eventStartDateTime;
+    eventEndDate.value = e.eventEndDateTime;
+
+    selectedAgesGroup.value = mapAgeGroup(e.minAge, e.maxAge);
+    selectedSkillLevel.value = mapSkillLevel(e.skillLevel);
+    location.value = mapLocation(e.location, e.address);
+    availableSlot = TextEditingController(
+      text: e.availableSlot?.toString() ?? "",
+    );
+
+    zipCode = TextEditingController(text: e.zipCode ?? "");
+    city = TextEditingController(text: e.city ?? "");
+
+    link = TextEditingController(text: e.websiteLink ?? "");
+    eventFee = TextEditingController(
+      text: e.registrationFee?.toString() ?? "",
+    );
+
+    final plainDescription = e.description ?? "";
+    quillController.document = Document()..insert(0, plainDescription);
+
+    super.initState();
+  }
+
+  String mapAgeGroup(num? minAge, num? maxAge) {
+    if (minAge == null || maxAge == null) return "Any Age";
+
+    if (minAge == 0 && maxAge >= 100) return "Any Age";
+
+    if (maxAge >= 100) return "$minAge+ years";
+
+    return "$minAge–$maxAge years";
+  }
+
+  String? mapSkillLevel(String? level) {
+    const levels = ["Intermediate", "Beginner", "Advanced"];
+    if (level == null) return null;
+
+    if (levels.contains(level)) return level;
+
+    return null;
+  }
+
+  PickedLocation? mapLocation(EventDetailsLocationEntity? loc, String? address) {
+    if (loc?.coordinates == null || loc!.coordinates!.length != 2) return null;
+
+    final lng = loc.coordinates![0];
+    final lat = loc.coordinates![1];
+
+    if (!lat.isFinite || lat == 0) return null;
+    if (!lng.isFinite || lng == 0) return null;
+
+    return PickedLocation(
+      latitude: lat,
+      longitude: lng,
+      address: address ?? "",
+    );
+  }
+
+
 
   @override
   void dispose() {
@@ -52,7 +140,6 @@ class _EventAddScreenState extends State<EventAddScreen> {
 
     eventName.dispose();
     eventDescription.dispose();
-    // eventPhoneNumber.dispose();
 
     selectedImage.dispose();
     selectedSportType.dispose();
@@ -81,7 +168,6 @@ class _EventAddScreenState extends State<EventAddScreen> {
   void clear() {
     eventName.clear();
     eventDescription.clear();
-    // eventPhoneNumber.clear();
     selectedImage.value = null;
     selectedSportType.value = null;
     selectedEventType.value = null;
@@ -105,12 +191,11 @@ class _EventAddScreenState extends State<EventAddScreen> {
     pageController.jumpToPage(0);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.loc.add_event),
+        title: Text(context.loc.edit_event),
         titleTextStyle: context.titleMedium,
       ),
       body: Form(
@@ -122,6 +207,7 @@ class _EventAddScreenState extends State<EventAddScreen> {
             EventAddPageOne(
               pageController: pageController,
               formKey: formKey,
+              netWorkImage: widget.eventDetailsEntity.image,
 
               selectedImage: selectedImage,
               selectedSportType: selectedSportType,
@@ -129,7 +215,6 @@ class _EventAddScreenState extends State<EventAddScreen> {
 
               eventName: eventName,
               eventDescription: eventDescription,
-              // eventPhoneNumber: eventPhoneNumber,
             ),
             EventAddPageTwo(
               pageController: pageController,
@@ -237,17 +322,18 @@ class _EventAddScreenState extends State<EventAddScreen> {
 
 
 
-                          context.read<EventAddBloc>().add(
-                            EventAdd(
+                          context.read<EventEditBloc>().add(
+                            EventEditNewEvent(
                               entities: entities,
+                              id: widget.eventDetailsEntity.id,
                               imagePath: imagePath,
                             ),
                           );
                         }
                       },
-                      child: BlocConsumer<EventAddBloc, EventAddState>(
+                      child: BlocConsumer<EventEditBloc, EventEditState>(
                         listener: (context, state) {
-                          if (state is EventAddNewState) {
+                          if (state is EventEditNewState) {
                             if (state.message != null) {
                               AppToast.info(context: context, message: state.message ?? "");
                             }
@@ -255,11 +341,14 @@ class _EventAddScreenState extends State<EventAddScreen> {
                               clear();
                               context.read<ManagementHomeCubit>().pagingController.refresh();
                               context.read<MyEventCubit>().pagingController.refresh();
+                              if(Navigator.canPop(context)){
+                                AppRouter.route.pop(true);
+                              }
                             }
                           }
                         },
                         builder: (context, state) {
-                          final data = state is EventAddNewState && state.isLoading;
+                          final data = state is EventEditNewState && state.isLoading;
                           if(data) {
                             return const LoadingWidget(color: AppColors.white,);
                           }

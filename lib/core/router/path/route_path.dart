@@ -25,6 +25,7 @@ class RoutePath{
 
   static const String categoryScreen = 'categoryScreen';
   static const String eventDetailsScreen = 'eventDetailsScreen';
+  static const String eventEditScreen = 'eventEditScreen';
 
   static const String subscriptionScreen = 'subscriptionScreen';
 

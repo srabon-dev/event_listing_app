@@ -10,8 +10,9 @@ class EventAddPageOne extends StatelessWidget {
 
     required this.eventName,
     required this.eventDescription,
-    required this.eventPhoneNumber,
+    // required this.eventPhoneNumber,
 
+    this.netWorkImage,
     required this.selectedImage,
     required this.selectedSportType,
     required this.selectedEventType,
@@ -20,13 +21,15 @@ class EventAddPageOne extends StatelessWidget {
   final PageController pageController;
   final GlobalKey<FormState> formKey;
 
+  final String? netWorkImage;
+
   final ValueNotifier<String?> selectedImage;
   final ValueNotifier<String?> selectedSportType;
   final ValueNotifier<String?> selectedEventType;
 
   final TextEditingController eventName;
   final TextEditingController eventDescription;
-  final TextEditingController eventPhoneNumber;
+  // final TextEditingController eventPhoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,6 @@ class EventAddPageOne extends StatelessWidget {
               } catch (_) {}
             },
             child: Container(
-              padding: const EdgeInsets.all(10),
               height: 200,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -68,7 +70,16 @@ class EventAddPageOne extends StatelessWidget {
                   if (imagePath != null && imagePath.isNotEmpty) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.file(File(imagePath), fit: BoxFit.cover,),
+                      child: Image.file(File(imagePath), fit: BoxFit.cover, width: MediaQuery.of(context).size.width, height: 200,),
+                    );
+                  }
+
+                  if(netWorkImage != null && netWorkImage!.isNotEmpty){
+                    return CustomNetworkImage(
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      borderRadius: BorderRadius.circular(8),
+                      imageUrl: netWorkImage,
                     );
                   }
                   return Column(
@@ -99,12 +110,12 @@ class EventAddPageOne extends StatelessWidget {
             controller: eventDescription,
             validator: TextFieldValidator.required(context),
           ),
-          CustomTextField(
+          /*CustomTextField(
             title: context.loc.phoneNumber,
             hintText: "e.g. (480) 555-0103",
             controller: eventPhoneNumber,
             validator: TextFieldValidator.required(context),
-          ),
+          ),*/
           CustomAlignText(text: context.loc.sport),
           BlocBuilder<CategoryCubit, CategoryState>(
             builder: (context, state) {
@@ -168,7 +179,6 @@ class EventAddPageOne extends StatelessWidget {
                   value: selectedEntity,
                   isRequired: true,
                   onChanged: (value) {
-                    print(value?.id);
                     selectedEventType.value = value?.id;
                   },
                 );
@@ -183,7 +193,11 @@ class EventAddPageOne extends StatelessWidget {
             text: context.loc.next,
             onTap: () {
               if (formKey.currentState!.validate()) {
-                if (selectedImage.value == null || selectedImage.value!.isEmpty) {
+
+                final hasLocalImage = selectedImage.value != null && selectedImage.value!.isNotEmpty;
+                final hasNetworkImage = netWorkImage != null && netWorkImage!.isNotEmpty;
+
+                if (!hasLocalImage && !hasNetworkImage) {
                   AppToast.warning(
                     message: context.loc.pleaseUploadImage,
                   );
@@ -196,6 +210,7 @@ class EventAddPageOne extends StatelessWidget {
               }
             },
           ),
+          const SizedBox(height: 24,),
         ],
       ),
     );

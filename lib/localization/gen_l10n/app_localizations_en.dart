@@ -91,6 +91,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordsDoNotMatch => 'Password does not match.';
 
   @override
+  String get edit_event => 'Edit Event';
+
+  @override
   String get user_onboarding_one =>
       'Search and browse youth Sport events near you — tryouts, camps, and tournaments. Filter by sport, age, and location to quickly discover the right events.';
 

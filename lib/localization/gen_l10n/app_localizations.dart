@@ -248,6 +248,12 @@ abstract class AppLocalizations {
   /// **'Password does not match.'**
   String get passwordsDoNotMatch;
 
+  /// No description provided for @edit_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Event'**
+  String get edit_event;
+
   /// No description provided for @user_onboarding_one.
   ///
   /// In en, this message translates to:

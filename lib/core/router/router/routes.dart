@@ -160,6 +160,21 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        name: RoutePath.eventEditScreen,
+        path: RoutePath.eventEditScreen.addBasePath,
+        pageBuilder: (context, state) {
+          final extra = state.extra;
+          final map = (extra is Map<String, dynamic>) ? extra : {};
+
+          final entity = map['entity'] as EventDetailsEntity;
+
+          return _buildPageWithAnimation(
+            child: EventEditScreen(eventDetailsEntity: entity),
+            state: state,
+          );
+        },
+      ),
       /*GoRoute(
         name: RoutePath.categoryEventsScreen,
         path: RoutePath.categoryEventsScreen.addBasePath,
