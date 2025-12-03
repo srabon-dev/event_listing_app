@@ -1,5 +1,4 @@
 import 'package:event_listing_app/app_export.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryBoxCardWidget extends StatelessWidget {
   const CategoryBoxCardWidget({super.key, required this.name, required this.image, this.onTap});
@@ -29,7 +28,7 @@ class CategoryBoxCardWidget extends StatelessWidget {
               width: 80,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CustomNetworkImage(imageUrl: image,),
+                child: CustomNetworkImage(imageUrl: image, borderRadius: BorderRadius.circular(8)),
               ),
             ),
             Flexible(

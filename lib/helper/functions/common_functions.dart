@@ -14,6 +14,7 @@ Future<String?> pickImage() async {
 }
 
 String getAgeRangeLabel(num minAge, num maxAge) {
+  print("$maxAge - $minAge");
   if (minAge == 0 && maxAge == 1000) {
     return "Any Age";
   } else if (minAge == 5 && maxAge == 7) {
@@ -24,7 +25,7 @@ String getAgeRangeLabel(num minAge, num maxAge) {
     return "11–13 years";
   } else if (minAge == 14 && maxAge == 16) {
     return "14–16 years";
-  } else if (minAge == 17 && maxAge == 1000) {
+  } else if (minAge == 17 && (maxAge == 100000 || maxAge == 1000)) {
     return "17+ years";
   } else {
     return "$minAge–$maxAge years";
