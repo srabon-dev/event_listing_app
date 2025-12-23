@@ -113,6 +113,12 @@ class LocalService implements ILocalService {
         return false;
       }
 
+      try {
+        await SubscriptionService.logoutUser();
+      } catch (e) {
+        AppLogger.log('Failed to logout user from RevenueCat: $e');
+      }
+
       final langSaved = await prefs.setString(LocalKeys.language, lang);
       if (!langSaved) AppLogger.log("Language not restored after logout", type: AppLogType.warning);
 

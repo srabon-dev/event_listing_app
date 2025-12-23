@@ -7,6 +7,9 @@ class AppConfig {
   //Default Language Key
   static const String defaultLanguageKey = "en";
 
+  static const String revenueCatAppleApiKey = "appl_BJViVwKbWyiwgvlGGMkEkYKuRQF";
+  static const String revenueCatGoogleApiKey = "en";
+
   static const String googleMapAPIKey = "AIzaSyC_qKHmzl-HHB9hr8-fWGmhETSVR2H0894";
 
   static const defaultProfile = "https://img.freepik.com/premium-photo/casual-young-man-shirt_146377-2992.jpg";

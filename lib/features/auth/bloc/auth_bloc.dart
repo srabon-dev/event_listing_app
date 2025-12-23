@@ -1,4 +1,5 @@
 import 'package:event_listing_app/app_export.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -49,6 +50,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             id: success.userId,
             role: success.role,
           );
+
+          try {
+            await SubscriptionService.identifyUser(success.userId);
+          } catch (e) {
+            AppLogger.log('Failed to identify user in RevenueCat: $e');
+          }
 
           emit(LoginState(isLoading: false, isVerified: true, authEntity: success));
         },
@@ -199,6 +206,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             id: success.userId,
             role: success.role,
           );
+
+          try {
+            await SubscriptionService.identifyUser(success.userId);
+          } catch (e) {
+            AppLogger.log('Failed to identify user in RevenueCat: $e');
+          }
 
           final message = 'Sign up success';
           emit(SignUpOtpState(isLoading: false, isVerified: true, message: message, authEntity: success));

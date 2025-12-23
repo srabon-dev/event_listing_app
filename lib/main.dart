@@ -5,6 +5,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DeviceUtils.lockDevicePortrait();
   initDependencies();
+  await _purchaseConfig();
 
   runApp(
     MultiBlocProvider(
@@ -107,4 +108,12 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
+}
+
+Future<void> _purchaseConfig() async {
+  try {
+    await SubscriptionService.initialize();
+  } catch (e) {
+    AppLogger.log('Failed to initialize RevenueCat: $e');
+  }
 }

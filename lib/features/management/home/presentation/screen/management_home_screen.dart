@@ -116,7 +116,9 @@ class _ManagementHomeScreenState extends State<ManagementHomeScreen> {
                         if (state is CategoryLoading) {
                           return const LoadingWidget();
                         } else if (state is CategoryLoaded) {
-                          final items = state.categories.getSports().toList();
+                          final allItems = state.categories.getSports().toList();
+                          final items = allItems.take(4).toList();
+
                           if(items.isEmpty){
                             return const NoDataCard(
                               text: "Category will appear once they’re available.",
