@@ -72,9 +72,9 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   Future<void> skip() async => _checkAuthStatus();
 
   Future<void> _checkAuthStatus() async {
-    if(isUser){
-      AppRouter.route.goNamed(RoutePath.userNavigationScreen);
-    }else {
+    if(isUser) {
+      AppRouter.route.goNamed(RoutePath.subscriptionScreen);
+    } else {
       AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
     }
   }

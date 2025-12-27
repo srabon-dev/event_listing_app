@@ -3,12 +3,14 @@ class AuthEntity {
   final String role;
   final String accessToken;
   final String refreshToken;
+  final bool hasActiveSubscription;
 
   const AuthEntity({
     required this.userId,
     required this.role,
     required this.accessToken,
     required this.refreshToken,
+    required this.hasActiveSubscription,
   });
 
   bool get hasAccessToken => accessToken.isNotEmpty;

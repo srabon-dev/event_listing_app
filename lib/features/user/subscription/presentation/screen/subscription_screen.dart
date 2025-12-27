@@ -3,20 +3,22 @@ import 'package:event_listing_app/app_export.dart';
 import '../widgets/subscription_package_card.dart';
 
 class SubscriptionScreen extends StatelessWidget {
-  const SubscriptionScreen({super.key});
+  const SubscriptionScreen({super.key, required this.isBack});
+  final bool isBack;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SubscriptionCubit(),
-      child: const _View(),
+      child: _View(isBack),
     );
   }
 }
 
 
 class _View extends StatefulWidget {
-  const _View();
+  const _View(this.isBack);
+  final bool isBack;
 
   @override
   State<_View> createState() => _ViewState();
@@ -47,6 +49,14 @@ class _ViewState extends State<_View> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
+
+            if (!widget.isBack) {
+              Future.delayed(const Duration(seconds: 2), () {
+                if (context.mounted) {
+                  AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+                }
+              });
+            }
           } else if (state is SubscriptionRestoreSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -55,7 +65,16 @@ class _ViewState extends State<_View> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
+
+            if (!widget.isBack && state.subscription != null) {
+              Future.delayed(const Duration(seconds: 2), () {
+                if (context.mounted) {
+                  AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+                }
+              });
+            }
           } else if (state is SubscriptionError) {
+            AppLogger.log(state.message);
             if (state.errorCode != 'cancelled') {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -266,7 +285,8 @@ class _ViewState extends State<_View> {
                   context,
                   Icons.store_outlined,
                   'Store',
-                  subscription.store == 'APP_STORE' ? 'App Store' : 'Play Store',
+                  subscription.store.toUpperCase(),
+                  // subscription.store == 'APP_STORE' ? 'App Store' : 'Play Store',
                 ),
 
                 const SizedBox(height: 8),
@@ -312,10 +332,10 @@ class _ViewState extends State<_View> {
 
           OutlinedButton.icon(
             onPressed: () {
-              _showManageSubscriptionDialog(context);
+              SubscriptionUtils.openSubscriptionManagement();
             },
             style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
               side: const BorderSide(color: AppColors.brandHoverColor),
             ),
             icon: const Icon(Icons.settings, color: AppColors.brandHoverColor),
@@ -588,30 +608,6 @@ class _ViewState extends State<_View> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _showManageSubscriptionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Manage Subscription'),
-        content: const Text(
-          'To manage or cancel your subscription, please visit your account settings in the App Store or Google Play Store.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              SubscriptionUtils.openSubscriptionManagement();
-            },
-            child: const Text('Open Store'),
-          ),
-        ],
       ),
     );
   }

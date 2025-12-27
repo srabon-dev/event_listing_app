@@ -186,7 +186,7 @@ class YearlySubscriptionCard extends StatelessWidget {
                                     style: context.headlineMedium.copyWith(
                                       fontWeight: FontWeight.w900,
                                       color: Colors.orange.shade700,
-                                      fontSize: 32,
+                                      fontSize: 24,
                                     ),
                                   ),
                                   Text(
