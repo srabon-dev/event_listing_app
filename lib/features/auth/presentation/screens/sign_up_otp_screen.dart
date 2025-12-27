@@ -91,10 +91,6 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
                         AppToast.info(context: context, message: state.message ?? "");
                       }
                       if (state.isVerified) {
-                        AppLogger.log(state.isVerified);
-                        AppLogger.log(state.authEntity?.isSuccess);
-                        AppLogger.log(state.authEntity?.isUser);
-                        AppLogger.log(state.authEntity?.isOrganizer);
                         if(state.authEntity?.isSuccess == true){
                           if(state.authEntity?.isUser == true){
                             AppRouter.route.goNamed(RoutePath.onboardingScreen, extra: true);

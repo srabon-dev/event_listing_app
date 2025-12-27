@@ -218,8 +218,12 @@ class AppRouter {
         name: RoutePath.subscriptionScreen,
         path: RoutePath.subscriptionScreen.addBasePath,
         pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final isBack = extra?['isBack'] as bool? ?? false;
           return _buildPageWithAnimation(
-            child: const SubscriptionScreen(),
+            child: SubscriptionScreen(
+              isBack: isBack,
+            ),
             state: state,
           );
         },

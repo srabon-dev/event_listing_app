@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       name: context.loc.mySubscription,
                       icon: Assets.icons.premium,
                       onTap: () {
-                        AppRouter.route.pushNamed(RoutePath.subscriptionScreen);
+                        AppRouter.route.pushNamed(RoutePath.subscriptionScreen, extra: {"back": true});
                       },
                     ),
                   ProfileRowCard(

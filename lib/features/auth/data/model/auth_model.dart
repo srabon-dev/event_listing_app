@@ -31,6 +31,7 @@ class AuthModel {
         accessToken: "",
         refreshToken: "",
         role: "",
+        hasActiveSubscription: false,
       );
     }
 
@@ -43,6 +44,7 @@ class AuthModel {
       role: role,
       accessToken: data!.accessToken ?? "",
       refreshToken: data!.refreshToken ?? "",
+      hasActiveSubscription: false,
     );
   }
 }

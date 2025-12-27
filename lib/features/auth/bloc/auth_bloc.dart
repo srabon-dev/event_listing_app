@@ -1,5 +1,4 @@
 import 'package:event_listing_app/app_export.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -51,13 +50,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             role: success.role,
           );
 
-          try {
-            await SubscriptionService.identifyUser(success.userId);
-          } catch (e) {
-            AppLogger.log('Failed to identify user in RevenueCat: $e');
+          bool hasSubscription = false;
+
+          if (success.role.toLowerCase() == 'user') {
+            try {
+              await SubscriptionService.identifyUser(success.userId);
+              await SubscriptionService.syncPurchases();
+              hasSubscription = await SubscriptionService.hasActiveSubscription();
+            } catch (e) {
+              AppLogger.log('RevenueCat error: $e');
+            }
           }
 
-          emit(LoginState(isLoading: false, isVerified: true, authEntity: success));
+          final entity = AuthEntity(
+            userId: success.userId,
+            role: success.role,
+            accessToken: success.accessToken,
+            refreshToken: success.refreshToken,
+            hasActiveSubscription: hasSubscription,
+          );
+
+          emit(LoginState(isLoading: false, isVerified: true, authEntity: entity));
         },
       );
     } catch (e) {
@@ -209,6 +222,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
           try {
             await SubscriptionService.identifyUser(success.userId);
+            await SubscriptionService.syncPurchases();
           } catch (e) {
             AppLogger.log('Failed to identify user in RevenueCat: $e');
           }

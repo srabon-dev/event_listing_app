@@ -91,10 +91,12 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
 
       final package = offerings.current!.availablePackages.first;
 
-      final customerInfo = await Purchases.purchasePackage(package);
+      final purchaseResult = await Purchases.purchase(PurchaseParams.package(package));
 
-      if (customerInfo.customerInfo.entitlements.active.isNotEmpty) {
-        final activeSubscription = _getActiveSubscription(customerInfo.customerInfo);
+      final customerInfo = purchaseResult.customerInfo;
+
+      if (customerInfo.entitlements.active.isNotEmpty) {
+        final activeSubscription = _getActiveSubscription(customerInfo);
 
         if (activeSubscription != null) {
           emit(SubscriptionPurchaseSuccess(
@@ -212,12 +214,12 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
     return [
       'Unlimited event access',
       'Priority customer support',
-      'Ad-free experience',
+      // 'Ad-free experience',
       'Early access to new features',
       'Exclusive premium content',
-      'Advanced analytics dashboard',
+      // 'Advanced analytics dashboard',
       'Custom event notifications',
-      'Offline access to saved events',
+      // 'Offline access to saved events',
     ];
   }
 

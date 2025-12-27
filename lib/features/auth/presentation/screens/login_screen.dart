@@ -69,29 +69,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is LoginState) {
+                      listener: (context, state) {
+                        if (state is! LoginState) return;
+
                         if (state.message != null) {
-                          AppToast.info(context: context, message: state.message ?? "");
+                          AppToast.info(context: context, message: state.message!);
                         }
-                        if (state.isVerified) {
-                          if(state.authEntity?.isSuccess == true){
-                            if(state.authEntity?.isUser == true){
-                              AppRouter.route.goNamed(RoutePath.userNavigationScreen);
-                            } else if(state.authEntity?.isOrganizer == true){
-                              AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
-                            }
-                          }
+
+                        if (!state.isVerified || state.authEntity == null) return;
+
+                        final auth = state.authEntity!;
+
+                        if (auth.isOrganizer) {
+                          AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
+                          return;
                         }
-                      }
-                    },
-                    builder: (context, state) {
+
+                        if (auth.isUser) {
+                          AppRouter.route.goNamed(
+                            auth.hasActiveSubscription
+                                ? RoutePath.userNavigationScreen
+                                : RoutePath.subscriptionScreen,
+                          );
+                        }
+                      },
+                      builder: (context, state) {
                       final data = state is LoginState && state.isLoading;
                       return CustomButton(
                         text: context.loc.log_in,
                         isLoading: data,
                         onTap: () {
-                          if(_formKey.currentState!.validate()){
+                          if (_formKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(
                               LoginEvent(email: email.text.trim(), password: password.text.trim()),
                             );

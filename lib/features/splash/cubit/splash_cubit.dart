@@ -33,7 +33,11 @@ class SplashCubit extends Cubit<void> {
 
       switch (role) {
         case "user":
-          AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+          if(await SubscriptionService.hasActiveSubscription()){
+            AppRouter.route.goNamed(RoutePath.userNavigationScreen);
+          } else {
+            AppRouter.route.goNamed(RoutePath.subscriptionScreen);
+          }
           break;
         case "organizer":
           AppRouter.route.goNamed(RoutePath.managementNavigationScreen);
